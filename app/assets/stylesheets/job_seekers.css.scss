@@ -1,6 +1,26 @@
 // Place all the styles related to the JobSeekers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+fieldset {
+  background-color: #E1E2DB;
+  width: 600px;
+  table {
+    display: block;
+    margin: auto;
+  }
+}
+
+.error-notice {
+  color:red;
+  border: 2px solid red;
+}
+
+div#login {
+  border-right: 2px solid ghostwhite;
+  margin-right: 20px;
+}
+
 div#not_login {
   width: 500px;
   height: 125px;

@@ -1,21 +1,42 @@
-<h1> Registration Page </h1>
 <%= form_for(@job_seeker) do |f| %>
   <% if @job_seeker.errors.any? %>
     <div class="error_messages">
-      <h2> Form is invalid </h2>
-      <ul>
-        <% for message in @job_seeker.errors.full_messages %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+     <h2><%= pluralize(@job_seeker.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
   <% end %>
-  <table border = "2">
-    <tr><td><%= f.label :name %></td><td><%= f.text_field :name %></td></tr>
-    <tr><td><%= f.label :email %></td><td><%= f.email_field :email %></td></tr>
-    <tr><td><%= f.label :password %></td><td><%= f.password_field :password %></td></tr>
-    <tr><td><%= f.label :password_confirmation %></td><td><%= f.password_field :password_confirmation %></td></tr>
-    <tr><td><%= f.label :location %></td><td><%= f.text_field :location %></td></tr>
+  <fieldset>
+    <legend>Registration</legend>
+    <table border = "2">
+    <tr>
+      <td><%= f.label :name %></td><td><%= f.text_field :name %></td>
+      <% unless error_present?(:name) %>
+        <td class="error-notice"><%= get_errors(:name) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td><%= f.label :email %></td><td><%= f.email_field :email %></td>
+      <% unless error_present?(:email) %>
+        <td class="error-notice"><%= get_errors(:email) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td><%= f.label :password %></td><td><%= f.password_field :password %></td>
+      <% unless error_present?(:password) %>
+        <td class="error-notice"><%= get_errors(:password) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td><%= f.label :password_confirmation %></td><td><%= f.password_field :password_confirmation %></td>
+      <% unless error_present?(:password_confirmation) %>
+        <td class="error-notice"><%= get_errors(:password_confirmation) %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td><%= f.label :location %></td><td><%= f.text_field :location %></td>
+      <% unless error_present?(:location) %>
+        <td><%= get_errors(:location) %></td>
+      <% end %>
+    </tr>
     <tr><td><%= f.label :mobile_number %></td><td><%= f.telephone_field :mobile_number %></td></tr>
     <tr><td>Profile Details</td></tr>
     <tr><td><%= f.label :experience %></td><td><%= f.select "experience", JobSeeker::EXPERIENCE %></td></tr>
@@ -24,4 +45,5 @@
       <td><%= f.label :industry %></td>
       <td><%= f.select :industry, JobSeeker::INDUSTRY %></td></tr>
     <tr><td></td><td><p class="button"><%= f.submit %></p></td></tr>
+  </fieldset>
 <% end %>
