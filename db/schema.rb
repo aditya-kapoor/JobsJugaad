@@ -11,6 +11,49 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20120914060649) do
+
+  create_table "employers", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "website"
+    t.text     "description"
+    t.string   "password_hash"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "job_applications", :force => true do |t|
+    t.date     "interview_on"
+    t.text     "remarks"
+    t.integer  "job_id"
+    t.integer  "job_seeker_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "job_seekers", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "location"
+    t.string   "mobile_number"
+    t.string   "experience"
+    t.string   "key_skills"
+    t.string   "industry"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "jobs", :force => true do |t|
+    t.text     "description"
+    t.string   "location"
+    t.string   "keywords"
+    t.string   "skill_set"
+    t.integer  "salary"
+    t.integer  "employer_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end

@@ -1,4 +1,13 @@
 JobsJugaad::Application.routes.draw do
+
+  resources :job_seekers, :except => [:new, :show]
+  controller 'JobSeekers' do
+    get "profile" => :show
+    post "login" => :login
+    get "logout" => :logout
+    get "register" => :new
+    get "forgot_password" => :forgot_password
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

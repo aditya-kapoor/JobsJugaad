@@ -1,0 +1,26 @@
+// Place all the styles related to the JobSeekers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+div#not_login {
+  width: 500px;
+  height: 125px;
+  border: 2px solid red;
+  background-color: #F99;
+}
+
+.error_notice {
+  border:2px solid red;
+}
+
+div#notice{ 
+  width: 350px;
+  margin:auto;
+  background-color :greenyellow;
+  padding-top: 10px;
+}
+
+div#logged_in_holder {
+  float: right;
+  font-weight: bold;
+  font-size: 15px;
+}
