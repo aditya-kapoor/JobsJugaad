@@ -11,13 +11,18 @@ fieldset {
   }
 }
 
+div#login {
+  float:left; 
+  width:50%;
+}
+
 .error-notice {
   color:red;
   border: 2px solid red;
 }
 
 div#login {
-  border-right: 2px solid ghostwhite;
+  border-right: 2px solid #e1e2e3;
   margin-right: 20px;
 }
 
@@ -36,7 +41,8 @@ div#notice{
   width: 350px;
   margin:auto;
   background-color :greenyellow;
-  padding-top: 10px;
+  //padding-top: 10px;
+  height: 70px;
 }
 
 div#logged_in_holder {

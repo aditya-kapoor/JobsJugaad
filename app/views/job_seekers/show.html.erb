@@ -17,7 +17,7 @@
     <% unless notice.nil? %>
       <div id = "notice"> <%= notice %> </div>
     <% end %>
-    <fieldset><legend>Your Profile Information</legend>
+    <fieldset class="profile-fieldset"><legend>Your Profile Information</legend>
       <div id="links_to_use">
         <%= link_to 'Edit', edit_job_seeker_path(session[:job_seeker_id]) %>
       </div>
@@ -47,7 +47,7 @@
         </tr>
         <tr><td> Key Skills : </td>
           <td>
-            <% if current_user.key_skills.nil? %>
+            <% if current_user.skills.nil? %>
                 Not Mentioned
             <% else %>
                 <%= current_user.key_skills %>
@@ -56,7 +56,7 @@
       </table>
     </div>
     </fieldset>
-    <fieldset><legend>Your Job Applications</legend>
+    <fieldset class="profile-fieldset"><legend>Your Job Applications</legend>
       <table>
         <% current_user.jobs.each do |job| %>
           <tr><td>Job <%= current_user.jobs.index(job) + 1 %></td></tr>
@@ -67,7 +67,7 @@
         <% end %>
       </table>
     </fieldset>
-    <fieldset><legend>Search and Apply for Jobs:</legend>
+    <fieldset class="profile-fieldset"><legend>Search and Apply for Jobs:</legend>
     </fieldset>
   </div>
   

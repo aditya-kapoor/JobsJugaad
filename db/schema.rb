@@ -11,16 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914060649) do
+ActiveRecord::Schema.define(:version => 20120915213445) do
 
   create_table "employers", :force => true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "website"
     t.text     "description"
-    t.string   "password_hash"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "job_applications", :force => true do |t|
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20120914060649) do
     t.string   "location"
     t.string   "mobile_number"
     t.string   "experience"
-    t.string   "key_skills"
     t.string   "industry"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -49,11 +48,18 @@ ActiveRecord::Schema.define(:version => 20120914060649) do
     t.text     "description"
     t.string   "location"
     t.string   "keywords"
-    t.string   "skill_set"
     t.integer  "salary"
     t.integer  "employer_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "skills", :force => true do |t|
+    t.string   "name"
+    t.integer  "key_skill_id"
+    t.string   "key_skill_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
 end

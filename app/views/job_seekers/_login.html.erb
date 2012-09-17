@@ -1,15 +1,13 @@
-<div id="login" style="float:left; width:50%">
+<div id="login">
   <% if notice %>
-    <div id="notice">
-      <p><%= notice %></p>
-    </div>
+    <div id="notice"><p><%= notice %></p></div>
   <% end %>
   <h2>Login to get started....</h2>
     <%= form_tag(:controller => "JobSeekers", :action => "login") do %>
       <table>
         <tr>
           <td><%= label_tag :email, "Enter Email" %></td>
-          <td><%= email_field :email, params[:email] %></td>
+          <td><%= email_field :email, params[:email], :placeholder => "Enter Email" %></td>
         </tr>
         <tr>
           <td><%= label_tag :password, "Enter Password" %></td>
@@ -21,6 +19,6 @@
       </table>
     <% end %>
 <%= link_to "Forgot Password?", forgot_password_path %> <br />
-<%= link_to 'Login As Employer' %><br />
+<%= link_to 'Login As Employer', elogin_path %><br />
 <%= link_to 'New User', register_path %>
 </div>

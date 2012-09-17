@@ -6,44 +6,59 @@
   <% end %>
   <fieldset>
     <legend>Registration</legend>
-    <table border = "2">
+    <table>
     <tr>
       <td><%= f.label :name %></td><td><%= f.text_field :name %></td>
-      <% unless error_present?(:name) %>
-        <td class="error-notice"><%= get_errors(:name) %></td>
+      <% unless error_present?(:name, @job_seeker) %>
+        <td class="error-notice"><%= get_errors(:name, @job_seeker) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :email %></td><td><%= f.email_field :email %></td>
-      <% unless error_present?(:email) %>
-        <td class="error-notice"><%= get_errors(:email) %></td>
+      <% unless error_present?(:email, @job_seeker) %>
+        <td class="error-notice"><%= get_errors(:email, @job_seeker) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :password %></td><td><%= f.password_field :password %></td>
-      <% unless error_present?(:password) %>
-        <td class="error-notice"><%= get_errors(:password) %></td>
+      <% unless error_present?(:password, @job_seeker) %>
+        <td class="error-notice"><%= get_errors(:password, @job_seeker) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :password_confirmation %></td><td><%= f.password_field :password_confirmation %></td>
-      <% unless error_present?(:password_confirmation) %>
-        <td class="error-notice"><%= get_errors(:password_confirmation) %></td>
+      <% unless error_present?(:password_confirmation, @job_seeker) %>
+        <td class="error-notice"><%= get_errors(:password_confirmation, @job_seeker) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :location %></td><td><%= f.text_field :location %></td>
-      <% unless error_present?(:location) %>
-        <td><%= get_errors(:location) %></td>
+      <% unless error_present?(:location, @job_seeker) %>
+        <td><%= get_errors(:location, @job_seeker) %></td>
       <% end %>
     </tr>
-    <tr><td><%= f.label :mobile_number %></td><td><%= f.telephone_field :mobile_number %></td></tr>
-    <tr><td>Profile Details</td></tr>
-    <tr><td><%= f.label :experience %></td><td><%= f.select "experience", JobSeeker::EXPERIENCE %></td></tr>
-    <tr><td><%= f.label :key_skills %></td><td><%= f.select "key_skills", ""%></td></tr>
+    <tr>
+      <td><%= f.label :mobile_number %></td>
+      <td><%= f.telephone_field :mobile_number %></td>
+    </tr>
+    <tr>
+      <td>Profile Details</td>
+    </tr>
+    <tr>
+      <td><%= f.label :experience %></td>
+      <td><%= f.select "experience", JobSeeker::EXPERIENCE %> years</td>
+    </tr>
+    <tr>
+      <td><%= f.label :key_skills %></td>
+      <td><%= f.text_field :key_skills %></td>
+    </tr>
     <tr>
       <td><%= f.label :industry %></td>
-      <td><%= f.select :industry, JobSeeker::INDUSTRY %></td></tr>
-    <tr><td></td><td><p class="button"><%= f.submit %></p></td></tr>
+      <td><%= f.select :industry, JobSeeker::INDUSTRY %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><p class="button"><%= f.submit %></p></td>
+    </tr>
   </fieldset>
 <% end %>

@@ -3,4 +3,5 @@ class Job < ActiveRecord::Base
   belongs_to :employer
   has_many :job_applications
   has_many :job_seekers, :through => :job_applications
+  has_many :skills, :as => :key_skill
 end

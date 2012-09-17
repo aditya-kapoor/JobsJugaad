@@ -7,7 +7,6 @@ class CreateJobSeekers < ActiveRecord::Migration
       t.string :location
       t.string :mobile_number
       t.string :experience
-      t.string :key_skills
       t.string :industry
       
       t.timestamps

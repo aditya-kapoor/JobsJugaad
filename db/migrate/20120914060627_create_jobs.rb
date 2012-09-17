@@ -4,7 +4,6 @@ class CreateJobs < ActiveRecord::Migration
       t.text :description
       t.string :location
       t.string :keywords
-      t.string :skill_set
       t.integer :salary
       t.integer :employer_id
       t.timestamps

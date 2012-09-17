@@ -8,7 +8,7 @@ class JobSeekersController < ApplicationController
 
   def update
     @job_seeker = JobSeeker.find(params[:id])
-
+    
     respond_to do |format|
       if @job_seeker.update_attributes(params[:job_seeker])
         format.html { redirect_to profile_path, notice: 'Your profile has been successfully updated.' }
@@ -30,7 +30,6 @@ class JobSeekersController < ApplicationController
 
   def create
     @job_seeker = JobSeeker.new(params[:job_seeker])
-
     respond_to do |format|
       if @job_seeker.save
         format.html { redirect_to root_path, notice: 'Job Seeker Account was successfully created. Please login with your new credentials.' }
@@ -46,8 +45,7 @@ class JobSeekersController < ApplicationController
     @job_seeker = JobSeeker.find_by_email(params[:email])
     if @job_seeker && @job_seeker.authenticate(params[:password])
       session[:job_seeker_id] = @job_seeker.id
-      params
-      redirect_to "/profile"
+      redirect_to :profile
     else
       redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
     end

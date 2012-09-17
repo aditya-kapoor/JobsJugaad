@@ -1,0 +1,45 @@
+<% if session[:employer_id].nil? %>
+  <center> 
+    <div id="not_login">
+    <p>
+      You are not currently logged into the system...Please click <%= link_to 'here', root_path %> to login
+    </p>
+    </div>
+  </center>
+<% else %>
+  <div id="logged_in_holder"> 
+    <p> Logged in as <%= current_employer.email %> | <%= link_to 'Log Out', elogout_path %>
+  </div>
+<br />
+<br />
+  <div id = "main-container">
+    <h3> Welcome <%= current_employer.name %></h3>
+    <% unless notice.nil? %>
+      <div id = "notice"> <%= notice %> </div>
+    <% end %>
+    <fieldset class="profile-fieldset"><legend>Your Profile Information</legend>
+      <div id="links_to_use">
+        <%= link_to 'Edit', "" %>
+      </div>
+      <div id = "profile_div">
+      <h5> Your Profile Information : </h5>
+      <table>
+        <tr><td> Name:   </td><td><%= current_employer.name %></td></tr>
+        <tr><td> Email:  </td><td><%= current_employer.email %></td></tr>
+        <tr><td> Website:</td><td><%= current_employer.website %></td></tr>
+        <tr><td> Description: </td><td><%= current_employer.description %></td></tr> 
+      </table>
+    </div>
+    </fieldset>
+    <fieldset class="profile-fieldset"><legend>Your Job Postings...</legend>
+      <table>
+        <% current_employer.jobs.each do |job| %>
+          
+        <% end %>
+      </table>
+    </fieldset>
+    <fieldset class="profile-fieldset"><legend>Search For Talent</legend>
+    </fieldset>
+  </div>
+  
+<% end %> 
