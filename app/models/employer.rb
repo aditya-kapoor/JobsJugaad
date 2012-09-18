@@ -1,6 +1,6 @@
 class Employer < ActiveRecord::Base
   attr_accessible :name, :email, :website, :description, :password, :password_confirmation
-  has_many :jobs
+  has_many :jobs, :dependent => :destroy
   has_secure_password
   validates :name, :presence  => true
   validates :email, :presence => true, :uniqueness => true

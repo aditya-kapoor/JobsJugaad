@@ -3,14 +3,36 @@ class EmployersController < ApplicationController
     @employer = Employer.find_by_email(params[:email])
     if @employer && @employer.authenticate(params[:password])
       session[:employer_id] = @employer.id
+      session[:user_type] = 'employer'
       redirect_to :eprofile
     else
       redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
     end
   end
 
+  def edit
+    @employer = Employer.find(session[:employer_id])
+  end
+
+  def update
+    @employer = Employer.find(params[:id])
+
+    respond_to do |format|
+      if @employer.update_attributes(params[:employer])
+        format.html { redirect_to eprofile_url, notice: "Employer Profile was successfully updated." }
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
   def new
     @employer = Employer.new
+  end
+
+  def add_job
+    @employer = Employer.find(session[:employer_id])
+    @job = @employer.jobs.build
   end
 
   def create

@@ -1,5 +1,5 @@
 <% if session[:employer_id].nil? %>
-  <center> 
+  <center>
     <div id="not_login">
     <p>
       You are not currently logged into the system...Please click <%= link_to 'here', root_path %> to login
@@ -8,35 +8,43 @@
   </center>
 <% else %>
   <div id="logged_in_holder"> 
-    <p> Logged in as <%= current_employer.email %> | <%= link_to 'Log Out', elogout_path %>
+    <p> Logged in as <%= current_user.email %> | <%= link_to 'Log Out', elogout_path %>
   </div>
 <br />
 <br />
   <div id = "main-container">
-    <h3> Welcome <%= current_employer.name %></h3>
+    <h3> Welcome <%= current_user.name %></h3>
     <% unless notice.nil? %>
       <div id = "notice"> <%= notice %> </div>
     <% end %>
-    <fieldset class="profile-fieldset"><legend>Your Profile Information</legend>
+    <fieldset class="profile-fieldset">
+      <legend>Your Profile Information</legend>
       <div id="links_to_use">
-        <%= link_to 'Edit', "" %>
+        <%= link_to 'Change Password', "" %>
+        <%= link_to 'Edit', emp_edit_path %>
       </div>
       <div id = "profile_div">
       <h5> Your Profile Information : </h5>
       <table>
-        <tr><td> Name:   </td><td><%= current_employer.name %></td></tr>
-        <tr><td> Email:  </td><td><%= current_employer.email %></td></tr>
-        <tr><td> Website:</td><td><%= current_employer.website %></td></tr>
-        <tr><td> Description: </td><td><%= current_employer.description %></td></tr> 
+        <tr><td> Name:   </td><td><%= current_user.name %></td></tr>
+        <tr><td> Email:  </td><td><%= current_user.email %></td></tr>
+        <tr><td> Website:</td><td><%= link_to current_user.website, current_user.website %></td></tr>
+        <tr><td> Description: </td><td><%= current_user.description %></td></tr> 
       </table>
     </div>
     </fieldset>
     <fieldset class="profile-fieldset"><legend>Your Job Postings...</legend>
       <table>
-        <% current_employer.jobs.each do |job| %>
-          
+        <% current_user.jobs.each do |job| %>
+            <tr><td> Job # <%= current_user.jobs.index(job) + 1 %></td><td><%= link_to 'Edit', edit_job_path(job) %> <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?"  %></td></tr>
+            <tr><td> Job Description : </td><td> <%= job.description %></td></tr>
+            <tr><td> Job Location : </td><td> <%= job.location %></td></tr>
+            <tr><td> Job Package : </td><td> <%= job.salary %> LPA</td></tr>
+            <tr><td> Job Posting Date : </td><td> <%= job.created_at.strftime("%d-%m-%Y") %></td></tr>
+            <tr><td> Job Skills : </td><td> <%= job.skills.collect(&:name).join(",") %></td></tr>
         <% end %>
       </table>
+      <%= link_to "Post a New Job", add_job_path %>
     </fieldset>
     <fieldset class="profile-fieldset"><legend>Search For Talent</legend>
     </fieldset>

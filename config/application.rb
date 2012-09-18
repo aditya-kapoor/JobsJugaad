@@ -50,6 +50,8 @@ module JobsJugaad
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
 
+    Dir.glob("./lib/*.rb").each { |file| require file}
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

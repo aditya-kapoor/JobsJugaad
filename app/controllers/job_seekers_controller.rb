@@ -4,6 +4,7 @@ class JobSeekersController < ApplicationController
 
   def edit
     @job_seeker = JobSeeker.find(params[:id])
+    @job_seeker.key_skills
   end
 
   def update
@@ -41,10 +42,28 @@ class JobSeekersController < ApplicationController
     end
   end
 
+  def change_password
+    @job_seeker = JobSeeker.find(session[:job_seeker_id])
+  end
+
+  def update_password
+    @job_seeker = JobSeeker.find(session[:job_seeker_id])
+    if @job_seeker.authenticate(params[:old_password])
+      if @job_seeker.update_attributes(params[:job_seeker])
+        redirect_to profile_path, :notice => "Password has been changed successfully."
+      else
+        render "change_password.html.erb", :notice => "There Were Some Errors"
+      end
+    else
+      redirect_to request.referrer, :notice => "Invalid Password"
+    end
+  end
+
   def login
     @job_seeker = JobSeeker.find_by_email(params[:email])
     if @job_seeker && @job_seeker.authenticate(params[:password])
       session[:job_seeker_id] = @job_seeker.id
+      session[:user_type] = 'job_seeker'
       redirect_to :profile
     else
       redirect_to request.referrer, :notice => "Invalid Email and Password Combination"

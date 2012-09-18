@@ -37,7 +37,7 @@
         </tr>
       <tr>
         <td><%= f.label :website %></td>
-        <td><%= f.text_field :website %></td>
+        <td><%= f.url_field :website %></td>
         <% unless error_present?(:website, @employer) %>
           <td class="error-notice"><%= get_errors(:website, @employer) %></td>
         <% end %>

@@ -1,0 +1,37 @@
+<%= form_for(@employer) do |post_form| %>
+  <% if @employer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employer.errors.count, "error") %> prohibited the details from being saved:</h2>
+    </div>
+  <% end %>
+  
+  <fieldset><legend>Editing Profile</legend>
+  <div id="form">
+      <table id="edit_table">
+        <tr>
+          <td><%= post_form.label :name %></td>
+          <td><%= post_form.text_field :name %></td>
+            <% str = "" %>
+            <% unless error_present?(:name, @employer) %>
+              <td class="error_notice"><%= get_errors(:name, @employer) %></td>
+            <% end %>
+        </tr>
+        <tr>
+          <td><%= post_form.label :email %></td>
+          <td><%= @employer.email %></td>
+        </tr>
+        <tr>
+          <td><%= post_form.label :website %></td>
+          <td><%= post_form.url_field :website %></td>
+        </tr>
+        <tr>
+          <td><%= post_form.label :description %></td>
+          <td><%= post_form.text_area :description %></td>
+        </tr>
+        <tr>
+          <td><%= post_form.submit %></td>
+      </table>
+    <%= link_to 'Back to Profile', profile_path %>
+  </div>
+  </fieldset>
+<% end %>

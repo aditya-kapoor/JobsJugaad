@@ -1,0 +1,45 @@
+<%= form_for(@job) do |f| %>
+  <% if @job.errors.any? %>
+    <div class="error_messages">
+      <h2><%= pluralize(@job.errors.count, "error") %> prohibited the details from being saved:</h2>
+    </div>
+  <% end %>    
+  <fieldset>
+    <% unless notice.nil? %>
+      <div id = "notice"> <%= notice %> </div>
+    <% end %>
+    <legend>Adding New Job</legend>
+    <table>
+      <tr>
+        <td><%= f.label "Job Description" %></td>
+        <td><%= f.text_area :description %></td>
+        <% unless error_present?(:description, @job) %>
+          <td class="error-notice"><%= get_errors(:description, @job) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= f.label :location %></td>
+        <td><%= f.text_field :location %></td>
+        <% unless error_present?(:location, @job) %>
+          <td class="error-notice"><%= get_errors(:location, @job) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= f.label :salary %>(in LPA)</td>
+        <td><%= f.text_field :salary %></td>
+        <% unless error_present?(:salary, @job) %>
+          <td class="error-notice"><%= get_errors(:salary, @job) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= f.label :key_skills %></td>
+        <td><%= f.text_field :key_skills %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :submit %></td>
+        <td><%= f.submit %></td>
+      </tr>
+    </table>
+    <%= link_to 'Back to Profile', eprofile_path %>
+  </fieldset>
+<% end %>

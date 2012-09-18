@@ -4,7 +4,7 @@
 
 fieldset {
   background-color: #E1E2DB;
-  width: 600px;
+  width: 750px;
   table {
     display: block;
     margin: auto;
@@ -35,13 +35,14 @@ div#not_login {
 
 .error_notice {
   border:2px solid red;
+  background-color: rosybrown;
 }
 
 div#notice{ 
   width: 350px;
   margin:auto;
   background-color :greenyellow;
-  //padding-top: 10px;
+  padding-top: 25px;
   height: 70px;
 }
 

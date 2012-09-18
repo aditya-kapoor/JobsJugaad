@@ -7,7 +7,9 @@ JobsJugaad::Application.routes.draw do
     get "logout" => :logout
     get "register" => :new
     get "forgot_password" => :forgot_password
-  end 
+    get "change_password" => :change_password
+    post "update_password" => :update_password
+  end
   resources :employers, :controller => "Employers", :except => [:new, :show]
   controller 'Employers' do
     get "elogin" => :login
@@ -15,9 +17,11 @@ JobsJugaad::Application.routes.draw do
     get "eregister" => :new
     get "eprofile" => :profile
     get "elogout" => :logout
+    get "add_job" => :add_job
+    get "emp_edit" => :edit
   end
+  resources :jobs
 
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
