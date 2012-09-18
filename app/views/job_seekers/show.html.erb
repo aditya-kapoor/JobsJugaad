@@ -1,4 +1,4 @@
-<% if session[:job_seeker_id].nil? %>
+<% if session[:id].nil? %>
   <center> 
     <div id = "not_login">
     <p>
@@ -20,7 +20,7 @@
     <fieldset class="profile-fieldset"><legend>Your Profile Information</legend>
       <div id="links_to_use">
         <%= link_to 'Change Password', change_password_path %> |
-        <%= link_to 'Edit', edit_job_seeker_path(session[:job_seeker_id]) %> 
+        <%= link_to 'Edit', edit_job_seeker_path(session[:id]) %> 
       </div>
       <div id = "profile_div">
       <h5> Your Profile Information : </h5>

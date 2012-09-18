@@ -4,7 +4,7 @@
     <% if notice %>
       <div id="notice"><p><%= notice %></p></div>
     <% end %>
-    <%= form_tag(:controller => "Employers", :action => "authenticate") do %>
+    <%= form_tag(:controller => "sessions", :action => "login") do %>
       <table>
         <tr>
           <td><%= label_tag :email, "Enter Email" %></td>
@@ -13,6 +13,9 @@
         <tr>
           <td><%= label_tag :password, "Enter Password" %></td>
           <td><%= password_field_tag :password %></td>
+        </tr>
+        <tr>
+          <td><%= hidden_field_tag :user_type, "employer" %></td>
         </tr>
         <tr>
           <td></td><td><%= submit_tag "Login" %></td>

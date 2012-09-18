@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
 
   def create
-    @employer = Employer.find(session[:employer_id])
+    @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
     respond_to do |format|
       if @job.save

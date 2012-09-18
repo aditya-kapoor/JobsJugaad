@@ -1,17 +1,7 @@
 class EmployersController < ApplicationController
-  def authenticate
-    @employer = Employer.find_by_email(params[:email])
-    if @employer && @employer.authenticate(params[:password])
-      session[:employer_id] = @employer.id
-      session[:user_type] = 'employer'
-      redirect_to :eprofile
-    else
-      redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
-    end
-  end
-
+  
   def edit
-    @employer = Employer.find(session[:employer_id])
+    @employer = Employer.find(session[:id])
   end
 
   def update
@@ -31,7 +21,7 @@ class EmployersController < ApplicationController
   end
 
   def add_job
-    @employer = Employer.find(session[:employer_id])
+    @employer = Employer.find(session[:id])
     @job = @employer.jobs.build
   end
 
@@ -47,10 +37,5 @@ class EmployersController < ApplicationController
       end
     end
   end
-
-  def logout
-    session[:employer_id] = nil
-    redirect_to root_url, :notice => "You have been successfully logged out"
-  end
-
+  
 end

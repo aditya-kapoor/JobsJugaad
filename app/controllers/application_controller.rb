@@ -11,9 +11,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if session[:user_type] == 'job_seeker'
-      @current_job_seeker ||= JobSeeker.find(session[:job_seeker_id])
+      @current_job_seeker ||= JobSeeker.find(session[:id])
     else
-      @current_employer ||= Employer.find(session[:employer_id])
+      @current_employer ||= Employer.find(session[:id])
     end
   end
   helper_method :current_user

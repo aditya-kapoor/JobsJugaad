@@ -43,11 +43,11 @@ class JobSeekersController < ApplicationController
   end
 
   def change_password
-    @job_seeker = JobSeeker.find(session[:job_seeker_id])
+    @job_seeker = JobSeeker.find(session[:id])
   end
 
   def update_password
-    @job_seeker = JobSeeker.find(session[:job_seeker_id])
+    @job_seeker = JobSeeker.find(session[:id])
     if @job_seeker.authenticate(params[:old_password])
       if @job_seeker.update_attributes(params[:job_seeker])
         redirect_to profile_path, :notice => "Password has been changed successfully."
@@ -59,24 +59,8 @@ class JobSeekersController < ApplicationController
     end
   end
 
-  def login
-    @job_seeker = JobSeeker.find_by_email(params[:email])
-    if @job_seeker && @job_seeker.authenticate(params[:password])
-      session[:job_seeker_id] = @job_seeker.id
-      session[:user_type] = 'job_seeker'
-      redirect_to :profile
-    else
-      redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
-    end
-  end
-
-  def logout
-    session[:job_seeker_id] = nil
-    redirect_to root_url, :notice => "You have been successfully logged out"
-  end
-
   def profile
-    @job_seeker = JobSeeker.find()
+    # @job_seeker = JobSeeker.find()
   end
 
   def forgot_password

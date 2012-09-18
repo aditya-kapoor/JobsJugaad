@@ -1,4 +1,4 @@
-<% if session[:employer_id].nil? %>
+<% if session[:id].nil? %>
   <center>
     <div id="not_login">
     <p>
@@ -8,7 +8,7 @@
   </center>
 <% else %>
   <div id="logged_in_holder"> 
-    <p> Logged in as <%= current_user.email %> | <%= link_to 'Log Out', elogout_path %>
+    <p> Logged in as <%= current_user.email %> | <%= link_to 'Log Out', logout_path %>
   </div>
 <br />
 <br />
