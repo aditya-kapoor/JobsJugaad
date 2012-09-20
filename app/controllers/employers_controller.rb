@@ -16,6 +16,13 @@ class EmployersController < ApplicationController
     end
   end
 
+  def remove_photo
+    @employer = Employer.find(session[:id])
+    @employer.photo.destroy
+    @employer.update_attribute(:photo, nil)
+    redirect_to eprofile_path
+  end
+
   def new
     @employer = Employer.new
   end
@@ -23,19 +30,6 @@ class EmployersController < ApplicationController
   def add_job
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build
-  end
-
-  def create
-    @employer = Employer.new(params[:employer])
-    respond_to do |format|
-      if @employer.save
-        format.html { redirect_to elogin_path, notice: 'Employer Account was successfully created. Please login with your new credentials.' }
-        format.json { render json: elogin_path, status: :created, location: @employer }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @employer.errors, status: :unprocessable_entity }
-      end
-    end
   end
   
 end

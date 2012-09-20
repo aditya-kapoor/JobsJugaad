@@ -22,6 +22,7 @@ group :assets do
   gem 'bcrypt-ruby', '~> 3.0'
   gem "rails3-jquery-autocomplete", "~> 1.0.7"
 end
+ gem 'paperclip', '~> 3.0.0'
 
 gem 'jquery-rails'
 

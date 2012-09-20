@@ -1,11 +1,16 @@
 
 class JobSeeker < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation, :location, :mobile_number, :key_skills, :experience, :industry
+  attr_accessible :name, :email, :password, :password_confirmation, :location, :mobile_number, :key_skills, :experience, :industry, :photo
   has_many :job_applications
   has_many :jobs, :through => :job_applications
   has_many :skills, :as => :key_skill
   # accepts_nested_attributes_for :skills, :allow_destroy => true
 
+  has_attached_file :photo, :styles => { :small => "175x175>"}, :default_url => '/assets/default-photo/default.gif'
+
+  validates_attachment_size :photo, :less_than => 6.megabytes  
+  validate :photo, :check_content_type
+  
   has_secure_password
   validates :name, :presence  => true
   validates :email, :presence => true, :uniqueness => true
@@ -16,6 +21,10 @@ class JobSeeker < ActiveRecord::Base
   validates_format_of :email,
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
     :message => "Doesn't Looks the correct email ID"
+
+  def check_content_type
+    check_image_type
+  end
 
   def key_skills
     self.get_skill_set

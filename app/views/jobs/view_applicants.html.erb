@@ -1,0 +1,12 @@
+<fieldset>
+  <legend>The following are the job applicants for the selected Job </legend>
+  <table>
+    <tr>
+      <th>Name</th><th>Experience</th>
+    </tr>
+    <% @job.job_seekers.each do |job_seeker| %>
+      <tr><td> jdhjhj<%= job_seeker.name %></td></tr>
+    <% end %>
+  </table>
+  <%= link_to 'Back to profile', eprofile_path %>
+</fieldset>

@@ -1,28 +1,35 @@
 JobsJugaad::Application.routes.draw do
 
-  resources :job_seekers, :controller => "JobSeekers", :except => [:new, :show]
-  controller 'JobSeekers' do
-    get "profile" => :show
+  resources :job_seekers, :controller => "job_seekers", :except => [:new]
+  controller 'job_seekers' do
+    get "profile" => :profile
     get "register" => :new
     get "forgot_password" => :forgot_password
     get "change_password" => :change_password
     post "update_password" => :update_password
+    get "remove_photo" => :remove_photo
   end
-  resources :employers, :controller => "Employers", :except => [:new, :show]
-  controller 'Employers' do
+  resources :employers, :controller => "employers", :except => [:new, :show]
+  controller 'employers' do
     get "elogin" => :login
     get "eregister" => :new
     get "eprofile" => :profile
     get "add_job" => :add_job
     get "emp_edit" => :edit
+    get "remove_photo_emp" => :remove_photo
   end
   resources :jobs
-  resources :sessions
+  controller :jobs do
+    get "view_applicants" => :view_applicants
+    post "search" => :search
+    get "search_results" => :search_results
+  end
+  resources :sessions, :except => [:destroy]
   controller :sessions do
     get "logout" => :destroy
     post "login" => :login
-    get "eregister" => :new
-    get "register" => :new
+    post "eregister" => :register
+    post "register" => :register
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

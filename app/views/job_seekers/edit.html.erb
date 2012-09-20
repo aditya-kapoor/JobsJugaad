@@ -1,55 +1,55 @@
-<%= form_for(@job_seeker) do |post_form| %>
+<%= form_for(@job_seeker, :html => { :multipart => true }) do |post_form| %>
   <% if @job_seeker.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@job_seeker.errors.count, "error") %> prohibited the details from being saved:</h2>
+      <h3> <%= @job_seeker.errors[:attachment] %></h3>
     </div>
   <% end %>
-  <div id="logged_in_holder"> 
-    <p> Logged in as <%= current_user.email %> | <%= link_to 'Log Out', logout_path %>
-  </div>
-  <br />
-  <br />
   <fieldset><legend>Editing Profile</legend>
   <div id="form">
-      <table id="edit_table">
-        <tr>
-          <td><%= post_form.label :name %></td>
-          <td><%= post_form.text_field :name %></td>
-            <% unless error_present?(:name, @job_seeker) %>
-              <td class="error_notice"><%= get_errors(:name, @job_seeker) %></td>
-            <% end %>
+    <table id="edit_table">
+      <tr>
+        <td><%= post_form.label :name %></td>
+        <td><%= post_form.text_field :name %></td>
+          <% unless error_present?(:name, @job_seeker) %>
+            <td class="error_notice"><%= get_errors(:name, @job_seeker) %></td>
+          <% end %>
+      </tr>
+      <tr>
+        <td><%= post_form.label :email %></td>
+        <td><%= @job_seeker.email %></td>
+          <% unless error_present?(:email, @job_seeker) %>
+              <td class="error_notice"><%= get_errors(:email, @job_seeker) %></td>
+          <% end %>
         </tr>
-        <tr>
-          <td><%= post_form.label :email %></td>
-          <td><%= @job_seeker.email %></td>
-            <% unless error_present?(:email, @job_seeker) %>
-                <td class="error_notice"><%= get_errors(:email, @job_seeker) %></td>
-            <% end %>
-          </tr>
-        <tr>
-          <td><%= post_form.label :location %></td>
-          <td><%= post_form.text_field :location %></td>
-        </tr>
-        <tr>
-          <td><%= post_form.label :mobile_number %></td>
-          <td><%= post_form.text_field :mobile_number %></td>
-        </tr>
-        <tr>
-          <td><%= post_form.label :experience %> (in years):</td>
-          <td><%= post_form.text_field :experience %></td>
-        </tr>
-        <tr>
-          <td><%= post_form.label :industry %></td>
-          <td><%= post_form.text_field :industry %></td>
-        </tr>
-        <tr>
-          <td><%= post_form.label :key_skills %></td>
-          <td><%= post_form.text_field :key_skills %></td>
-        </tr>
-        <tr>
-          <td><%= post_form.submit "Update Profile" %></td>
-        </tr>
-      </table>
+      <tr>
+        <td><%= post_form.label :location %></td>
+        <td><%= post_form.text_field :location %></td>
+      </tr>
+      <tr>
+        <td><%= post_form.label :mobile_number %></td>
+        <td><%= post_form.text_field :mobile_number %></td>
+      </tr>
+      <tr>
+        <td><%= post_form.label :experience %> (in years):</td>
+        <td><%= post_form.text_field :experience %></td>
+      </tr>
+      <tr>
+        <td><%= post_form.label :industry %></td>
+        <td><%= post_form.text_field :industry %></td>
+      </tr>
+      <tr>
+        <td><%= post_form.label :key_skills %></td>
+        <td><%= post_form.text_field :key_skills %></td>
+      </tr>
+      <tr>
+        <td>Profile Image: </td>
+        <td><%= post_form.file_field :photo %></td>
+      </tr>
+      <tr>
+        <td><%= post_form.submit "Update Profile" %></td>
+      </tr>
+    </table>
     <%= link_to 'Back to Profile', profile_path %>
   </div>
   </fieldset>

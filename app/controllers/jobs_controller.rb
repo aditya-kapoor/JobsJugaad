@@ -13,7 +13,23 @@ class JobsController < ApplicationController
   end
 
   def edit
+    begin
+      @job = Job.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to :root, :notice => "Not Authorised to view this page"
+    end
+  end
+
+  def view_applicants
     @job = Job.find(params[:id])
+  end
+
+  def show
+    begin
+      @job = Job.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to :root, :notice => "Not Authorised to view this page"
+    end
   end
 
   def update
@@ -25,6 +41,12 @@ class JobsController < ApplicationController
       else
         format.html { render action: "edit" }
       end
+    end
+  end
+
+  def search
+    if params[:search_type] == "location"
+      @jobs = Job.location(params[:location])
     end
   end
 

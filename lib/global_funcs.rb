@@ -1,4 +1,11 @@
-public 
+public
+
+def check_image_type
+  unless ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'].include?(self.photo_content_type)
+    errors.add('attachment', "#{self.photo_file_name} is not a valid image type" )
+  end
+end
+
 def get_skill_set
   self.skills.collect(&:name).join(", ")
 end

@@ -1,5 +1,5 @@
 class Employer < ActiveRecord::Base
-  attr_accessible :name, :email, :website, :description, :password, :password_confirmation
+  attr_accessible :name, :email, :website, :description, :password, :password_confirmation, :photo
   has_many :jobs, :dependent => :destroy
   has_secure_password
   validates :name, :presence  => true
@@ -16,4 +16,13 @@ class Employer < ActiveRecord::Base
   validates_format_of :website, 
     :with    => /^(https?:\/\/)?((([A-z]+)\.)*)([A-z]+\.[A-z]{2,4})$/,
     :message => "Doesn't looks like correct Website URL" 
+
+  has_attached_file :photo, :styles => { :small => "175x175>"}, :default_url => '/assets/default-photo/default.gif'
+
+  validates_attachment_size :photo, :less_than => 6.megabytes
+  validate :photo, :check_content_type
+
+  def check_content_type
+    check_image_type
+  end
 end

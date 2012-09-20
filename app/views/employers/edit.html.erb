@@ -29,6 +29,10 @@
           <td><%= post_form.text_area :description %></td>
         </tr>
         <tr>
+          <td>Profile Image: </td>
+          <td><%= post_form.file_field :photo %></td>
+        </tr>
+        <tr>
           <td><%= post_form.submit %></td>
       </table>
     <%= link_to 'Back to Profile', profile_path %>

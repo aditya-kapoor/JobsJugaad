@@ -8,6 +8,29 @@ fieldset {
   table {
     display: block;
     margin: auto;
+    tr {
+      td {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+div#add-image-popup {
+  z-index:1;
+}
+
+div#profile-image {
+  float: left;
+  text-align: center;
+  ul { 
+    list-style :none;
+    margin-right :40px;
+    margin-top :25px;
+  }
+  img {
+    width: 200px;
+    height: 200px;
   }
 }
 
