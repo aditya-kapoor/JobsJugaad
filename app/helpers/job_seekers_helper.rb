@@ -1,5 +1,4 @@
 module JobSeekersHelper
-
   def get_skills(user)
     skill_set = ""
     user.skills.each do |skill|
@@ -8,5 +7,4 @@ module JobSeekersHelper
     end
     skill_set
   end
-  
 end

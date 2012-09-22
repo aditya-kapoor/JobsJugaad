@@ -33,6 +33,9 @@
         <tr>
           <td><%= post_form.label :mobile_number %></td>
           <td><%= post_form.text_field :mobile_number %></td>
+          <% unless error_present?(:mobile_number, @job_seeker) %>
+            <td class="error-notice"><%= get_errors(:mobile_number, @job_seeker) %></td>
+          <% end %>
         </tr>
         <tr>
           <td><%= post_form.label :experience %> (in years):</td>

@@ -2,7 +2,6 @@
   <% if @job_seeker.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@job_seeker.errors.count, "error") %> prohibited the details from being saved:</h2>
-      <h3> <%= @job_seeker.errors[:attachment] %></h3>
     </div>
   <% end %>
   <fieldset><legend>Editing Profile</legend>
@@ -14,6 +13,17 @@
           <% unless error_present?(:name, @job_seeker) %>
             <td class="error_notice"><%= get_errors(:name, @job_seeker) %></td>
           <% end %>
+      </tr>
+      <tr>
+        <td><%= post_form.label :gender %></td>
+        <td><%= post_form.select :gender, [["Male","Male"], ["Female", "Female"], ["Others", "Others"]]%></td>
+        <% unless error_present?(:gender, @job_seeker) %>
+            <td class="error_notice"><%= get_errors(:gender, @job_seeker) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= post_form.label :date_of_birth %></td>
+        <td><%= post_form.date_select :date_of_birth, :start_year => 1962, :end_year => Time.now.year - 16, :order => [:day, :month, :year] %></td>
       </tr>
       <tr>
         <td><%= post_form.label :email %></td>
@@ -29,6 +39,9 @@
       <tr>
         <td><%= post_form.label :mobile_number %></td>
         <td><%= post_form.text_field :mobile_number %></td>
+        <% unless error_present?(:mobile_number, @job_seeker) %>
+          <td class="error_notice"><%= get_errors(:mobile_number, @job_seeker) %></td>
+        <% end %>
       </tr>
       <tr>
         <td><%= post_form.label :experience %> (in years):</td>
@@ -45,6 +58,16 @@
       <tr>
         <td>Profile Image: </td>
         <td><%= post_form.file_field :photo %></td>
+        <% unless error_present?(:photo, @job_seeker) %>
+          <td class="error_notice"><%= get_errors(:photo, @job_seeker) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Resume: </td>
+        <td><%= post_form.file_field :resume %></td>
+        <% unless error_present?(:resume_file_name, @job_seeker) %>
+          <td class="error_notice"><%= get_errors(:resume_file_name, @job_seeker) %></td>
+        <% end %>
       </tr>
       <tr>
         <td><%= post_form.submit "Update Profile" %></td>

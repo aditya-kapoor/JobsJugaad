@@ -4,25 +4,27 @@ JobsJugaad::Application.routes.draw do
   controller 'job_seekers' do
     get "profile" => :profile
     get "register" => :new
-    get "forgot_password" => :forgot_password
-    get "change_password" => :change_password
-    post "update_password" => :update_password
+    # get "forgot_password" => :forgot_password
+    # get "change_password" => :change_password
+    # post "update_password" => :update_password
     get "remove_photo" => :remove_photo
   end
-  resources :employers, :controller => "employers", :except => [:new, :show]
+  resources :employers, :controller => "employers", :except => [:new]
   controller 'employers' do
     get "elogin" => :login
     get "eregister" => :new
     get "eprofile" => :profile
     get "add_job" => :add_job
-    get "emp_edit" => :edit
+    # get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
   end
   resources :jobs
   controller :jobs do
     get "view_applicants" => :view_applicants
-    post "search" => :search
+    # post "search" => :search
+    post "search_results" => :search_results
     get "search_results" => :search_results
+    post "apply" => :apply
   end
   resources :sessions, :except => [:destroy]
   controller :sessions do
@@ -30,6 +32,15 @@ JobsJugaad::Application.routes.draw do
     post "login" => :login
     post "eregister" => :register
     post "register" => :register
+    get "change_password" => :change_password
+    post "update_password" => :update_password
+    get "forgot_password" => :forgot_password
+    post "reset_password" => :reset_password
+    get "set_new_password" => :set_new_password
+    get "reset_user_password" => :reset_user_password
+    get "activate_user" => :activate_user
+    post "set_new_password" => :set_new_password
+    post "save_new_password" => :save_new_password
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,26 +1,34 @@
-<fieldset>
-  <legend>Login As Employer</legend>
-  <div id="login">
-    <% if notice %>
-      <div id="notice"><p><%= notice %></p></div>
-    <% end %>
-    <%= form_tag(:controller => "sessions", :action => "login") do %>
-      <table>
-        <tr>
-          <td><%= label_tag :email, "Enter Email" %></td>
-          <td><%= email_field :email, params[:email] %></td>
-        </tr>
-        <tr>
-          <td><%= label_tag :password, "Enter Password" %></td>
-          <td><%= password_field_tag :password %></td>
-        </tr>
-        <tr>
-          <td><%= hidden_field_tag :user_type, "employer" %></td>
-        </tr>
-        <tr>
-          <td></td><td><%= submit_tag "Login" %></td>
-        </tr>
-      </table>
-      <%= link_to 'Register New', eregister_path %>
-    <% end %>
-</fieldset>
+<% unless session[:id].nil? %>
+  <br /><br />
+  <div id="logged-in">
+    <p> You are Already Logged in </p>
+  </div>
+<% else %>
+  <fieldset>
+    <legend>Login As Employer</legend>
+    <div id="login">
+      <% if notice %>
+        <div id="notice"><p><%= notice %></p></div>
+      <% end %>
+      <%= form_tag(:controller => "sessions", :action => "login") do %>
+        <table>
+          <tr>
+            <td><%= label_tag :email, "Enter Email" %></td>
+            <td><%= email_field :email, params[:email] %></td>
+          </tr>
+          <tr>
+            <td><%= label_tag :password, "Enter Password" %></td>
+            <td><%= password_field_tag :password %></td>
+          </tr>
+          <tr>
+            <td><%= hidden_field_tag :user_type, "employer" %></td>
+          </tr>
+          <tr>
+            <td></td><td><%= submit_tag "Login" %></td>
+          </tr>
+        </table>
+        <%= link_to 'Forgot Password', forgot_password_path(:user => "Employer") %>
+        <%= link_to 'Register New', eregister_path %>
+      <% end %>
+  </fieldset>
+<% end %>

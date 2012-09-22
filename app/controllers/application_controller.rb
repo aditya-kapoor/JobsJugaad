@@ -9,15 +9,5 @@ class ApplicationController < ActionController::Base
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
-  def current_user
-    if session[:id] && session[:user_type] == 'job_seeker'
-      @current_job_seeker ||= JobSeeker.find(session[:id])
-    elsif session[:id] && session[:user_type] == 'employer'
-      @current_employer ||= Employer.joins(:jobs).find(session[:id])
-    else
-      nil
-    end
-  end
-
-  helper_method :current_user
+  # helper_method :current_user
 end

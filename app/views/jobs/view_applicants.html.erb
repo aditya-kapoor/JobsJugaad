@@ -1,12 +1,25 @@
 <fieldset>
   <legend>The following are the job applicants for the selected Job </legend>
+  <% if @job.job_seekers.empty? %>
+    <div id="no-job-seekers">
+      There are no job seekers yet!!!
+    </div>
+  <% else %>
   <table>
     <tr>
-      <th>Name</th><th>Experience</th>
+      <th> Name </th>
+      <th> Skills </th>
+      <th> Profile </th>
     </tr>
     <% @job.job_seekers.each do |job_seeker| %>
-      <tr><td> jdhjhj<%= job_seeker.name %></td></tr>
+      <tr>
+        <td><%= job_seeker.name %></td>
+        <td><%= job_seeker.skills.collect(&:name).join(", ") %></td>
+        <td><%= link_to job_seeker.name, job_seeker %></td>
+        <td><%= link_to "Resume", job_seeker.resume.url %></td>
+      </tr>
     <% end %>
   </table>
+  <% end %>
   <%= link_to 'Back to profile', eprofile_path %>
 </fieldset>

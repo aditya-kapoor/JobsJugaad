@@ -1,0 +1,32 @@
+<h3> Your Search Results </h3>
+<% if @jobs.empty? %>
+  <center> 
+    <div id="no-jobs">
+      <p> No Jobs Found..try something different..<br />Click <%= link_to "here", request.referer %> to go back </p>
+    </div>
+  </center>
+<% else %>
+  <center>
+  <table id = "job-listings" border="2">
+    <% @jobs.each do |job| %>
+        <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
+          <td>
+            <ul>
+              <%= form_for( job, :url => { :action => :apply, :job_id => job.id }, :method => :post ) do |f| %>
+                <li><div class="desc-placeholder">Job Title: </div><%= link_to job.title, job, :target => "_blank" %></li>
+                <li><div class="desc-placeholder">Employer : </div><%= link_to job.employer.name, job.employer, :target => "_blank" %></li>
+                <li><div class="desc-placeholder">Job Description : </div><%= job.description.gsub("\r\n", "<br />").html_safe %></li>
+                <li><div class="desc-placeholder">Location : </div><%= job.location %></li>
+                <li><div class="desc-placeholder">Key Skills Required: </div><%= job.skills.collect(&:name).join(", ") %></li>
+                <li><div class="desc-placeholder">Salary Offered: </div>
+                  <%= job.salary_min %> to <%= job.salary_max %> <%= job.salary_type %>
+                </li>
+              <%= submit_tag "Apply to Job" %>
+              <% end %>
+            </ul>
+          </td>
+        </tr> 
+    <% end %>
+  </center>
+  <%= paginate @jobs %>
+<% end %>

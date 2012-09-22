@@ -1,7 +1,50 @@
 class EmployersController < ApplicationController
+
+  before_filter :is_valid_access?, :except => [:new, :forgot_password, :show, :login]
+
+  def is_valid_access?
+    if session[:id].nil? 
+      redirect_to root_path , :notice => "You are not currently logged into the system..."      
+    end
+  end
+
+  def employer_authorised_to_see_profile?
+    authorized_ids = get_authorized_ids
+    @employer = Employer.find(session[:id])
+    @employer.jobs.each do |job|
+      authorized_ids.concat(job.job_seekers.collect(&:id))
+    end
+
+    if(authorized_ids.include?(Integer(params["id"])))
+      return true
+    else 
+      return false
+    end
+  end
+
+  def get_authorized_ids
+    authorized_ids = []
+    @employer = Employer.find(session[:id])
+    @employer.jobs.each do |job|
+      authorized_ids.concat(job.job_seekers.collect(&:id))
+    end
+    authorized_ids
+  end
+
+  def profile
+    @employer = Employer.find(session[:id])
+  end
   
   def edit
-    @employer = Employer.find(session[:id])
+    if params[:id].to_s == session[:id].to_s
+      @employer = Employer.find(params[:id])
+    else
+      redirect_to :eprofile, :notice => "You are not authorised to edit this profile"
+    end
+  end
+
+  def show
+    @employer = Employer.find(params[:id])
   end
 
   def update
@@ -31,5 +74,5 @@ class EmployersController < ApplicationController
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build
   end
-  
+
 end

@@ -1,27 +1,29 @@
 <p id="notice"><%= notice %></p>
-
-<table>
-  <tr>
-    <td>Employer: </td>
-    <td> <%= @job.employer.name %></td>
-  </tr>
-  <tr>
-    <td>Description:</td>
-    <td><%= @job.description %></td>
-  </tr>
-  <tr>
-    <td>Location</td>
-    <td><%= @job.location %></td>
-  </tr>
-  <tr>
-    <td>Salary</td>
-    <td><%= @job.salary %> LPA </td>
-  </tr>
-  <tr>
-    <td> Skills Required : </td>
-    <td> <%= @job.key_skills %></td>
-  </tr>
-</table>
-<%= link_to 'Edit', edit_job_path(@job) %> |
-<%= link_to 'View Job Seekers', view_applicants_path(:id => @job.id) %> |
-<%= link_to 'Back', eprofile_path %>
+<fieldset>
+  <legend>Job Description</legend>
+  <table>
+    <tr>
+      <td>Employer: </td>
+      <td><%= link_to @job.employer.name, @job.employer %></td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td><%= @job.description %></td>
+    </tr>
+    <tr>
+      <td>Location</td>
+      <td><%= @job.location %></td>
+    </tr>
+    <tr>
+      <td>Salary Offered</td>
+      <td>&#8377; <%= @job.salary_min %> to <%= @job.salary_max %> <%= @job.salary_type %></td>
+    </tr>
+    <tr>
+      <td> Skills Required : </td>
+      <td> <%= @job.key_skills %></td>
+    </tr>
+    <% if session[:user_id] == "employer" && session[:id] == @job.employer.id %>
+      <%= link_to "Edit", edit_job %>
+    <% end %>
+  </table>
+</fieldset>

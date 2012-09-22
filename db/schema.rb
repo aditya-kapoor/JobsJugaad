@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919074614) do
+ActiveRecord::Schema.define(:version => 20120922120236) do
 
   create_table "employers", :force => true do |t|
     t.string   "name"
@@ -19,12 +19,15 @@ ActiveRecord::Schema.define(:version => 20120919074614) do
     t.string   "website"
     t.text     "description"
     t.string   "password_digest"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "auth_token"
+    t.boolean  "activated"
+    t.string   "password_reset_token"
   end
 
   create_table "job_applications", :force => true do |t|
@@ -44,22 +47,33 @@ ActiveRecord::Schema.define(:version => 20120919074614) do
     t.string   "mobile_number"
     t.string   "experience"
     t.string   "industry"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "gender"
+    t.date     "date_of_birth"
+    t.string   "resume_file_name"
+    t.string   "resume_content_type"
+    t.integer  "resume_file_size"
+    t.datetime "resume_updated_at"
+    t.string   "auth_token"
+    t.boolean  "activated"
+    t.string   "password_reset_token"
   end
 
   create_table "jobs", :force => true do |t|
     t.text     "description"
     t.string   "location"
-    t.string   "keywords"
-    t.integer  "salary"
     t.integer  "employer_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "salary_min"
+    t.integer  "salary_max"
+    t.string   "title"
+    t.string   "salary_type"
   end
 
   create_table "skills", :force => true do |t|

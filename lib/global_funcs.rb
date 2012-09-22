@@ -20,6 +20,6 @@ def set_skill_set(skill_arr)
     self.skills.find_by_name(skill).delete
   end
   skill_to_be_added.each do |skill|
-    self.skills.find_or_create_by_name(:name => skill)
+    self.skills.find_or_initialize_by_name(:name => skill)
   end
 end

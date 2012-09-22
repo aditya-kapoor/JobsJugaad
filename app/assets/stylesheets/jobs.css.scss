@@ -1,3 +1,36 @@
 // Place all the styles related to the Jobs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+table#job-listings {
+  width: 750px;
+  tr {
+    td {
+      ul {
+        list-style :none;
+        margin-right: 40px; 
+        div.desc-placeholder {
+          font-weight: bold;
+        } 
+      }
+    }
+  }
+}
+
+input.salary-fields {
+  width: 114px;
+}
+
+div#no-jobs {
+  width: 300px;
+  height: 75px;
+  background-color: #e1e2e3;
+  padding: 20px;
+}
+
+.job_posting_even {
+  background-color: #DBC3CD;
+}
+
+.job_posting_odd {
+  background-color: #e1e2e3;
+}
