@@ -37,6 +37,17 @@ class JobsController < ApplicationController
     job_seeker.jobs.collect(&:id)
   end
 
+  def apply_to_job
+    @job_seeker = JobSeeker.find(session[:id])
+    authorized_ids = authorized_ids(@job_seeker)
+    if authorized_ids.include?(Integer(params[:job_id]))
+      redirect_to :profile, :notice => "You have already applied for this job"
+    else
+      @job_seeker.jobs << Job.find(params[:job_id])
+      redirect_to :profile, :notice => "You have successfully applied to this job"
+    end
+  end
+
   def apply
     if session[:id].nil?
       redirect_to :root, :notice => "Please Login or Register as the job seeker"
@@ -44,14 +55,7 @@ class JobsController < ApplicationController
       if session[:user_type] == "employer"
         redirect_to :root, :notice => "You are Logged in as employer. Please login as the Job Seeker"
       else
-        @job_seeker = JobSeeker.find(session[:id])
-        authorized_ids = authorized_ids(@job_seeker)
-        if authorized_ids.include?(Integer(params[:job_id]))
-          redirect_to :profile, :notice => "You have already applied for this job"
-        else
-          @job_seeker.jobs << Job.find(params[:job_id])
-          redirect_to :profile, :notice => "You have successfully applied to this job"
-        end
+        apply_to_job
       end
     end
   end
