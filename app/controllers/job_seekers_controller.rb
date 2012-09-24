@@ -23,29 +23,6 @@ class JobSeekersController < ApplicationController
     end
   end
 
-  def employer_authorised_to_see_profile?
-    authorized_ids = get_authorized_ids
-    @employer = Employer.find(session[:id])
-    @employer.jobs.each do |job|
-      authorized_ids.concat(job.job_seekers.collect(&:id))
-    end
-
-    if(authorized_ids.include?(Integer(params["id"])))
-      return true
-    else 
-      return false
-    end
-  end
-
-  def get_authorized_ids
-    authorized_ids = []
-    @employer = Employer.find(session[:id])
-    @employer.jobs.each do |job|
-      authorized_ids.concat(job.job_seekers.collect(&:id))
-    end
-    authorized_ids
-  end
-
   def index
   end
 

@@ -18,6 +18,7 @@ JobsJugaad::Application.routes.draw do
     get "add_job" => :add_job
     # get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
+    get "call_for_interview" => :call_for_interview
   end
   resources :jobs
   controller :jobs do
@@ -46,6 +47,8 @@ JobsJugaad::Application.routes.draw do
     post "set_new_password" => :set_new_password
     post "save_new_password" => :save_new_password
   end
+
+  resources :job_applications
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

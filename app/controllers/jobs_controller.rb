@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
 
+  @@rpp = 5
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
@@ -70,14 +71,16 @@ class JobsController < ApplicationController
   def search_results
     case params[:search_type]
     when "location"
-      @jobs = Job.includes(:skills).location(params[:location]).page(params[:page]).per(10)
+      @jobs = Job.includes(:skills).location(params[:location]).page(params[:page]).per(@@rpp)
     when "skills"
       job_arr = []
-      skill_set = Skill.skill_name(params[:skills]).skill_type("Job")
-      skill_set.each do |job|
-        job_arr << job.key_skill
+      (params[:skills]).split(",").each do |skill|
+        skill_set = Skill.skill_name(skill).skill_type("Job")
+        skill_set.each do |job|
+          job_arr << job.key_skill
+        end
       end
-      @jobs = Kaminari.paginate_array(job_arr).page(params[:page]).per(10)
+      @jobs = Kaminari.paginate_array(job_arr).page(params[:page]).per(@@rpp)
     end
   end
 

@@ -1,0 +1,10 @@
+<h1>Calling Candidate For Interview </h1>
+  <h3> Welcome <%= @employer.name %></h3>
+  <h4> Please fill in the interview date, so that the candidate can be intimated about the same </h4>
+  <%= form_for (@job_application) do |f| %>
+  <table>
+    <td> Select Interview Date: </td>
+    <td> <%= f.date_select :interview_on %></td>
+    <td> <%= f.submit %></td>
+  </table>
+<% end %>

@@ -8,6 +8,13 @@ class Notifier < ActionMailer::Base
     mail(:to => @email, :subject => "Password Reset Instructions")
   end
 
+  def send_email_for_interview(job_application)
+    @job_application = job_application
+    @email = JobSeeker.find(job_application.job_seeker_id).email
+    @job = Job.find(job_application.job_id)
+    mail(:to => @email, :subject => "Call For Interview")
+  end
+
   def activate_user(user, link)
     @user = user
     @link = link

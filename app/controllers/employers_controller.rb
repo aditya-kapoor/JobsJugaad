@@ -70,6 +70,14 @@ class EmployersController < ApplicationController
     @employer = Employer.new
   end
 
+  def call_for_interview
+    @employer = Employer.find(session[:id])
+    @job_seeker = JobSeeker.find(params[:id])
+    @job = Job.find(params[:job_id])
+    @job_application = JobApplication.find_by_job_seeker_id_and_job_id(@job_seeker.id, @job.id) 
+    # Notifier.call_for_interview(@employer, @job_seeker, @job).deliver
+  end
+
   def add_job
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build
