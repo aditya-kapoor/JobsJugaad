@@ -25,10 +25,7 @@
           <div id = "profile-image">
            <%= image_tag @job_seeker.photo.url(:small) %>
             <ul>
-              <li><%= link_to 'Upload Image', "" %></li>
               <li><%= link_to 'Remove Image', remove_photo_path %></li>
-              <li><%= link_to 'Upload Resume', "#", :id => "upload-resume", :remote => true %>
-              </li>
             </ul>
           </div>
           <div id="upload-resume-div"><%= render "upload-resume" %></div>
@@ -74,13 +71,19 @@
       <legend id="jobs-applied-legend">Your Job Applications</legend>
       <div id="applied-jobs-container">
         <table>
+          <tr>
+            <th> Title </th>
+            <th> Employer </th>
+            <th> Location </th>
+            <th> Status </th>
+          </tr>
           <% current_user.jobs.each do |job| %>
-            <tr><td> Job <%= current_user.jobs.index(job) + 1 %></td></tr>
-            <tr><td> Job Title : </td><td> <%= link_to job.title, job, :target => '_blank' %></td></tr>
-            <tr><td> Employer </td><td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td></tr>
-            <tr><td> Job Description </td><td><%= job.description %> </td></tr>
-            <tr><td> Location </td><td><%= job.location %> </td></tr>
-            
+            <tr>
+              <td><%= link_to job.title, job, :target => '_blank' %></td>
+              <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
+              <td><%= job.location %> </td>
+              <td><%= get_status(current_user.id, job.id) %></td>
+            </tr>           
           <% end %>
         </table>
       </div>
