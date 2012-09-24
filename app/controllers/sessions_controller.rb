@@ -46,17 +46,21 @@ class SessionsController < ApplicationController
     end
   end
 
+  def check_for_activation(class_object, redirection)
+    if class_object.activated
+      session[:id] = @class_object.id
+      session[:user_type] = params[:user_type] #params[:user_type]
+      redirect_to redirection
+    else
+      redirect_to request.referrer, :notice => "You have not activated your account yet!!"
+    end
+  end
+
   def check_credentials(class_name, redirection)
     class_instance = Object::const_get(class_name)
     @class_object = class_instance.send("find_by_email", params[:email])
     if @class_object && @class_object.authenticate(params[:password])
-      if @class_object.activated
-        session[:id] = @class_object.id
-        session[:user_type] = params[:user_type] #params[:user_type]
-        redirect_to redirection
-      else
-        redirect_to request.referrer, :notice => "You have not activated your account yet!!"
-      end
+      check_for_activation(@class_object, redirection)
     else
       redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
     end
@@ -78,21 +82,40 @@ class SessionsController < ApplicationController
     end
   end
 
+  def activate_user
+    begin
+      @class = Object::const_get(params[:type])
+      @user = @class.send("find_by_auth_token", params[:auth_token])
+      if @user && @user.email == params[:email]
+        @user.update_attributes(:activated => true)
+        redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
+      else
+        redirect_to root_url, :notice => "Unauthorised Access Detected"
+      end
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_url, :notice => "There was some error with your link"
+    end
+  end
+
+  def get_class_name
+    if session[:user_type] == "job_seeker"
+      class_name = :JobSeeker
+    else
+      class_name = :Employer
+    end
+  end
+
   def change_password
     begin
-      if session[:user_type] == "job_seeker"
-        class_name = :JobSeeker
-      else
-        class_name = :Employer
-      end
+      class_name = get_class_name    
       @object = Object::const_get(class_name).send("find", session[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to root_url, :notice => "You have already logged out of the system"
     end
   end
 
-  def get_redirection_route(user_type)
-    if user_type == "JobSeeker"
+  def get_redirection_route
+    if params[:user_type] == "JobSeeker"
       profile_path
     else
       eprofile_path
@@ -111,7 +134,7 @@ class SessionsController < ApplicationController
     @object = Object::const_get(params[:user_type]).send("find", session[:id])
     if @object.authenticate(params[:old_password])
       if @object.update_attributes(get_params)
-        redirect_to get_redirection_route(params[:user_type]), :notice => "Password has been changed successfully."
+        redirect_to get_redirection_route, :notice => "Password has been changed successfully."
       else
         render "change_password.html.erb", :notice => "There Were Some Errors"
       end
@@ -126,19 +149,21 @@ class SessionsController < ApplicationController
 
   def reset_password
     @class = Object::const_get(params[:user])
-    @email = params[:email]
     @auth_token = BCrypt::Password.create("Tutu")
-    @class_object = @class.send("find_by_email", @email)
+    @class_object = @class.send("find_by_email", params[:email])
     @class_object.update_attributes(:password_reset_token => @auth_token)
-    @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{@email}&type=#{@class}"
-    Notifier.send_password_reset(@email, @link).deliver
-    redirect_to root_url, :notice => "Reset Password instructions has been sent"
+    @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
+    Notifier.send_password_reset(@class_object, @link).deliver
+    redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
   end
 
   def reset_user_password
     @class = Object::const_get(params[:type])
     @class_object = @class.send("find_by_password_reset_token", params[:auth_token])
     if @class_object && @class_object.email == params[:email]
+      # @id = @class_object.id
+      # @user_type = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
+
       session[:id] = @class_object.id
       session[:user_type] = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
       redirect_to set_new_password_path
@@ -154,22 +179,24 @@ class SessionsController < ApplicationController
   end
 
   def save_new_password
-    user_type = session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer"
-    @object = Object::const_get(user_type).send("find", session[:id])
+    user_type = (session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer")
+    @class_object = Object::const_get(user_type).send("find", session[:id])
+    params_type = determine_params
+    if @class_object.update_attributes(params[params_type])
+      @class_object.update_attributes(:password_reset_token => nil)
+      session[:id] = nil
+      session[:user_type] = nil
+      redirect_to root_url, :notice => "Your Password has been reset successfully..Login now!!"
+    else
+      render :action => :set_new_password 
+    end
   end
 
-  def activate_user
-    begin
-      @class = Object::const_get(params[:type])
-      @user = @class.send("find_by_auth_token", params[:auth_token])
-      if @user && @user.email == params[:email]
-        @user.update_attributes(:activated => true)
-        redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
-      else
-        redirect_to root_url, :notice => "Unauthorised Access Detected"
-      end
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_url, :notice => "There was some error with your link"
+  def determine_params
+    if session[:user_type] == "job_seeker"
+      :job_seeker
+    else
+      :employer
     end
   end
 

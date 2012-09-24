@@ -8,4 +8,11 @@ $('document').ready(function(){
 
   $('div#notice').fadeOut(3000)
 
+  $('a#upload-resume').click(function(){
+    $('#upload-resume-div').toggle()
+  })
+
+  $('img#close-div-img').click(function(){
+    $('div#upload-resume-div').hide()
+  })
 })

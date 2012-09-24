@@ -7,6 +7,7 @@ JobsJugaad::Application.routes.draw do
     # get "forgot_password" => :forgot_password
     # get "change_password" => :change_password
     # post "update_password" => :update_password
+    post "upload_resume" => :upload_resume
     get "remove_photo" => :remove_photo
   end
   resources :employers, :controller => "employers", :except => [:new]
@@ -32,13 +33,16 @@ JobsJugaad::Application.routes.draw do
     post "login" => :login
     post "eregister" => :register
     post "register" => :register
+    get "activate_user" => :activate_user
+    
     get "change_password" => :change_password
-    post "update_password" => :update_password
+    get "update_password" => :update_password
+
+
     get "forgot_password" => :forgot_password
     post "reset_password" => :reset_password
     get "set_new_password" => :set_new_password
     get "reset_user_password" => :reset_user_password
-    get "activate_user" => :activate_user
     post "set_new_password" => :set_new_password
     post "save_new_password" => :save_new_password
   end

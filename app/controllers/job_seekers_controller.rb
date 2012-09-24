@@ -74,6 +74,19 @@ class JobSeekersController < ApplicationController
     end
   end
 
+  def upload_resume
+    @job_seeker = JobSeeker.find(session[:id])
+    respond_to do |format|
+      if @job_seeker.update_attributes(params[:job_seeker])
+        format.html { redirect_to profile_path, :notice => "Resume has been added successfully" }
+        format.js
+      else 
+        format.html { redirect_to request.referrer, :notice => "There Was An Error" }
+        format.js
+      end
+    end
+  end
+
   def remove_photo
     @job_seeker = JobSeeker.find(session[:id])
     @job_seeker.photo.destroy

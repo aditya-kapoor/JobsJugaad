@@ -1,8 +1,9 @@
 class Notifier < ActionMailer::Base
   default from: "jobsjugaad@gmail.com"
 
-  def send_password_reset(email, link)
-    @email = email
+  def send_password_reset(object, link)
+    @email = object.email
+    @object = object
     @link = link
     mail(:to => @email, :subject => "Password Reset Instructions")
   end

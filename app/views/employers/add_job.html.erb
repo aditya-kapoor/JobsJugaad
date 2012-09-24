@@ -3,7 +3,7 @@
     <div class="error_messages">
       <h2><%= pluralize(@job.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
-  <% end %>    
+  <% end %>
   <fieldset>
     <% unless notice.nil? %>
       <div id = "notice"> <%= notice %> </div>
@@ -15,8 +15,11 @@
         <td><%= f.text_field :title %></td>
       </tr>
       <tr>
-        <td><%= f.label "Job Description" %></td>
-        <td><%= f.text_area :description %></td>
+        <td><%= f.label "Job Description [More than 50 chars]" %></td>
+        <td>
+          <%= f.text_area :description, :id => "description" %><br />
+          <p id="description-count">0</p>
+        </td>
         <% unless error_present?(:description, @job) %>
           <td class="error-notice"><%= get_errors(:description, @job) %></td>
         <% end %>
