@@ -3,7 +3,7 @@ class Job < ActiveRecord::Base
                   :salary_max, :salary_type, :key_skills
   belongs_to :employer
   has_many :job_applications
-  has_many :job_seekers, :through => :job_applications
+  has_many :job_seekers, :through => :job_applications #has-many through
   has_many :skills, :as => :key_skill, :dependent => :destroy
 
   validates :description, :presence => true, :length => { :minimum => 50 }

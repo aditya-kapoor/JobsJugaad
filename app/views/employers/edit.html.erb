@@ -31,6 +31,9 @@
         <tr>
           <td>Profile Image: </td>
           <td><%= post_form.file_field :photo %></td>
+          <% unless error_present?(:photo, @employer) %>
+            <td class="error_notice"><%= get_errors(:photo, @employer) %></td>
+          <% end %>
         </tr>
         <tr>
           <td><%= post_form.submit %></td>

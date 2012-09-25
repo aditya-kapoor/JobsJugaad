@@ -1,4 +1,4 @@
-<h1> Search Your Dream Jobs Here .... </h1>
+<h2> Search Your Dream Job Here .... </h2>
 <div id="search">
   <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
     <%= text_field_tag :location, nil, :placeholder => "Search by Location" %>
@@ -10,6 +10,5 @@
     <%= text_field_tag :skills, nil, :placeholder => "Search by Skills" %>
     <%= hidden_field_tag :search_type, "skills" %>
     <%= submit_tag "Search By Skills" %>
-  <% end %>
-  
+  <% end %>  
 </div>

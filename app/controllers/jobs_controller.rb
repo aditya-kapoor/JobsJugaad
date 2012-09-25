@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
 
-  @@rpp = 5
+  @@rpp = 1
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])

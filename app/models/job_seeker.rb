@@ -6,7 +6,7 @@ class JobSeeker < ActiveRecord::Base
                   :industry, :photo, :resume, :activated, :password_reset_token
 
   has_many :job_applications
-  has_many :jobs, :through => :job_applications
+  has_many :jobs, :through => :job_applications # has-many through
   has_many :skills, :as => :key_skill, :dependent => :destroy
   # accepts_nested_attributes_for :skills, :allow_destroy => true
 

@@ -27,7 +27,9 @@
         <div id = "profile-image">
          <%= image_tag @employer.photo.url(:small) %>
           <ul>
-            <li><%= link_to 'Remove Image', remove_photo_emp_path %></li>
+            <% if is_image_missing?(@employer.photo.to_s) %>
+              <li><%= link_to 'Remove Image', remove_photo_emp_path %></li>
+            <% end %>
           </ul>
         </div>
         <div id="profile_table">

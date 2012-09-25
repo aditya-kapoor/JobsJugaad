@@ -20,11 +20,12 @@ group :assets do
   gem 'ruby-graphviz'
   gem 'uglifier', '>= 1.0.3'
   gem 'bcrypt-ruby', '~> 3.0'
-  gem "rails3-jquery-autocomplete", "~> 1.0.7"
+  # gem 'autocomplete'
 end
   gem 'paperclip', '~> 3.0.0'
   gem 'jquery-rails'
   gem 'kaminari'
+  gem "rails3-jquery-autocomplete"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
