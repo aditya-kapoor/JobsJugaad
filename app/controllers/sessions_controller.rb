@@ -151,10 +151,14 @@ class SessionsController < ApplicationController
     @class = Object::const_get(params[:user])
     @auth_token = BCrypt::Password.create("Tutu")
     @class_object = @class.send("find_by_email", params[:email])
-    @class_object.update_attributes(:password_reset_token => @auth_token)
-    @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
-    Notifier.send_password_reset(@class_object, @link).deliver
-    redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
+    unless @class_object.nil?
+      @class_object.update_attributes(:password_reset_token => @auth_token)
+      @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
+      Notifier.send_password_reset(@class_object, @link).deliver
+      redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
+    else
+      redirect_to root_url, :notice => "There Was An Error With your email"
+    end
   end
 
   def reset_user_password

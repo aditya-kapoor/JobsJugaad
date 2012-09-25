@@ -43,7 +43,9 @@ class JobsController < ApplicationController
     if authorized_ids.include?(Integer(params[:job_id]))
       redirect_to :profile, :notice => "You have already applied for this job"
     else
-      @job_seeker.jobs << Job.find(params[:job_id])
+      job = Job.find(params[:job_id])
+      @job_seeker.jobs << job
+      Notifier.send_email_to_employer(job, @job_seeker).deliver
       redirect_to :profile, :notice => "You have successfully applied to this job"
     end
   end
@@ -75,11 +77,16 @@ class JobsController < ApplicationController
   def search_results
     case params[:search_type]
     when "location"
-      @jobs = Job.includes(:skills).location(params[:location]).page(params[:page]).per(@@rpp)
+      # @jobs = Job.includes(:skills).location(params[:location]).page(params[:page]).per(@@rpp)
+      job_arr = []
+      (params[:location]).split(",").each do |loc|
+        job_arr.concat(Job.location(loc.strip))
+      end
+      @jobs = Kaminari.paginate_array(job_arr).page(params[:page]).per(@@rpp)
     when "skills"
       job_arr = []
       (params[:skills]).split(",").each do |skill|
-        skill_set = Skill.skill_name(skill).skill_type("Job")
+        skill_set = Skill.skill_name(skill.strip).skill_type("Job")
         skill_set.each do |job|
           job_arr << job.key_skill
         end

@@ -14,13 +14,18 @@
       <th> Name </th>
       <th> Skills </th>
       <th> Profile </th>
+      <th> Resume </th>
     </tr>
     <% @job.job_seekers.each do |job_seeker| %>
       <tr>
         <td><%= job_seeker.name %></td>
         <td><%= job_seeker.skills.collect(&:name).join(", ") %></td>
         <td><%= link_to job_seeker.name, job_seeker %></td>
-        <td><%= link_to "Resume", job_seeker.resume.url %></td>
+        <td>
+          <% unless is_resume_missing?(job_seeker.resume.url) %>
+            <%= link_to "Resume", job_seeker.resume.url %>
+          <% end %>
+        </td>
         <td><%= link_to 'Call For interview', call_for_interview_path(:id => job_seeker.id, :job_id => params[:id]) %></td>
       </tr>
     <% end %>

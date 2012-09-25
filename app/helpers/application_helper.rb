@@ -7,6 +7,14 @@ module ApplicationHelper
     reference.errors[parameter].join(", ")
   end
   
+  def is_image_missing?(url)
+    if url.split("/").pop == "default.gif"
+      false
+    else
+      true
+    end
+  end
+
   def current_user
     if session[:id] && session[:user_type] == 'job_seeker'
       @current_job_seeker ||= JobSeeker.find(session[:id])

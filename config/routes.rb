@@ -38,7 +38,7 @@ JobsJugaad::Application.routes.draw do
     
     get "change_password" => :change_password
     get "update_password" => :update_password
-
+    post "update_password" => :update_password
 
     get "forgot_password" => :forgot_password
     post "reset_password" => :reset_password

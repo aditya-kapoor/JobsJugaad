@@ -20,4 +20,11 @@ class Notifier < ActionMailer::Base
     @link = link
     mail(:to => @user.email, :subject => "Activate Your Account")
   end
+
+  def send_email_to_employer(job, job_seeker)
+    @job = job
+    @job_seeker = job_seeker
+    mail(:to => @job.employer.email, :subject => "You have received a job application")
+  end
+
 end

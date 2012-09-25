@@ -15,7 +15,7 @@
               <%= form_for( job, :url => { :action => :apply, :job_id => job.id }, :method => :post ) do |f| %>
                 <li><div class="desc-placeholder">Job Title: </div><%= link_to job.title, job, :target => "_blank" %></li>
                 <li><div class="desc-placeholder">Employer : </div><%= link_to job.employer.name, job.employer, :target => "_blank" %></li>
-                <li><div class="desc-placeholder">Job Description : </div><%= job.description.gsub("\r\n", "<br />").html_safe %></li>
+                <li><div class="desc-placeholder">Job Description : </div><%= truncate(job.description, :length => 25) %></li>
                 <li><div class="desc-placeholder">Location : </div><%= job.location %></li>
                 <li><div class="desc-placeholder">Key Skills Required: </div><%= job.skills.collect(&:name).join(", ") %></li>
                 <li><div class="desc-placeholder">Salary Offered: </div>

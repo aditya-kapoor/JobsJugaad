@@ -25,7 +25,9 @@
           <div id = "profile-image">
            <%= image_tag @job_seeker.photo.url(:small) %>
             <ul>
-              <li><%= link_to 'Remove Image', remove_photo_path %></li>
+              <% if is_image_missing?(@job_seeker.photo.to_s) %>
+                <li><%= link_to 'Remove Image', remove_photo_path %></li>
+              <% end %>
             </ul>
           </div>
           <div id="upload-resume-div"><%= render "upload-resume" %></div>

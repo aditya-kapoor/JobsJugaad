@@ -13,7 +13,7 @@
         <td><%= f.text_field :title %></td>
       </tr>
       <tr>
-        <td><%= f.label :description %></td>
+        <td><%= f.label :description %> [More than 50 characters]</td>
         <td><%= f.text_area :description %></td>
         <% unless error_present?(:description, @job) %>
           <td class="error_notice"><%= get_errors(:description, @job) %></td>
