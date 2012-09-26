@@ -30,7 +30,5 @@ class ApplicationController < ActionController::Base
     end
     authorized_ids
   end
-
-
   # helper_method :current_user
 end

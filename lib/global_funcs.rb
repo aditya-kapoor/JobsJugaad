@@ -16,10 +16,13 @@ def set_skill_set(skill_arr)
   median_skillset = new_skillset & old_skillset
   skills_to_be_deleted = old_skillset - median_skillset
   skill_to_be_added = new_skillset - median_skillset
+  
   skills_to_be_deleted.each do |skill|
-    self.skills.find_by_name(skill).delete
+    sk = Skill.find_or_initialize_by_name(skill)
+    self.skills.delete(sk)
   end
   skill_to_be_added.each do |skill|
-    self.skills.find_or_initialize_by_name(:name => skill)
+    sk = Skill.find_or_initialize_by_name(skill.downcase)
+    self.skills << sk   
   end
 end

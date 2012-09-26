@@ -44,18 +44,16 @@
     </fieldset>
     <fieldset class="profile-fieldset"><legend>Your Job Postings...</legend>
       <table>
-        <% @employer.jobs.each do |job| %>
-            <tr>
-              <td> Job # <%= @employer.jobs.index(job) + 1 %></td>
-              <td>
-                <%= link_to 'Show', job %>
-                <%= link_to 'Edit', edit_job_path(job) %> 
-                <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
-                <%= link_to 'View Applicants', view_applicants_path(:id => job.id) %>
-              </td>
-              </tr>
-            <tr><td> Job Description : </td><td> <%= truncate(job.description, :length => 25) %></td></tr>
-            
+        <% @employer.jobs.each do |job| %>  
+          <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
+            <td>
+              <%= link_to 'Show', job %>
+              <%= link_to 'Edit', edit_job_path(job) %> 
+              <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
+              <%= link_to 'View Applicants', view_applicants_job_url(job) %>
+              <%= truncate(job.description, :length => 50) %>
+            </td>
+          </tr>
         <% end %>
       </table>
       <%= link_to "Post a New Job", add_job_path %>

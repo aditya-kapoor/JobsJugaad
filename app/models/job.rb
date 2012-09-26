@@ -4,13 +4,14 @@ class Job < ActiveRecord::Base
   belongs_to :employer
   has_many :job_applications
   has_many :job_seekers, :through => :job_applications #has-many through
-  has_many :skills, :as => :key_skill, :dependent => :destroy
+  
+  # has_many :skills, :as => :key_skill, :dependent => :destroy
+  has_many :xyz, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :xyz
+
 
   validates :description, :presence => true, :length => { :minimum => 50 }
   validates :location, :presence => true
-    # validate do |job|
-    #   job.errors.add_to_base("Important...if you have confusion, simply enter 0") if job.salary_min.blank?
-    # end
   validates_presence_of :salary_min, :message => "Important...if you have confusion, simply enter 0"
   validates_presence_of :salary_max, :message => "It is Important to enter Maximum Salary"
   validates_presence_of :salary_type, :message => "Please Enter the Salary Type in either LPA or pm"

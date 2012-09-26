@@ -21,7 +21,15 @@ class EmployersController < ApplicationController
   end
 
   def show
-    @employer = Employer.find(params[:id])
+    @employer = Employer.find_by_id(params[:id])
+    
+    respond_to do |format|
+      if(@employer)
+        format.html
+      else
+        format.html { redirect_to root_url }
+      end
+    end
   end
 
   def update

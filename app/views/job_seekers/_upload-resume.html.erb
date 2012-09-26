@@ -3,7 +3,9 @@
 <% end %>
 <fieldset>
   <legend> Upload Your Resume Here </legend>
-  <div id="close-div"><img id="close-div-img" src="remove.png" /></div>
+  <div class="close-div">
+    <img id="close-div-img" src="remove.png" />
+  </div>
   <%= form_for(@job_seeker, :remote => true, :url => upload_resume_path, :html => { :multipart => true }, :method => "post") do |f| %>
   <table>
       <tr><td><%= f.file_field :resume %></td></tr>

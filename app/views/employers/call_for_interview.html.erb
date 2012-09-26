@@ -1,12 +1,20 @@
+<% if @job_application.errors.any? %>
+  <div> <h3> There was an error </h3> </div>
+<% end %>
 <fieldset>
   <legend>Calling Candidate For Interview </legend>
   <h3> Welcome <%= @employer.name %></h3>
-  <h4> Please fill in the interview date, so that the candidate can be intimated about the same </h4>
+  <h4> Please fill in the interview date, so that the candidate, <%= @job_seeker.name %> can be intimated about the same </h4>
   <%= form_for (@job_application) do |f| %>
   <table>
-    <td> Select Interview Date: </td>
-    <td> <%= f.text_field :interview_on, :readonly => true %></td>
-    <td> <%= f.submit %></td>
+    <tr>
+      <td> Select Interview Date: </td>
+      <td> <%= f.text_field :interview_on, :readonly => true %></td>
+      <% unless error_present?(:interview_on, @job_application) %>
+        <td class="error_notice"><%= get_errors(:interview_on, @job_application) %></td>
+      <% end %>
+    </tr>
+    <tr><td> <%= f.submit %></td></tr>
   </table>
 <% end %>
 </fieldset>

@@ -69,8 +69,8 @@
       <td><%= f.select "experience", JobSeeker::EXPERIENCE %> years</td>
     </tr>
     <tr>
-      <td><%= f.label :key_skills %></td>
-      <td><%= f.text_field :key_skills %></td>
+      <td><%= f.label :skill_name %></td>
+      <td><%= f.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
     </tr>
     <tr>
       <td><%= f.label :industry %></td>

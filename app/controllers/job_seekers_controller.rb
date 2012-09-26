@@ -1,8 +1,10 @@
 class JobSeekersController < ApplicationController
   
-  before_filter :is_valid_access?, :except => [:new, :forgot_password]
+  
+  before_filter :is_valid_access?, :except => [:new, :forgot_password, :autocomplete_skill_name]
+  skip_before_filter :is_valid_access?
   # before_filter :is_authorised_access?, :on => [:edit]
-
+  autocomplete :skill, :name
   def is_authorised_access?
     if params[:id] == session[:id]
       render "edit"
@@ -17,7 +19,7 @@ class JobSeekersController < ApplicationController
     else
       if session['user_type'] == 'employer'
         unless employer_authorised_to_see_profile?
-          redirect_to request.referrer, :notice => "You are not allowed to see this particular profile"
+          redirect_to root_path, :notice => "You are not allowed to see this particular profile"
         end
       end
     end

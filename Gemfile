@@ -26,6 +26,7 @@ end
   gem 'jquery-rails'
   gem 'kaminari'
   gem "rails3-jquery-autocomplete"
+  gem 'validates_timeliness', '~> 3.0'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

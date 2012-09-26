@@ -1,14 +1,10 @@
 <h2> Search Your Dream Job Here .... </h2>
 <div id="search">
   <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
-    <%= text_field_tag :location, nil, :placeholder => "Search by Location" %>
-    <%= hidden_field_tag :search_type, "location" %>
-    <%= submit_tag "Search By Location" %>
-  <% end %>
-
-  <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
-    <%= text_field_tag :skills, nil, :placeholder => "Search by Skills" %>
-    <%= hidden_field_tag :search_type, "skills" %>
-    <%= submit_tag "Search By Skills" %>
+  <table>
+    <tr><td><%= text_field_tag :location, nil, :placeholder => "Search by Location" %></td></tr>
+    <tr><td><%= text_field_tag :skills, nil, :placeholder => "Search by Skills" %></td></tr>
+    <tr><td><%= submit_tag "Search For Jobs" %></td></tr>
+    </table>
   <% end %>  
 </div>

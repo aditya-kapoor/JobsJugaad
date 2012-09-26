@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
 
-  @@rpp = 1
+  @@rpp = 10
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
@@ -75,24 +75,20 @@ class JobsController < ApplicationController
   end
 
   def search_results
-    case params[:search_type]
-    when "location"
-      # @jobs = Job.includes(:skills).location(params[:location]).page(params[:page]).per(@@rpp)
-      job_arr = []
-      (params[:location]).split(",").each do |loc|
-        job_arr.concat(Job.location(loc.strip))
-      end
-      @jobs = Kaminari.paginate_array(job_arr).page(params[:page]).per(@@rpp)
-    when "skills"
-      job_arr = []
-      (params[:skills]).split(",").each do |skill|
-        skill_set = Skill.skill_name(skill.strip).skill_type("Job")
-        skill_set.each do |job|
-          job_arr << job.key_skill
-        end
-      end
-      @jobs = Kaminari.paginate_array(job_arr).page(params[:page]).per(@@rpp)
+    jobs_by_location = []
+    jobs_by_skills = []
+    (params[:location]).split(",").each do |loc|
+      jobs_by_location.concat(Job.location(loc.strip))
     end
+    # (params[:skills]).split(",").each do |skill|
+    #   Job.all.each do |job|
+    #     if job.skills.collect(&:name).include?(skill.strip)
+    #       jobs_by_skills << (job)
+    #     end
+    #   end
+    # end
+    # selected_jobs = jobs_by_location & jobs_by_skills
+    @jobs = Kaminari.paginate_array(jobs_by_location).page(params[:page]).per(@@rpp)
   end
 
   def destroy

@@ -15,4 +15,9 @@ $('document').ready(function(){
   $('img#close-div-img').click(function(){
     $('div#upload-resume-div').hide()
   })
+
+  $('a#upload-photo').click(function(){
+    $('#upload-photo-div').toggle()
+  })
+
 })

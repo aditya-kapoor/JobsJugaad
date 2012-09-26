@@ -5,6 +5,11 @@ class SessionsController < ApplicationController
     @class_object = class_instance.send("new", registration_stuff)
     respond_to do |format|
       if @class_object.save
+        @auth_token = BCrypt::Password.create("Tutu")
+        @class_object.update_attributes(:auth_token => @auth_token)
+        @class_object.update_attributes(:activated => false)
+        @link = activate_user_url + "?auth_token=#{@auth_token}&email=#{@job_seeker.email}&type=#{class_name}"
+        Notifier.activate_user(@class_object, @link).deliver
         format.html { redirect_to root_path, 
           notice: "#{class_name.to_s.capitalize} Account was successfully created. Please login with your new credentials." }
       else
@@ -15,15 +20,42 @@ class SessionsController < ApplicationController
 
   def register
     if(params[:user_type] == 'job_seeker')
-      class_name = "JobSeeker"
-      registration_stuff = params[:job_seeker]
-      template = "job_seekers/new.html.erb"
-      save_credentials(class_name, registration_stuff, template)
+      @job_seeker = JobSeeker.new(params[:job_seeker])
+      respond_to do |format|     
+        if @job_seeker.save
+          @auth_token = BCrypt::Password.create("Tutu")
+          @job_seeker.update_attributes(:auth_token => @auth_token)
+          @job_seeker.update_attributes(:activated => false)
+          @link = activate_user_url + "?auth_token=#{@auth_token}&email=#{@job_seeker.email}&type=JobSeeker"
+          Notifier.activate_user(@job_seeker, @link).deliver
+          format.html { redirect_to root_path, 
+          notice: 'Job Seeker Account was successfully created. A verification mail has been sent to your email..' }
+        else     
+          format.html { render "job_seekers/new.html.erb" }
+        end
+      end
+      # class_name = "JobSeeker"
+      # registration_stuff = params[:job_seeker]
+      # template = "job_seekers/new.html.erb"
+      # save_credentials(class_name, registration_stuff, template)
     else
-      class_name = "Employer"
-      registration_stuff = params[:employer]
-      template = "employers/new.html.erb"
-      save_credentials(class_name, registration_stuff, template)
+      @employer = Employer.new(params[:employer])      
+      respond_to do |format|
+        if @employer.save
+          @auth_token = BCrypt::Password.create("Tutu")
+          @employer.update_attributes(:auth_token => @auth_token)
+          @employer.update_attributes(:activated => false)      
+          @link = activate_user_url + "?auth_token=#{@auth_token}&email=#{@employer.email}&type=Employer"
+          Notifier.activate_user(@employer, @link).deliver      
+          format.html { redirect_to elogin_path, notice: 'Employer Account was successfully created. A verification mail has been sent your mailbox...' }
+        else
+          format.html { render "employers/new.html.erb" }
+        end      
+      end
+      # class_name = "Employer"
+      # registration_stuff = params[:employer]
+      # template = "employers/new.html.erb"
+      # save_credentials(class_name, registration_stuff, template)
     end
   end
 

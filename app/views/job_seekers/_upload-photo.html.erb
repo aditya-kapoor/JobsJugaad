@@ -1,0 +1,16 @@
+<% unless error_present?(:photo, @job_seeker) %>
+  <%= get_errors(:photo, @job_seeker) %>
+<% end %>
+<fieldset>
+  <legend> Upload Your Photo Here </legend>
+  <div id="close-div">
+    <img class="close-div-img" src="remove.png" />
+  </div>
+  <%= form_for(@job_seeker, :url => upload_photo_path, :html => { :multipart => true }, :method => "post") do |f| %>
+  <table>
+      <tr><td><%= f.file_field :photo %></td></tr>
+      <tr><td><%= f.submit "Update Resume" %></td></tr>
+      <span></span>
+    <% end %>
+  </table>
+</fieldset>

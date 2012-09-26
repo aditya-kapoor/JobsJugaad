@@ -24,7 +24,14 @@ div#upload-resume-div {
   top: 250px;
 }
 
-div#close-div {
+div#upload-photo-div {
+  display:none;
+  position: fixed;
+  z-index: 1 !important;
+  top: 250px;
+}
+
+div.close-div {
   float:right;
   img {
     height:25px;
@@ -43,10 +50,6 @@ div#profile-image {
     list-style :none;
     margin-right :40px;
     margin-top :25px;
-  }
-  img {
-    width: 175px;
-    height: 175px;
   }
 }
 
