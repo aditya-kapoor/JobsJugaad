@@ -14,9 +14,6 @@
     <h3> Welcome <%= @employer.name %></h3>
     <fieldset class="profile-fieldset" id="profile-info">
       <legend id="profile-info-legend">Your Profile Information</legend>
-      <% unless notice.nil? %>
-        <div id = "notice"> <%= notice %> </div>
-      <% end %>
       <div id="profile-container">
         <div id="links_to_use">
           <%= link_to 'Change Password', change_password_path %> | 

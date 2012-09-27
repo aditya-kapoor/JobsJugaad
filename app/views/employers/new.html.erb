@@ -1,7 +1,7 @@
-<%= form_for(@employer, :url => { :controller => "sessions", :action => "register" }) do |f| %>
-  <% if @employer.errors.any? %>
+<%= form_for(@class_object, :url => { :controller => "sessions", :action => "register" }) do |f| %>
+  <% if @class_object.errors.any? %>
     <div class="error_messages">
-     <h2><%= pluralize(@employer.errors.count, "error") %> prohibited the details from being saved:</h2>
+     <h2><%= pluralize(@class_object.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
   <% end %>
   <fieldset>
@@ -10,36 +10,36 @@
       <tr>
         <td><%= f.label :name %></td>
         <td><%= f.text_field :name %></td>
-        <% unless error_present?(:name, @employer) %>
-          <td class="error-notice"><%= get_errors(:name, @employer) %></td>
+        <% unless error_present?(:name, @class_object) %>
+          <td class="error-notice"><%= get_errors(:name, @class_object) %></td>
         <% end %>
       </tr>
       <tr>
         <td><%= f.label :email %></td>
         <td><%= f.email_field :email %></td>
-        <% unless error_present?(:email, @employer) %>
-          <td class="error-notice"><%= get_errors(:email, @employer) %></td>
+        <% unless error_present?(:email, @class_object) %>
+          <td class="error-notice"><%= get_errors(:email, @class_object) %></td>
         <% end %>
       </tr>
       <tr>
         <td><%= f.label :password %></td>
         <td><%= f.password_field :password %></td>
-        <% unless error_present?(:password, @employer) %>
-          <td class="error-notice"><%= get_errors(:password, @employer) %></td>
+        <% unless error_present?(:password, @class_object) %>
+          <td class="error-notice"><%= get_errors(:password, @class_object) %></td>
         <% end %>
         </tr>
       <tr>
         <td><%= f.label :password_confirmation %></td>
         <td><%= f.password_field :password_confirmation %></td>
-        <% unless error_present?(:password_confirmation, @employer) %>
-          <td class="error-notice"><%= get_errors(:password_confirmation, @employer) %></td>
+        <% unless error_present?(:password_confirmation, @class_object) %>
+          <td class="error-notice"><%= get_errors(:password_confirmation, @class_object) %></td>
         <% end %>
         </tr>
       <tr>
         <td><%= f.label :website %></td>
         <td><%= f.url_field :website %> (include http:// Prefix) </td>
-        <% unless error_present?(:website, @employer) %>
-          <td class="error-notice"><%= get_errors(:website, @employer) %></td>
+        <% unless error_present?(:website, @class_object) %>
+          <td class="error-notice"><%= get_errors(:website, @class_object) %></td>
         <% end %>
         </tr>
       <tr>

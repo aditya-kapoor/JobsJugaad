@@ -7,9 +7,6 @@
   <fieldset>
     <legend>Login As Employer</legend>
     <div id="login">
-      <% if notice %>
-        <div id="notice"><p><%= notice %></p></div>
-      <% end %>
       <%= form_tag(:controller => "sessions", :action => "login") do %>
         <table>
           <tr>

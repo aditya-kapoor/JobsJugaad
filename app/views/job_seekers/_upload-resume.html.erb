@@ -1,16 +1,15 @@
-<% unless error_present?(:resume_file_name, @job_seeker) %>
-  <%= get_errors(:resume_file_name, @job_seeker) %>
-<% end %>
-<fieldset>
-  <legend> Upload Your Resume Here </legend>
-  <div class="close-div">
-    <img id="close-div-img" src="remove.png" />
-  </div>
-  <%= form_for(@job_seeker, :remote => true, :url => upload_resume_path, :html => { :multipart => true }, :method => "post") do |f| %>
-  <table>
-      <tr><td><%= f.file_field :resume %></td></tr>
-      <tr><td><%= f.submit "Update Resume" %></td></tr>
-      <span></span>
-    <% end %>
-  </table>
-</fieldset>
+<div class="container">
+  <fieldset class="upload-class">
+    <legend> Upload Your Resume Here </legend>
+    <div class="close-div">
+      <img id="close-div-img" src="remove.png" />
+    </div>
+    <%= form_for(@job_seeker, :url => upload_resume_path, :html => { :multipart => true }, :method => "post") do |f| %>
+    <table>
+        <tr><td><%= f.file_field :resume %></td></tr>
+        <tr><td><%= f.submit "Update Resume" %></td></tr>
+        <span></span>
+      <% end %>
+    </table>
+  </fieldset>
+</div>

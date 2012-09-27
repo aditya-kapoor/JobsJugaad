@@ -52,7 +52,7 @@ class EmployersController < ApplicationController
   end
 
   def new
-    @employer = Employer.new
+    @class_object = Employer.new
   end
 
   def call_for_interview

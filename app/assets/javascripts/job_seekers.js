@@ -20,4 +20,12 @@ $('document').ready(function(){
     $('#upload-photo-div').toggle()
   })
 
+  $('img#close-photo-div').click(function(){
+    $('div#upload-photo-div').hide()
+  })
+
+  validate = (function(){
+    alert("Hello World")
+  })
+
 })

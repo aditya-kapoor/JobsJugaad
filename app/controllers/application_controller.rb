@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
     authorized_ids
   end
   # helper_method :current_user
+
+  def authorized_ids(job_seeker)
+    job_seeker.jobs.collect(&:id)
+  end
 end

@@ -52,6 +52,7 @@ class JobsController < ApplicationController
 
   def apply
     if session[:id].nil?
+      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
       redirect_to :root, :notice => "Please Login or Register as the job seeker"
     else
       if session[:user_type] == "employer"

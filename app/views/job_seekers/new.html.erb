@@ -1,7 +1,7 @@
-<%= form_for(@job_seeker, :url => '/register' ) do |f| %>
-  <% if @job_seeker.errors.any? %>
+<%= form_for(@class_object, :url => '/register' ) do |f| %>
+  <% if @class_object.errors.any? %>
     <div class="error_messages">
-     <h2><%= pluralize(@job_seeker.errors.count, "error") %> prohibited the details from being saved:</h2>
+     <h2><%= pluralize(@class_object.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
   <% end %>
   <fieldset>
@@ -11,36 +11,36 @@
     <tr>
       <td><%= f.label :name %></td>
       <td><%= f.text_field :name %></td>
-      <% unless error_present?(:name, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:name, @job_seeker) %></td>
+      <% unless error_present?(:name, @class_object) %>
+        <td class="error-notice"><%= get_errors(:name, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :email %></td>
       <td><%= f.email_field :email %></td>
-      <% unless error_present?(:email, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:email, @job_seeker) %></td>
+      <% unless error_present?(:email, @class_object) %>
+        <td class="error-notice"><%= get_errors(:email, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :password %></td>
       <td><%= f.password_field :password %></td>
-      <% unless error_present?(:password, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:password, @job_seeker) %></td>
+      <% unless error_present?(:password, @class_object) %>
+        <td class="error-notice"><%= get_errors(:password, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :password_confirmation %></td>
       <td><%= f.password_field :password_confirmation %></td>
-      <% unless error_present?(:password_confirmation, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:password_confirmation, @job_seeker) %></td>
+      <% unless error_present?(:password_confirmation, @class_object) %>
+        <td class="error-notice"><%= get_errors(:password_confirmation, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :gender %></td>
       <td><%= f.select :gender, [["Male","Male"], ["Female", "Female"], ["Others", "Others"]], :prompt => "Select Gender" %></td>
-      <% unless error_present?(:gender, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:gender, @job_seeker) %></td>
+      <% unless error_present?(:gender, @class_object) %>
+        <td class="error-notice"><%= get_errors(:gender, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
@@ -50,15 +50,15 @@
     <tr>
       <td><%= f.label :location %> (City in India)</td>
       <td><%= f.text_field :location %></td>
-      <% unless error_present?(:location, @job_seeker) %>
-        <td><%= get_errors(:location, @job_seeker) %></td>
+      <% unless error_present?(:location, @class_object) %>
+        <td><%= get_errors(:location, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
       <td><%= f.label :mobile_number %></td>
       <td><%= f.telephone_field :mobile_number %></td>
-      <% unless error_present?(:mobile_number, @job_seeker) %>
-        <td class="error-notice"><%= get_errors(:mobile_number, @job_seeker) %></td>
+      <% unless error_present?(:mobile_number, @class_object) %>
+        <td class="error-notice"><%= get_errors(:mobile_number, @class_object) %></td>
       <% end %>
     </tr>
     <tr>

@@ -3,7 +3,7 @@
 <head>
   <title>JobsJugaad</title>
   <%= stylesheet_link_tag "ui-lightness/jquery-ui-1.8.23.custom.css", "application" %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "application" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -16,6 +16,11 @@
       <p> Logged in as <%= link_to current_user.email, get_path() %> | <%= link_to 'Log Out', logout_path %>
     </div>
   <% end %>
+  <div class = "part">
+    <% flash.each do |key, msg| %>
+      <%= content_tag :div, msg, :id => key %>
+    <% end %>
+  </div>
 <%= yield %>
 </body>
 </html>

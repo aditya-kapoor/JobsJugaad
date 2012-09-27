@@ -1,5 +1,7 @@
 <% if @job_application.errors.any? %>
-  <div> <h3> There was an error </h3> </div>
+  <div id="error-explanation"> 
+    <h3> There was an error </h3> 
+  </div>
 <% end %>
 <fieldset>
   <legend>Calling Candidate For Interview </legend>
@@ -14,7 +16,11 @@
         <td class="error_notice"><%= get_errors(:interview_on, @job_application) %></td>
       <% end %>
     </tr>
-    <tr><td> <%= f.submit %></td></tr>
+    <tr>
+      <td><%= f.label "Place and Time of interview" %></td>
+      <td><%= f.text_area :remarks %></td>
+    </tr>
+    <tr><td> <%= f.submit "Send Mail for Interview" %></td></tr>
   </table>
 <% end %>
 </fieldset>

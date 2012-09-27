@@ -19,7 +19,7 @@ JobsJugaad::Application.routes.draw do
     get "eregister" => :new
     get "eprofile" => :profile
     get "add_job" => :add_job
-    # get "emp_edit" => :edit
+    get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
     get "call_for_interview" => :call_for_interview
   end

@@ -12,9 +12,6 @@
     <h3> Welcome <%= @job_seeker.name %></h3>
     <fieldset id="profile-info" class="profile-fieldset">
       <legend id="profile-info-legend">Your Profile Information</legend>
-      <% unless notice.nil? %>
-        <div id = "notice"> <%= notice %> </div>
-      <% end %>
       <div id="profile-container">
         <div id="links_to_use">
           <%= link_to 'Change Password', change_password_path %> |
@@ -28,6 +25,7 @@
               <% if is_image_missing?(@job_seeker.photo.to_s) %>
                 <li><%= link_to 'Remove Image', remove_photo_path %></li>
               <% end %>
+              <li><%= link_to 'Upload Profile Image', '#', :id => "upload-photo" %></li>
               <li><%= link_to 'Upload Resume', "#", :id => "upload-resume" %></li>
             </ul>
           </div>
@@ -41,31 +39,9 @@
               <tr><td> Gender: </td><td><%= @job_seeker.gender %></td></tr>
               <tr><td> Location: </td><td><%= @job_seeker.location %></td></tr>
               <tr><td> Mobile Number: </td><td><%= @job_seeker.mobile_number %></td></tr>
-              <tr><td> Experience : </td>
-                  <td>
-                    <% if @job_seeker.experience.match(/Fresher/i) %>
-                      <%= @job_seeker.experience %>
-                    <% else %>
-                      <%= @job_seeker.experience %> years
-                    <% end %>
-                </td></tr>
-              <tr><td> Industry : </td>
-                <td>
-                  <% if @job_seeker.industry.nil? %>
-                      Not Mentioned
-                  <% else %>
-                      <%= @job_seeker.industry %>
-                  <% end %>
-                </td>
-              </tr>
-              <tr><td> Key Skills : </td>
-                <td>
-                  <% if @job_seeker.skills.nil? %>
-                      Not Mentioned
-                  <% else %>
-                      <%= @job_seeker.key_skills %>
-                  <% end %>
-                </td>
+              <tr><td> Experience : </td><td><%= get_experience %></td></tr>
+              <tr><td> Industry : </td><td><%= get_industry %></td></tr>
+              <tr><td> Key Skills : </td><td><%= get_skills %></td></tr>
             </table>
           </div>
         </div>
@@ -74,22 +50,26 @@
     <fieldset class="profile-fieldset">
       <legend id="jobs-applied-legend">Your Job Applications</legend>
       <div id="applied-jobs-container">
-        <table>
-          <tr>
-            <th> Title </th>
-            <th> Employer </th>
-            <th> Location </th>
-            <th> Status </th>
-          </tr>
-          <% current_user.jobs.each do |job| %>
+        <% if @job_seeker.jobs.empty? %>
+          No Jobs Applied For..
+        <% else %>
+          <table>
             <tr>
-              <td><%= link_to job.title, job, :target => '_blank' %></td>
-              <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
-              <td><%= job.location %> </td>
-              <td><%= get_status(current_user.id, job.id) %></td>
-            </tr>           
-          <% end %>
-        </table>
+              <th> Title </th>
+              <th> Employer </th>
+              <th> Location </th>
+              <th> Status </th>
+            </tr>
+            <% @job_seeker.jobs.each do |job| %>
+              <tr>
+                <td><%= link_to job.title, job, :target => '_blank' %></td>
+                <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
+                <td><%= job.location %> </td>
+                <td><%= get_status(current_user.id, job.id) %></td>
+              </tr>           
+            <% end %>
+          </table>
+        <% end %>
       </div>
     </fieldset>
     <fieldset class="profile-fieldset"><legend>Search and Apply for Jobs:</legend>
