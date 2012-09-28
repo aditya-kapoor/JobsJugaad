@@ -23,4 +23,13 @@ class Employer < ActiveRecord::Base
 
   validates_attachment_size :photo, :less_than => 6.megabytes
   validates_format_of :photo, :with => %r{\.(jpg|jpeg|png|ico|gif)}i, :message => "Invalid Image: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+
+  after_create :send_authentication_email
+  
+  def send_authentication_email
+    auth_token = BCrypt::Password.create("Tutu")
+    self.update_attributes(:auth_token => auth_token, :activated => false)
+    Notifier.activate_user(self, auth_token).deliver
+  end
+
 end

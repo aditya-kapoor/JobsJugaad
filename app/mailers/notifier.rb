@@ -1,11 +1,14 @@
 class Notifier < ActionMailer::Base
   default from: "jobsjugaad@gmail.com"
 
-  def send_password_reset(object, link)
-    @email = object.email
-    @object = object
-    @link = link
-    mail(:to => @email, :subject => "Password Reset Instructions")
+  def generate_reset_password_link(user, token)
+    reset_user_password_url(:host => "localhost:3000") + "?auth_token=#{token}&email=#{user.email}&type=#{user.class.to_s}"
+  end
+
+  def send_password_reset(user, token)
+    @user = user
+    @link = generate_reset_password_link(user, token)
+    mail(:to => @user.email, :subject => "Password Reset Instructions")
   end
 
   def send_email_for_interview(job_application)

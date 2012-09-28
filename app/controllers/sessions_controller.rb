@@ -69,7 +69,7 @@ class SessionsController < ApplicationController
       @user.update_attributes(:activated => true)
       redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
     else
-      redirect_to root_url, :notice => "Unauthorised Access Detected"
+      redirect_to root_url, :notice => "There Was A Problem With Your Link"
     end
   end
 
@@ -116,13 +116,12 @@ class SessionsController < ApplicationController
   end
 
   def reset_password
-    @class = Object::const_get(params[:user])
-    @auth_token = BCrypt::Password.create("Tutu")
-    @class_object = @class.send("find_by_email", params[:email])
+    auth_token = BCrypt::Password.create("Tutu")
+    @class_object = params[:user].constantize.find_by_email(params[:email])
     unless @class_object.nil?
-      @class_object.update_attributes(:password_reset_token => @auth_token)
-      @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
-      Notifier.send_password_reset(@class_object, @link).deliver
+      @class_object.update_attributes(:password_reset_token => auth_token)
+      # @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
+      Notifier.send_password_reset(@class_object, auth_token).deliver
       redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
     else
       redirect_to root_url, :notice => "There Was An Error With your email"
