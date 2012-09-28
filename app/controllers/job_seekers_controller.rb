@@ -86,17 +86,21 @@ class JobSeekersController < ApplicationController
     end
   end
 
+  def check_for_already_applied
+    if authorized_ids(@job_seeker).include?(Integer(session[:job_to_be_added].id))
+      session[:job_to_be_added] = nil
+      redirect_to :profile, :notice => "You have already applied for this job"
+    else
+      @job_seeker.jobs << session[:job_to_be_added]
+      session[:job_to_be_added] = nil
+      redirect_to :profile, :notice => "You have successfully applied for this job"
+    end
+  end
+
   def apply_to_job_after_login
     unless session[:job_to_be_added].nil?
       @job_seeker = JobSeeker.find(session[:id])
-      if authorized_ids(@job_seeker).include?(Integer(session[:job_to_be_added].id))
-        session[:job_to_be_added] = nil
-        redirect_to :profile, :notice => "You have already applied for this job"
-      else
-        @job_seeker.jobs << session[:job_to_be_added]
-        session[:job_to_be_added] = nil
-        redirect_to :profile, :notice => "You have successfully applied for this job"
-      end
+      check_for_already_applied 
     end
   end
 

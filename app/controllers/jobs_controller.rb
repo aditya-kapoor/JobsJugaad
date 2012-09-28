@@ -89,8 +89,8 @@ class JobsController < ApplicationController
     #   sk = Skill.find_by_name(skill.downcase).jobs
     #   jobs_by_skills.concat(sk)      
     # end
-    selected_jobs = jobs_by_location & jobs_by_skills
-    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+    # selected_jobs = jobs_by_location & jobs_by_skills
+    @jobs = Kaminari.paginate_array(jobs_by_location).page(params[:page]).per(@@rpp)
   end
 
   def destroy
