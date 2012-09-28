@@ -141,14 +141,11 @@ class SessionsController < ApplicationController
   end
 
   def set_new_password
-    @user_type = (session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer")
-    @class_object = @user_type.constantize.find(session[:id])
+    @class_object = determine_class_name.constantize.find(session[:id])
   end
 
   def save_new_password
-    user_type = (session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer")
-    
-    @class_object = user_type.constantize.find(session[:id])
+    @class_object = determine_class_name.constantize.find(session[:id])
     params_type = determine_params
     if @class_object.update_attributes(params[params_type])
       @class_object.update_attributes(:password_reset_token => nil)
@@ -158,6 +155,14 @@ class SessionsController < ApplicationController
     else
       render :action => :set_new_password 
     end
+  end
+
+  def determine_class_name
+    if session[:user_type] == "job_seeker" 
+      "JobSeeker"
+    else
+     "Employer"
+   end
   end
 
   def determine_params
