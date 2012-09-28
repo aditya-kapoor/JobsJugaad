@@ -7,12 +7,19 @@ JobsJugaad::Application.routes.draw do
     # get "forgot_password" => :forgot_password
     # get "change_password" => :change_password
     # post "update_password" => :update_password
-    post "upload_photo" => :upload_photo
-    post "upload_resume" => :upload_resume
+    post "upload_photo" => :upload_asset
+    post "upload_resume" => :upload_asset
     get "remove_photo" => :remove_photo
+    # get "download_resume" => :download_resume
   end
   match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
   
+  resources :job_seekers do
+    member do 
+      get "download_resume" => :download_resume 
+    end
+  end
+
   resources :employers, :controller => "employers", :except => [:new]
   controller 'employers' do
     get "elogin" => :login
@@ -28,6 +35,7 @@ JobsJugaad::Application.routes.draw do
       get "view_applicants" => :view_applicants
     end
   end
+  
   controller :jobs do
     # get "view_applicants" => :view_applicants
     # post "search" => :search

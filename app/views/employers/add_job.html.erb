@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <td><%= f.label :key_skills %></td>
-        <td><%= f.text_field :key_skills %></td>
+        <td><%= f.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
       </tr>
       <tr>
         <td><%= f.label "Salary" %></td>

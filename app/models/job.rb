@@ -1,6 +1,6 @@
 class Job < ActiveRecord::Base
-  attr_accessible :title, :description, :location, :skill_set, :salary_min, 
-                  :salary_max, :salary_type, :key_skills
+  attr_accessible :title, :description, :location, :salary_min, 
+                  :salary_max, :salary_type, :skill_name
   belongs_to :employer
   has_many :job_applications
   has_many :job_seekers, :through => :job_applications #has-many through
@@ -21,11 +21,11 @@ class Job < ActiveRecord::Base
   scope :location, lambda { |place| where("location like ?", "#{place}")}
   scope :skill, lambda { |skill| where("name")}
   
-  def key_skills
+  def skill_name
     get_skill_set
   end
 
-  def key_skills=(skill_arr)
+  def skill_name=(skill_arr)
     set_skill_set(skill_arr)
   end
 end

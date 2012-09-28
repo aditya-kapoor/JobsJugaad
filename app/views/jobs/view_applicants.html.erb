@@ -19,7 +19,7 @@
         <td><%= link_to job_seeker.name, job_seeker %></td>
         <td>
           <% unless is_resume_missing?(job_seeker.resume.url) %>
-            <%= link_to "Resume", job_seeker.resume.url %>
+            <%= link_to "Resume", download_resume_job_seeker_path(job_seeker) %>
           <% end %>
         </td>
         <td><%= link_to 'Call For interview', call_for_interview_path(:id => job_seeker.id, :job_id => params[:id]) %></td>

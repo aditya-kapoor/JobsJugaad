@@ -33,9 +33,9 @@ class JobsController < ApplicationController
     end
   end
 
-  def authorized_ids(job_seeker)
-    job_seeker.jobs.collect(&:id)
-  end
+  # def authorized_ids(job_seeker)
+  #   job_seeker.jobs.collect(&:id)
+  # end
 
   def apply_to_job
     @job_seeker = JobSeeker.find(session[:id])
@@ -78,18 +78,19 @@ class JobsController < ApplicationController
   def search_results
     jobs_by_location = []
     jobs_by_skills = []
-    (params[:location]).split(",").each do |loc|
-      jobs_by_location.concat(Job.location(loc.strip))
+    selected_jobs = []
+
+    params[:location].split(",").each do |loc|
+      jobs = Job.location(loc.strip)
+      jobs_by_location.concat(jobs)
     end
-    # (params[:skills]).split(",").each do |skill|
-    #   Job.all.each do |job|
-    #     if job.skills.collect(&:name).include?(skill.strip)
-    #       jobs_by_skills << (job)
-    #     end
-    #   end
+
+    # params[:skills].split(",").each do |skill|
+    #   sk = Skill.find_by_name(skill.downcase).jobs
+    #   jobs_by_skills.concat(sk)      
     # end
-    # selected_jobs = jobs_by_location & jobs_by_skills
-    @jobs = Kaminari.paginate_array(jobs_by_location).page(params[:page]).per(@@rpp)
+    selected_jobs = jobs_by_location & jobs_by_skills
+    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
   end
 
   def destroy

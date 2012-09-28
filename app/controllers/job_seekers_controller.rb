@@ -1,15 +1,13 @@
 class JobSeekersController < ApplicationController
-  
-  
+    
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :autocomplete_skill_name]
   skip_before_filter :is_valid_access?
-  # before_filter :is_authorised_access?, :on => [:edit]
+  before_filter :is_authorised_access?, :only => [:edit]
   autocomplete :skill, :name
+  
   def is_authorised_access?
-    if params[:id] == session[:id]
-      render "edit"
-    else
-      redirect_to request.referrer, :notice => "You are not authorised to edit this profile"
+    unless params[:id].to_s == session[:id].to_s && session[:user_type] == "job_seeker"
+      redirect_to root_url, :notice => "You are not authorised to edit this profile"
     end
   end
 
@@ -32,15 +30,14 @@ class JobSeekersController < ApplicationController
     @job_seeker = JobSeeker.find(params[:id])
   end
 
-  def edit
-    if params[:id].to_s == session[:id].to_s
-      @job_seeker = JobSeeker.find(params[:id])
-    else
-      redirect_to :profile, :notice => "You are not authorised to edit this profile"
-    end
+  def edit 
+    @job_seeker = JobSeeker.find(params[:id])
   end
 
   def update
+    if params[:job_seeker][:email].present?
+      params[:job_seeker][:email].delete
+    end
     @job_seeker = JobSeeker.find(params[:id])
     
     respond_to do |format|
@@ -52,26 +49,14 @@ class JobSeekersController < ApplicationController
     end
   end
 
-  def upload_photo
+  def upload_asset
     @job_seeker = JobSeeker.find(session[:id])
     respond_to do |format|
       if @job_seeker.update_attributes(params[:job_seeker])
-        format.html { redirect_to profile_path, :notice => "Your profile pic has been changed successfully" }
+        format.html { redirect_to profile_path, 
+                      :notice => "Your profile has been changed successfully" }
         format.js
       else
-        format.html { redirect_to request.referrer, :notice => "There Was An Error" }
-        format.js
-      end
-    end
-  end
-
-  def upload_resume
-    @job_seeker = JobSeeker.find(session[:id])
-    respond_to do |format|
-      if @job_seeker.update_attributes(params[:job_seeker])
-        format.html { redirect_to profile_path, :notice => "Resume has been added successfully" }
-        format.js
-      else 
         format.html { redirect_to request.referrer, :notice => "There Was An Error" }
         format.js
       end
@@ -109,5 +94,10 @@ class JobSeekersController < ApplicationController
         redirect_to :profile, :notice => "You have successfully applied for this job"
       end
     end
+  end
+
+  def download_resume
+    @job_seeker = JobSeeker.find(params[:id])
+    send_file(@job_seeker.resume.path.to_s, :type => @job_seeker.resume.content_type)
   end
 end
