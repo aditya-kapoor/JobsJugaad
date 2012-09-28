@@ -38,8 +38,7 @@ class SessionsController < ApplicationController
   end
 
   def check_credentials(class_name, redirection)
-    class_instance = Object::const_get(class_name)
-    @class_object = class_instance.send("find_by_email", params[:email])
+    @class_object = class_name.constantize.find_by_email(params[:email])
     if @class_object && @class_object.authenticate(params[:password])
       check_for_activation(@class_object, redirection)
     else
@@ -67,31 +66,31 @@ class SessionsController < ApplicationController
     @user = params[:type].constantize.find_by_auth_token(params[:auth_token])
     if @user && @user.email == params[:email]
       @user.update_attributes(:activated => true)
-      redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
+      notice = "Your Accrount Has been activated successfully.."
     else
-      redirect_to root_url, :notice => "There Was A Problem With Your Link"
+      notice = "There Was A Problem With Your Link"
     end
+    redirect_to root_url, :notice => notice
   end
 
   def get_class_name
     if session[:user_type] == "job_seeker"
-      class_name = :JobSeeker
+      "JobSeeker"
     else
-      class_name = :Employer
+      "Employer"
     end
   end
 
   def change_password
     begin
-      class_name = get_class_name    
-      @object = Object::const_get(class_name).send("find", session[:id])
+      @object = get_class_name.constantize.find(session[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to root_url, :notice => "You have already logged out of the system"
     end
   end
 
   def update_password
-    @object = Object::const_get(params[:user_type]).send("find", session[:id])
+    @object = params[:user_type].constantize.find(session[:id])
     if @object.authenticate(params[:old_password])
       if @object.update_attributes(get_params)
         redirect_to get_redirection_route, :notice => "Password has been changed successfully."
@@ -120,7 +119,6 @@ class SessionsController < ApplicationController
     @class_object = params[:user].constantize.find_by_email(params[:email])
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
-      # @link = reset_user_password_url + "?auth_token=#{@auth_token}&email=#{params[:email]}&type=#{@class}"
       Notifier.send_password_reset(@class_object, auth_token).deliver
       redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
     else
@@ -129,8 +127,7 @@ class SessionsController < ApplicationController
   end
 
   def reset_user_password
-    @class = Object::const_get(params[:type])
-    @class_object = @class.send("find_by_password_reset_token", params[:auth_token])
+    @class_object = params[:type].constantize.find_by_password_reset_token(params[:auth_token])
     if @class_object && @class_object.email == params[:email]
       # @id = @class_object.id
       # @user_type = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
@@ -145,13 +142,13 @@ class SessionsController < ApplicationController
 
   def set_new_password
     @user_type = (session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer")
-    @class = Object::const_get(@user_type)
-    @class_object = @class.send("find", session[:id])
+    @class_object = @user_type.constantize.find(session[:id])
   end
 
   def save_new_password
     user_type = (session[:user_type] == "job_seeker" ? "JobSeeker" : "Employer")
-    @class_object = Object::const_get(user_type).send("find", session[:id])
+    
+    @class_object = user_type.constantize.find(session[:id])
     params_type = determine_params
     if @class_object.update_attributes(params[params_type])
       @class_object.update_attributes(:password_reset_token => nil)
