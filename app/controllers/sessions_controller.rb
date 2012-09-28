@@ -64,17 +64,12 @@ class SessionsController < ApplicationController
   end
 
   def activate_user
-    begin
-      @class = Object::const_get(params[:type])
-      @user = @class.send("find_by_auth_token", params[:auth_token])
-      if @user && @user.email == params[:email]
-        @user.update_attributes(:activated => true)
-        redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
-      else
-        redirect_to root_url, :notice => "Unauthorised Access Detected"
-      end
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_url, :notice => "There was some error with your link"
+    @user = params[:type].constantize.find_by_auth_token(params[:auth_token])
+    if @user && @user.email == params[:email]
+      @user.update_attributes(:activated => true)
+      redirect_to root_url, :notice => "Your Accrount Has been activated successfully.."
+    else
+      redirect_to root_url, :notice => "Unauthorised Access Detected"
     end
   end
 
