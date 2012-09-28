@@ -15,9 +15,13 @@ class Notifier < ActionMailer::Base
     mail(:to => @email, :subject => "Call For Interview")
   end
 
-  def activate_user(user, link)
+  def generate_activation_link(user, token)
+    activate_user_url(:host => "localhost:3000") + "?auth_token=#{token}&email=#{user.email}&type=#{user.class.to_s}"
+  end
+
+  def activate_user(user, token)
     @user = user
-    @link = link
+    @link = generate_activation_link(user, token)
     mail(:to => @user.email, :subject => "Activate Your Account")
   end
 

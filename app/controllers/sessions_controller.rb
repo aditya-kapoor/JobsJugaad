@@ -1,15 +1,9 @@
 class SessionsController < ApplicationController
 
   def save_credentials(class_name, registration_stuff, template)
-    class_instance = Object::const_get(class_name)
-    @class_object = class_instance.send("new", registration_stuff)
+    @class_object = class_name.constantize.new(registration_stuff)
     respond_to do |format|
       if @class_object.save
-        @auth_token = BCrypt::Password.create("Tutu")
-        @class_object.update_attributes(:auth_token => @auth_token)
-        @class_object.update_attributes(:activated => false)
-        @link = activate_user_url + "?auth_token=#{@auth_token}&email=#{@class_object.email}&type=#{class_name}"
-        Notifier.activate_user(@class_object, @link).deliver
         format.html { redirect_to root_path, 
           notice: "#{class_name.to_s.capitalize} Account was successfully created. 
           A verification mail has been sent to your email so that we can identify you.." }

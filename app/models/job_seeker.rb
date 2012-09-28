@@ -28,7 +28,6 @@ class JobSeeker < ActiveRecord::Base
   validates_format_of :photo, :with => %r{\.(jpg|jpeg|png|ico|gif)}i, 
   :message => "Invalid Image: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   
-  
   has_secure_password
   validates :name, :presence  => true
   validates :email, :presence => true, :uniqueness => true
@@ -48,6 +47,8 @@ class JobSeeker < ActiveRecord::Base
 
   validates :gender, :presence => true
 
+  after_create :send_authentication_email
+
   def skill_name
     self.get_skill_set
   end
@@ -58,6 +59,12 @@ class JobSeeker < ActiveRecord::Base
 
   def industry_options
     JobSeeker::INDUSTRY
+  end
+
+  def send_authentication_email
+    auth_token = BCrypt::Password.create("Tutu")
+    self.update_attributes(:auth_token => auth_token, :activated => false)
+    Notifier.activate_user(self, auth_token).deliver
   end
 
   INDUSTRY = {
