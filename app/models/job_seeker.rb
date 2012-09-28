@@ -9,9 +9,6 @@ class JobSeeker < ActiveRecord::Base
   has_many :job_applications
   has_many :jobs, :through => :job_applications # has-many through
   
-  # has_many :skills, :as => :key_skill, :dependent => :destroy
-  # accepts_nested_attributes_for :skills, :allow_destroy => true
-
   has_many :xyz, :as => :skillable, :dependent => :destroy
   has_many :skills, :through => :xyz
 
@@ -65,6 +62,7 @@ class JobSeeker < ActiveRecord::Base
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)
     Notifier.activate_user(self, auth_token).deliver
+    # self.send_activation_mail
   end
 
   INDUSTRY = {
