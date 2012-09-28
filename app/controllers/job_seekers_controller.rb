@@ -92,6 +92,7 @@ class JobSeekersController < ApplicationController
       redirect_to :profile, :notice => "You have already applied for this job"
     else
       @job_seeker.jobs << session[:job_to_be_added]
+      Notifier.send_email_to_employer(session[:job_to_be_added], @job_seeker).deliver
       session[:job_to_be_added] = nil
       redirect_to :profile, :notice => "You have successfully applied for this job"
     end

@@ -33,10 +33,6 @@ class JobsController < ApplicationController
     end
   end
 
-  # def authorized_ids(job_seeker)
-  #   job_seeker.jobs.collect(&:id)
-  # end
-
   def apply_to_job
     @job_seeker = JobSeeker.find(session[:id])
     authorized_ids = authorized_ids(@job_seeker)
