@@ -3,6 +3,7 @@ class JobSeekersController < ApplicationController
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :autocomplete_skill_name]
   skip_before_filter :is_valid_access?
   before_filter :is_authorised_access?, :only => [:edit]
+  before_filter :remove_params, :only => [:update]
   autocomplete :skill, :name
   
   def is_authorised_access?
@@ -23,6 +24,12 @@ class JobSeekersController < ApplicationController
     end
   end
 
+  def remove_params
+    if params[:job_seeker][:email].present?
+      params[:job_seeker][:email].delete
+    end
+  end
+
   def index
   end
 
@@ -35,9 +42,6 @@ class JobSeekersController < ApplicationController
   end
 
   def update
-    if params[:job_seeker][:email].present?
-      params[:job_seeker][:email].delete
-    end
     @job_seeker = JobSeeker.find(params[:id])
     
     respond_to do |format|
