@@ -1,7 +1,7 @@
 <%= form_for(@class_object, :url => '/register' ) do |f| %>
   <% if @class_object.errors.any? %>
     <div class="error_messages">
-     <h2><%= pluralize(@class_object.errors.count, "error") %> prohibited the details from being saved:</h2>
+     <h2>There are some errors in your submission</h2>
     </div>
   <% end %>
   <fieldset>
@@ -38,7 +38,7 @@
     </tr>
     <tr>
       <td><%= f.label :gender %></td>
-      <td><%= f.select :gender, [["Male","Male"], ["Female", "Female"], ["Others", "Others"]], :prompt => "Select Gender" %></td>
+      <td><%= f.select :gender, JobSeeker::GENDER, :prompt => "Select Gender" %></td>
       <% unless error_present?(:gender, @class_object) %>
         <td class="error-notice"><%= get_errors(:gender, @class_object) %></td>
       <% end %>

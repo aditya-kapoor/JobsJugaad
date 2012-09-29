@@ -146,9 +146,6 @@ class SessionsController < ApplicationController
   def reset_user_password
     @class_object = params[:type].constantize.find_by_password_reset_token(params[:auth_token])
     if @class_object && @class_object.email == params[:email]
-      # @id = @class_object.id
-      # @user_type = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
-
       session[:id] = @class_object.id
       session[:user_type] = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
       redirect_to set_new_password_path

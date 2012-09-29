@@ -1,8 +1,11 @@
 class JobSeeker < ActiveRecord::Base
   attr_accessible :name, :email, :gender, :date_of_birth, 
                   :password, :password_confirmation, :auth_token,
-                  :location, :mobile_number, :skill_name, :experience, 
-                  :industry, :photo, :resume, :activated, :password_reset_token
+                  :location, :mobile_number, :skill_name, :experience,
+                  :industry, :photo, :resume, :activated, :password_reset_token,
+                  :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
+                  :resume_file_name, :resume_content_type, :resume_file_size, :resume_updated_at
+
 
   attr_accessor :skill_name
 
@@ -22,23 +25,27 @@ class JobSeeker < ActiveRecord::Base
   :default_url => '/assets/default-photo/default.gif'
 
   validates_attachment_size :photo, :less_than => 6.megabytes
-  validates_format_of :photo, :with => %r{\.(jpg|jpeg|png|ico|gif)}i, 
-  :message => "Invalid Image: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+  validates :photo_file_name, :allow_blank => true, :format => {
+    :with => %r{[.](jpg|jpeg|png|ico|gif)$}i, 
+    :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+  }
   
   has_secure_password
-  validates :name, :presence  => true
-  validates :email, :presence => true, :uniqueness => true
-  validates :password, :confirmation => true, :presence => true, :if => :password
-  validates :password_confirmation, :presence => true, :if => :password 
-  validates :password, :length => { :minimum => 6 }, :if => :password
-  
+  validates :name, :email, :password, :presence  => true
+
+  validates :email, :uniqueness => true, :unless => proc { |user| user.email.blank? }
   validates_format_of :email,
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-    :message => "Doesn't Looks the correct email ID"
+    :message => "Doesn't Looks the correct email ID", 
+    :unless => proc { |user| user.email.blank? }
+  
+  validates :password, :length => { :minimum => 6 }, 
+            :unless => proc { |user| user.password.blank? }
+  
+  validates :password_confirmation, :presence => true, :if => :password
 
-
-  validates :mobile_number, 
-            :numericality => { :only_integer => true }, 
+  validates :mobile_number,
+            :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, 
             :length => { :is => 10 }, 
             :allow_blank => true
 
@@ -54,16 +61,14 @@ class JobSeeker < ActiveRecord::Base
     self.set_skill_set(skill_arr)
   end
 
-  def industry_options
-    JobSeeker::INDUSTRY
-  end
-
   def send_authentication_email
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)
     Notifier.activate_user(self, auth_token).deliver
     # self.send_activation_mail
   end
+
+  GENDER = { 'Male' => 1, 'Female' => 2, 'Others' => 3 }
 
   INDUSTRY = {
     "IT" => "IT",

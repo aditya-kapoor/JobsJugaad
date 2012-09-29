@@ -1,6 +1,7 @@
 class EmployersController < ApplicationController
 
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :show, :login]
+  before_filter :is_valid_user?, :only => [:edit]
 
   def is_valid_access?
     if session[:id].nil? 
@@ -12,12 +13,14 @@ class EmployersController < ApplicationController
     @employer = Employer.find(session[:id])
   end
   
-  def edit
-    if params[:id].to_s == session[:id].to_s
-      @employer = Employer.find(params[:id])
-    else
-      redirect_to :eprofile, :notice => "You are not authorised to edit this profile"
+  def is_valid_user?
+    unless params[:id].to_s == session[:id].to_s && session[:user_type] == "employer"
+      redirect_to root_url
     end
+  end
+
+  def edit
+    @employer = Employer.find(params[:id])
   end
 
   def show
