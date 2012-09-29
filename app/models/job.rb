@@ -19,8 +19,7 @@ class Job < ActiveRecord::Base
   validates :salary_max, :numericality => true
 
   scope :location, lambda { |place| where("location like ?", "#{place}")}
-  scope :skill, lambda { |skill| where("name")}
-  
+    
   def skill_name
     get_skill_set
   end

@@ -55,6 +55,16 @@ div#notice {
   border: 2px solid;
   height: 35px;
   text-align: center;
+  margin:auto;
+}
+
+div#error {
+  width:50%;
+  background-color: #FF011A;
+  border: 2px solid;
+  height: 35px;
+  text-align: center; 
+  margin: auto;
 }
 
 div#header {

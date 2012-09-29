@@ -19,7 +19,7 @@
     </tr>
     <tr>
       <td> Skills Required : </td>
-      <td> <%= @job.key_skills %></td>
+      <td> <%= @job.skill_name %></td>
     </tr>
     <% if session[:user_id] == "employer" && session[:id] == @job.employer.id %>
       <%= link_to "Edit", edit_job %>

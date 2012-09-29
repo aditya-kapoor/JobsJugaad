@@ -1,0 +1,17 @@
+<fieldset><legend>Login As Administrator</legend>
+<%= form_tag(:controller => "admin", :action => "login") do %>
+  <table>
+    <tr>
+      <td><%= label_tag :email, "Enter Email" %></td>
+      <td><%= email_field_tag :email, nil, :placeholder => "Enter Email" %></td>
+    </tr>
+    <tr>
+      <td><%= label_tag :password, "Enter Password" %></td>
+      <td><%= password_field_tag :password, nil, :placeholder => "Enter Password" %></td>
+    </tr>
+    <tr>
+      <td></td><td><%= submit_tag "Login" %></td>
+    </tr>
+  </table>
+<% end %>
+</fieldset>

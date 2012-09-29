@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
 
+  before_filter :check_unauthorised_access, :only => [:edit]
   @@rpp = 10
   def create
     @employer = Employer.find(session[:id])
@@ -13,12 +14,14 @@ class JobsController < ApplicationController
     end
   end
 
-  def edit
-    begin
-      @job = Job.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to :root, :notice => "Not Authorised to view this page"
+  def check_unauthorised_access
+    unless session[:user_type] == "employer"
+      redirect_to root_url
     end
+  end
+
+  def edit
+    @job = Job.find_by_id(params[:id])
   end
 
   def view_applicants
@@ -81,12 +84,15 @@ class JobsController < ApplicationController
       jobs_by_location.concat(jobs)
     end
 
-    # params[:skills].split(",").each do |skill|
-    #   sk = Skill.find_by_name(skill.downcase).jobs
-    #   jobs_by_skills.concat(sk)      
-    # end
-    # selected_jobs = jobs_by_location & jobs_by_skills
-    @jobs = Kaminari.paginate_array(jobs_by_location).page(params[:page]).per(@@rpp)
+    params[:skills].split(",").each do |s|
+      skills = Skill.skill_name(s.strip)
+      skills.each do |skill|
+        jobs_by_skills.concat(skill.jobs)
+      end
+    end
+
+    selected_jobs = jobs_by_location & jobs_by_skills
+    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
   end
 
   def destroy

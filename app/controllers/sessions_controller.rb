@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_filter :is_valid_user?, :only => [:change_password]
+
   def save_credentials(class_name, registration_stuff, template)
     @class_object = class_name.constantize.new(registration_stuff)
     respond_to do |format|
@@ -42,18 +44,19 @@ class SessionsController < ApplicationController
     if @class_object && @class_object.authenticate(params[:password])
       check_for_activation(@class_object, redirection)
     else
-      redirect_to request.referrer, :notice => "Invalid Email and Password Combination"
+      flash[:error] = "Invalid Email and Password Combination"
+      redirect_to request.referrer
     end
   end
 
   def login
     if session[:id].nil?
       if(params[:user_type] == 'job_seeker')
-        class_name = :JobSeeker
+        class_name = "JobSeeker"
         redirection = :profile
         check_credentials(class_name, redirection)
       else
-        class_name = :Employer
+        class_name = "Employer"
         redirection = :eprofile
         check_credentials(class_name, redirection)
       end
@@ -81,12 +84,23 @@ class SessionsController < ApplicationController
     end
   end
 
-  def change_password
-    begin
-      @object = get_class_name.constantize.find(session[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_url, :notice => "You have already logged out of the system"
+  def get_params_class
+    if params[:job_seeker]
+      "JobSeeker"
+    else
+      "Employer"
     end
+  end
+
+  def is_valid_user?
+    unless params[:id].to_s == session[:id].to_s
+      flash[:error] = "You are not authorised to do this"
+      redirect_to get_redirection_route
+    end 
+  end
+
+  def change_password
+    @object = get_class_name.constantize.find(params[:id])
   end
 
   def update_password
@@ -95,15 +109,17 @@ class SessionsController < ApplicationController
       if @object.update_attributes(get_params)
         redirect_to get_redirection_route, :notice => "Password has been changed successfully."
       else
-        render "change_password.html.erb", :notice => "There Were Some Errors"
+        flash[:error] = "There Were Some Errors"
+        render "change_password.html.erb"
       end
     else
-      redirect_to request.referrer, :notice => "Invalid Password"
+      flash[:error] = "Invalid Password"
+      redirect_to request.referrer
     end
   end
 
   def get_redirection_route
-    if params[:user_type] == "JobSeeker"
+    if session[:user_type] == "job_seeker"
       profile_path
     else
       eprofile_path
@@ -122,7 +138,8 @@ class SessionsController < ApplicationController
       Notifier.send_password_reset(@class_object, auth_token).deliver
       redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
     else
-      redirect_to root_url, :notice => "There Was An Error With your email"
+      flash[:error] = "There Was An Error With your email"
+      redirect_to root_url
     end
   end
 
@@ -146,8 +163,7 @@ class SessionsController < ApplicationController
 
   def save_new_password
     @class_object = determine_class_name.constantize.find(session[:id])
-    params_type = determine_params
-    if @class_object.update_attributes(params[params_type])
+    if @class_object.update_attributes(params[session[:user_type].to_sym])
       @class_object.update_attributes(:password_reset_token => nil)
       session[:id] = nil
       session[:user_type] = nil
@@ -163,14 +179,6 @@ class SessionsController < ApplicationController
     else
      "Employer"
    end
-  end
-
-  def determine_params
-    if session[:user_type] == "job_seeker"
-      :job_seeker
-    else
-      :employer
-    end
   end
 
   def get_params

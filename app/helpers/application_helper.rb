@@ -15,6 +15,16 @@ module ApplicationHelper
     end
   end
 
+  def is_admin?
+    session[:id] && session[:user_type] == 'admin'
+  end
+
+  def current_admin
+    if session[:id] && session[:user_type] == 'admin'
+      @current_admin ||= Admin.find(session[:id])
+    end
+  end
+
   def current_user
     if session[:id] && session[:user_type] == 'job_seeker'
       @current_job_seeker ||= JobSeeker.find(session[:id])

@@ -1,0 +1,15 @@
+<fieldset>
+  <legend id="admin-profile"> Admin Profile </legend>
+  <h3>Welcome <%= @admin.name %></h3>
+  <table>
+    <tr><td>Email: </td><td><%= @admin.email %></td></tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend id="jobs-container">Jobs Posted On Jobs Jugaad</legend>
+  <%= render 'all_jobs'%>
+</fieldset>
+<fieldset>
+  <legend id="employers-container">Employers On Jobs Jugaad</legend>
+  <%= render 'all_employers'%>
+</fieldset>

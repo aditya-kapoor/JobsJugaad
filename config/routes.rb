@@ -1,5 +1,7 @@
 JobsJugaad::Application.routes.draw do
 
+  get "admin/index"
+
   resources :job_seekers, :controller => "job_seekers", :except => [:new]
   controller 'job_seekers' do
     get "profile" => :profile
@@ -9,14 +11,15 @@ JobsJugaad::Application.routes.draw do
     # post "update_password" => :update_password
     post "upload_photo" => :upload_asset
     post "upload_resume" => :upload_asset
-    get "remove_photo" => :remove_photo
+    # get "remove_photo" => :remove_photo
     # get "download_resume" => :download_resume
   end
   match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
   
   resources :job_seekers do
     member do 
-      get "download_resume" => :download_resume 
+      get "download_resume" => :download_resume
+      get "remove_photo" => :remove_photo 
     end
   end
 
@@ -30,6 +33,7 @@ JobsJugaad::Application.routes.draw do
     get "remove_photo_emp" => :remove_photo
     get "call_for_interview" => :call_for_interview
   end
+
   resources :jobs do
     member do 
       get "view_applicants" => :view_applicants
@@ -43,7 +47,21 @@ JobsJugaad::Application.routes.draw do
     get "search_results" => :search_results
     post "apply" => :apply
   end
+
+  resources :job_seekers do
+    member do 
+      get "change_password" => "sessions#change_password"
+    end
+  end
+
+  resources :employers do
+    member do
+      get "change_password" => "sessions#change_password"
+    end
+  end
+
   resources :sessions, :except => [:destroy]
+
   controller :sessions do
     get "logout" => :destroy
     post "login" => :login
@@ -51,7 +69,7 @@ JobsJugaad::Application.routes.draw do
     post "register" => :register
     get "activate_user" => :activate_user
     
-    get "change_password" => :change_password
+    # get "change_password" => :change_password
     get "update_password" => :update_password
     post "update_password" => :update_password
 
@@ -63,7 +81,14 @@ JobsJugaad::Application.routes.draw do
     post "save_new_password" => :save_new_password
   end
 
-  resources :job_applications
+  resources :job_applications, :only => [:update]
+  resources :admin
+  controller :admin do
+    get "admin_login" => :login 
+    post "admin_login" => :login
+    get "admin_profile" => :profile
+    get "change_admin_password" => :change_password
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -14,7 +14,7 @@
       <legend id="profile-info-legend">Your Profile Information</legend>
       <div id="profile-container">
         <div id="links_to_use">
-          <%= link_to 'Change Password', change_password_path %> |
+          <%= link_to 'Change Password', change_password_job_seeker_path(@job_seeker) %> |
           <%= link_to 'Edit', edit_job_seeker_path(@job_seeker) %> 
         </div>
         <div id = "profile_div">
@@ -23,7 +23,7 @@
            <%= image_tag @job_seeker.photo.url(:small) %>
             <ul>
               <% if is_image_missing?(@job_seeker.photo.to_s) %>
-                <li><%= link_to 'Remove Image', remove_photo_path %></li>
+                <li><%= link_to 'Remove Image', remove_photo_job_seeker_path(@job_seeker) %></li>
               <% end %>
               <li><%= link_to 'Upload Profile Image', '#', :id => "upload-photo" %></li>
               <li><%= link_to 'Upload Resume', "#", :id => "upload-resume" %></li>

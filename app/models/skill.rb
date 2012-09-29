@@ -7,5 +7,4 @@ class Skill < ActiveRecord::Base
   has_many :job_seekers, :through => :xyz, :source => :skillable, :source_type => 'JobSeeker'
 
   scope :skill_name, lambda { |name| where("name like ?", name)}
-  scope :skill_type, lambda { |type| where("key_skill_type = ?", type)}
 end
