@@ -24,21 +24,22 @@ class JobSeeker < ActiveRecord::Base
   has_attached_file :photo, :styles => { :small => "175x175>"}, 
   :default_url => '/assets/default-photo/default.gif'
 
-  validates_attachment_size :photo, :less_than => 6.megabytes
+  validates_attachment_size :photo, :less_than => 6.megabytes, :message => "Must be less than 6 MB"
   validates :photo_file_name, :allow_blank => true, :format => {
     :with => %r{[.](jpg|jpeg|png|ico|gif)$}i, 
     :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
   
   has_secure_password
-  validates :name, :email, :password, :presence  => true
+  validates :name, :email, :presence  => true
 
   validates :email, :uniqueness => true, :unless => proc { |user| user.email.blank? }
   validates_format_of :email,
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
     :message => "Doesn't Looks the correct email ID", 
     :unless => proc { |user| user.email.blank? }
-  
+
+  validates :password, :presence => true, :if => :password
   validates :password, :length => { :minimum => 6 }, 
             :unless => proc { |user| user.password.blank? }
   

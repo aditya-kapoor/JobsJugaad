@@ -56,15 +56,24 @@ describe JobSeeker do
     @job_seeker.should have(1).error_on(:email)
     @job_seeker.errors[:email].should eq(["can't be blank"])
   end
+  it "Email must be unique" do
+    @job_seeker.attributes = valid_user_attributes
+    @job_seeker.save
+    @job_seeker1 = JobSeeker.new()
+    @job_seeker1.attributes = valid_user_attributes
+    @job_seeker1.save
+    @job_seeker1.should have(1).error_on(:email)
+    @job_seeker1.errors[:email].should eq(["has already been taken"])
+  end
   it "Valid Email" do
     @job_seeker.attributes = valid_user_attributes.only(:email)
     @job_seeker.should have(0).error_on(:email)
   end
-  it "password should not be blank" do
-    @job_seeker.attributes = valid_user_attributes.except(:password)
-    @job_seeker.should have(2).error_on(:password)
-    @job_seeker.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
-  end
+  # it "password should not be blank" do
+  #   @job_seeker.attributes = valid_user_attributes.except(:password)
+  #   @job_seeker.should have(2).error_on(:password)
+  #   @job_seeker.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
+  # end
   it "password confirmation should not be blank" do
     @job_seeker.attributes = valid_user_attributes.except(:password_confirmation)
     @job_seeker.should have(1).error_on(:password_confirmation)
@@ -104,13 +113,36 @@ describe JobSeeker do
     @job_seeker.attributes = valid_user_attributes.with(:mobile_number => "9654699107")
     @job_seeker.should have(0).error_on(:mobile_number)
   end
-  it "Gender Should have a value" do
+  it "Gender Should have a legal value" do
     @job_seeker.attributes = valid_user_attributes.except(:gender)
     @job_seeker.should have(1).error_on(:gender)
     @job_seeker.errors[:gender].should eq(["can't be blank"])
   end
   it "Valid Gender Value" do
-    @job_seeker.attributes = valid_user_attributes.with(:gender => "Male")
+    @job_seeker.attributes = valid_user_attributes.with(:gender => 1)
     @job_seeker.should have(0).error_on(:gender)
+  end
+  it "Must Have Valid Profile Photo" do
+    @job_seeker.attributes = valid_user_attributes.with(:photo_file_name => "photo.pdf")
+    @job_seeker.should have(1).error_on(:photo_file_name)
+    @job_seeker.errors[:photo_file_name].should eq(["Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"])
+  end
+  it "The size of the Photo must be less than 6 MB" do
+    @job_seeker.attributes = valid_user_attributes.with(:photo_file_size => 9999999999)
+    @job_seeker.should have(1).error_on(:photo_file_size)
+    @job_seeker.errors[:photo_file_size].should eq(["Must be less than 6 MB"])
+  end
+  it "Has Valid a Profile Photo" do
+    @job_seeker.attributes = valid_user_attributes.with(:photo_file_name => "photo.jpg")
+    @job_seeker.should have(0).error_on(:photo_file_name)
+  end
+  it "Must Have a Valid Resume Format" do
+    @job_seeker.attributes = valid_user_attributes.with(:resume_file_name => "resume.jpg")
+    @job_seeker.should have(1).error_on(:resume_file_name)
+    @job_seeker.errors[:resume_file_name].should eq(["Invalid Resume Format: Allowed Formats Are Only in PDF, DOCx, Doc and Text"])
+  end
+  it "Has Valid Profile Photo" do
+    @job_seeker.attributes = valid_user_attributes.with(:resume_file_name => "resume.pdf")
+    @job_seeker.should have(0).error_on(:resume_file_name)
   end
 end

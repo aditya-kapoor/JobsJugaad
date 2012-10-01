@@ -28,6 +28,6 @@ end
   gem "rails3-jquery-autocomplete"
   gem 'validates_timeliness', '~> 3.0'
 
-  group :development, :test do
+group :development, :test do
     gem 'rspec-rails'
-  end
+end

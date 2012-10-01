@@ -62,7 +62,7 @@
       <% end %>
     </tr>
     <tr>
-      <td>Profile Details</td>
+      <td><h2>Profile Details</h2></td>
     </tr>
     <tr>
       <td><%= f.label :experience %></td>
@@ -71,6 +71,9 @@
     <tr>
       <td><%= f.label :skill_name %></td>
       <td><%= f.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
+      <% unless error_present?(:skills, @class_object) %>
+        <td class="error-notice"><%= get_errors(:skills, @class_object) %></td>
+      <% end %>
     </tr>
     <tr>
       <td><%= f.label :industry %></td>

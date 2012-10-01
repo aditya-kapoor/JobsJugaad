@@ -11,6 +11,9 @@
       <tr>
         <td><%= f.label :title %></td>
         <td><%= f.text_field :title %></td>
+        <% unless error_present?(:title, @job) %>
+          <td class="error_notice"><%= get_errors(:title, @job) %></td>
+        <% end %>
       </tr>
       <tr>
         <td><%= f.label :description %> [More than 50 characters]</td>
