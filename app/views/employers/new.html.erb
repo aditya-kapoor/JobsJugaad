@@ -6,6 +6,7 @@
   <% end %>
   <fieldset>
     <legend>Registration</legend>
+    <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("employer") %>
     <table>
       <tr>
         <td><%= f.label :name %></td>

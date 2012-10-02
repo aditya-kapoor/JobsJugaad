@@ -80,8 +80,7 @@ class JobsController < ApplicationController
     selected_jobs = []
 
     params[:location].split(",").each do |loc|
-      jobs = Job.location(loc.strip)
-      jobs_by_location.concat(jobs)
+      jobs_by_location.concat(Job.location(loc.strip))
     end
 
     params[:skills].split(",").each do |s|
@@ -90,7 +89,6 @@ class JobsController < ApplicationController
         jobs_by_skills.concat(skill.jobs)
       end
     end
-
     selected_jobs = jobs_by_location & jobs_by_skills
     @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
   end

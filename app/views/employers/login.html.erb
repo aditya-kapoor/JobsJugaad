@@ -18,7 +18,7 @@
             <td><%= password_field_tag :password %></td>
           </tr>
           <tr>
-            <td><%= hidden_field_tag :user_type, "employer" %></td>
+            <td><%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("employer") %></td>
           </tr>
           <tr>
             <td></td><td><%= submit_tag "Login" %></td>

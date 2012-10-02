@@ -37,10 +37,13 @@ module ApplicationHelper
   end
 
   def get_path
-    if session[:user_type] == "job_seeker"
+    case session[:user_type]
+    when "job_seeker"
       :profile
-    else
+    when "employer"
       :eprofile
+    when "admin"
+      :admin_profile
     end
   end
 

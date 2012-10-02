@@ -3,6 +3,9 @@ class Employer < ActiveRecord::Base
                   :password, :password_confirmation, :photo,
                   :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
                   :auth_token, :activated, :password_reset_token
+
+  has_many :authentications
+
   has_many :jobs, :dependent => :destroy
   has_secure_password
 
@@ -37,6 +40,54 @@ class Employer < ActiveRecord::Base
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)
     Notifier.activate_user(self, auth_token).deliver
+  end
+
+  serialize :auth_hash, Hash
+
+  def twitter(auth_hash)
+    @tw_user ||= prepare_access_token(user_attributes(auth_hash)[:token], user_attributes(auth_hash)[:secret])
+  end
+
+  def user_attributes(auth_hash)
+    @user_attributes ||= extract_user_attributes(auth_hash)
+  end
+
+  def publish(text, auth_hash)
+    case auth_hash['provider']
+    when 'twitter'
+      then twitter(auth_hash).request(:post, "http://api.twitter.com/1/statuses/update.json", :status => text)
+    end
+  end
+
+  protected
+
+  def extract_user_attributes(hash)
+    user_credentials = hash['credentials'] || {}
+    user_info = hash['user_info'] || {}
+    user_hash = hash['extra'] ? (hash['extra']['user_hash'] || {}) : {}
+    
+    { 
+      :token => user_credentials['token'],
+      :secret => user_credentials['secret'],
+      :name => user_info['name'], 
+      :email => (user_info['email'] || user_hash['email']),
+      :nickname => user_info['nickname'],
+      :last_name => user_info['last_name'],
+      :first_name => user_info['first_name'],
+      :link => (user_info['link'] || user_hash['link']),
+      :photo_url => (user_info['image'] || user_hash['image']),
+      :locale => (user_info['locale'] || user_hash['locale']),
+      :description => (user_info['description'] || user_hash['description'])
+    }
+  end
+
+  def prepare_access_token(oauth_token, oauth_token_secret)
+    consumer = OAuth::Consumer.new('eZ17eRpN1In39HuCfM5WA', 'SfXvytpQro7PctvJhFAEbxjiY5uTT6ICqc52gzwQxMc', 
+      { :site => "http://api.twitter.com" })
+    # now create the access token object from passed values
+    token_hash = { :oauth_token => oauth_token, :oauth_token_secret => oauth_token_secret }
+    access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
+    return access_token
   end
 
 end

@@ -27,7 +27,9 @@ end
   gem 'kaminari'
   gem "rails3-jquery-autocomplete"
   gem 'validates_timeliness', '~> 3.0'
+  gem 'omniauth-twitter'
+  gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
 
 group :development, :test do
-    gem 'rspec-rails'
+  gem 'rspec-rails'
 end

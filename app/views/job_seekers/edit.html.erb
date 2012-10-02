@@ -16,7 +16,7 @@
       </tr>
       <tr>
         <td><%= post_form.label :gender %></td>
-        <td><%= post_form.select :gender, [["Male","Male"], ["Female", "Female"], ["Others", "Others"]]%></td>
+        <td><%= post_form.select :gender, JobSeeker::GENDER%></td>
         <% unless error_present?(:gender, @job_seeker) %>
             <td class="error_notice"><%= get_errors(:gender, @job_seeker) %></td>
         <% end %>
@@ -53,7 +53,7 @@
       </tr>
       <tr>
         <td><%= post_form.label :key_skills %></td>
-        <td><%= post_form.text_field :skill_name %></td>
+        <td><%= post_form.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
       </tr>
       <tr>
         <td>Profile Image: </td>

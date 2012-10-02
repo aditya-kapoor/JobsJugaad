@@ -1,18 +1,14 @@
 JobsJugaad::Application.routes.draw do
-
   get "admin/index"
+
+  match "/auth/twitter/callback" => "authentication#create"
 
   resources :job_seekers, :controller => "job_seekers", :except => [:new]
   controller 'job_seekers' do
     get "profile" => :profile
     get "register" => :new
-    # get "forgot_password" => :forgot_password
-    # get "change_password" => :change_password
-    # post "update_password" => :update_password
     post "upload_photo" => :upload_asset
     post "upload_resume" => :upload_asset
-    # get "remove_photo" => :remove_photo
-    # get "download_resume" => :download_resume
   end
   match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
   
@@ -28,10 +24,11 @@ JobsJugaad::Application.routes.draw do
     get "elogin" => :login
     get "eregister" => :new
     get "eprofile" => :profile
-    get "add_job" => :add_job
+    # get "add_job" => :add_job
     get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
     get "call_for_interview" => :call_for_interview
+    # get "post_job_on_twitter" => :post_job_on_twitter
   end
 
   resources :jobs do
@@ -41,8 +38,6 @@ JobsJugaad::Application.routes.draw do
   end
   
   controller :jobs do
-    # get "view_applicants" => :view_applicants
-    # post "search" => :search
     post "search_results" => :search_results
     get "search_results" => :search_results
     post "apply" => :apply
@@ -57,6 +52,7 @@ JobsJugaad::Application.routes.draw do
   resources :employers do
     member do
       get "change_password" => "sessions#change_password"
+      get "add_job" => :add_job
     end
   end
 
@@ -69,7 +65,6 @@ JobsJugaad::Application.routes.draw do
     post "register" => :register
     get "activate_user" => :activate_user
     
-    # get "change_password" => :change_password
     get "update_password" => :update_password
     post "update_password" => :update_password
 
@@ -87,7 +82,14 @@ JobsJugaad::Application.routes.draw do
     get "admin_login" => :login 
     post "admin_login" => :login
     get "admin_profile" => :profile
-    get "change_admin_password" => :change_password
+    # get "change_admin_password" => :change_password
   end
+  resources :admin do
+    member do 
+      get "change_password" => "sessions#change_password"
+    end
+  end
+
+  resources :authentication
   root :to => 'home#index'
 end

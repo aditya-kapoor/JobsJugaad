@@ -6,8 +6,14 @@ class Job < ActiveRecord::Base
   has_many :job_seekers, :through => :job_applications #has-many through
   
   # has_many :skills, :as => :key_skill, :dependent => :destroy
-  has_many :xyz, :as => :skillable, :dependent => :destroy
-  has_many :skills, :through => :xyz
+  
+  # has_many :xyz, :as => :skillable, :dependent => :destroy
+  # has_many :skills, :through => :xyz
+
+  has_many :skillsassociation, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :skillsassociation
+
+
 
   validates :title, :presence => true
 

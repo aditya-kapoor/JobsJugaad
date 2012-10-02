@@ -70,5 +70,4 @@ class EmployersController < ApplicationController
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build
   end
-
 end

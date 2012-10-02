@@ -46,12 +46,13 @@
               <%= link_to 'Edit', edit_job_path(job) %> 
               <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
               <%= link_to 'View Applicants', view_applicants_job_url(job) %>
+              <%= link_to 'Post on Twitter', "auth/twitter" %>
               <%= truncate(job.description, :length => 50) %>
             </td>
           </tr>
         <% end %>
       </table>
-      <%= link_to "Post a New Job", add_job_path %>
+      <%= link_to "Post a New Job", add_job_employer_path(@employer) %>
     </fieldset>
     <fieldset class="profile-fieldset">
       <legend>Search For Talent</legend>

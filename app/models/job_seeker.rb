@@ -12,8 +12,11 @@ class JobSeeker < ActiveRecord::Base
   has_many :job_applications
   has_many :jobs, :through => :job_applications # has-many through
   
-  has_many :xyz, :as => :skillable, :dependent => :destroy
-  has_many :skills, :through => :xyz
+  # has_many :xyz, :as => :skillable, :dependent => :destroy
+  # has_many :skills, :through => :xyz
+
+  has_many :skillsassociation, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :skillsassociation
 
   has_attached_file :resume
   validates :resume_file_name, :allow_blank => true, :format => {

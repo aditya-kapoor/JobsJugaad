@@ -1,7 +1,7 @@
 class JobSeekersController < ApplicationController
     
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :autocomplete_skill_name]
-  skip_before_filter :is_valid_access?
+  # skip_before_filter :is_valid_access?
   before_filter :is_authorised_access?, :only => [:edit]
   before_filter :remove_params, :only => [:update]
   autocomplete :skill, :name
