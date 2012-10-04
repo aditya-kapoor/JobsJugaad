@@ -1,6 +1,3 @@
-// Place all the styles related to the Jobs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 table#job-listings {
   width: 750px;
   tr {
@@ -14,6 +11,10 @@ table#job-listings {
       }
     }
   }
+}
+
+.sal-fields {
+  width : 75px;  
 }
 
 input.salary-fields {

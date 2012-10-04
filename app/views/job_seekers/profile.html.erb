@@ -72,12 +72,9 @@
         <% end %>
       </div>
     </fieldset>
-    <fieldset class="profile-fieldset"><legend>Search and Apply for Jobs:</legend>
-      <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
-        <%= text_field_tag :location, nil, :placeholder => "Search by Location" %>
-        <%= hidden_field_tag :search_type, "location" %>
-        <%= submit_tag "Search By Location" %>
-      <% end %>
+    <fieldset class="profile-fieldset">
+      <legend>Search and Apply for Jobs:</legend>
+      <%= render "jobs/search_jobs_form" %>
     </fieldset>
   </div>
 <% end %>

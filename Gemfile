@@ -29,7 +29,9 @@ end
   gem 'validates_timeliness', '~> 3.0'
   gem 'omniauth-twitter'
   gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
+  gem 'tweet-button'
 
 group :development, :test do
+  # gem 'shoulda'
   gem 'rspec-rails'
 end

@@ -39,7 +39,7 @@
       </tr>
       <tr>
         <td><%= f.label :salary_type %></td>
-        <td><%= f.select :salary_type, [["LPA", "LPA"], ["pm", "pm"]] %></td>
+        <td><%= f.select :salary_type, Job::SALARY_TYPE %></td>
       </tr>
       <tr>
         <td><%= f.label :key_skills %></td>

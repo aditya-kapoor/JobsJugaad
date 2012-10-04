@@ -1,7 +1,7 @@
 class EmployersController < ApplicationController
 
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :show, :login]
-  before_filter :is_valid_user?, :only => [:edit]
+  before_filter :is_valid_user?, :only => [:edit, :add_job]
 
   def is_valid_access?
     if session[:id].nil? 
@@ -15,6 +15,7 @@ class EmployersController < ApplicationController
   
   def is_valid_user?
     unless params[:id].to_s == session[:id].to_s && session[:user_type] == "employer"
+      flash[:error] = "You are not authorised to do this"
       redirect_to root_url
     end
   end

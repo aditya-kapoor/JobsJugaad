@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
 
-  before_filter :check_unauthorised_access, :only => [:edit]
+  before_filter :check_unauthorised_access, :only => [:edit, :create]
+
   @@rpp = 10
   def create
     @employer = Employer.find(session[:id])
@@ -16,6 +17,7 @@ class JobsController < ApplicationController
 
   def check_unauthorised_access
     unless session[:user_type] == "employer"
+      flash[:error] = "You are not authorised to do this"
       redirect_to root_url
     end
   end
@@ -29,11 +31,7 @@ class JobsController < ApplicationController
   end
 
   def show
-    begin
-      @job = Job.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to :root, :notice => "Not Authorised to view this page"
-    end
+    @job = Job.find_by_id(params[:id])
   end
 
   def apply_to_job
@@ -77,20 +75,70 @@ class JobsController < ApplicationController
   def search_results
     jobs_by_location = []
     jobs_by_skills = []
+    jobs_by_salary = []
     selected_jobs = []
 
-    params[:location].split(",").each do |loc|
-      jobs_by_location.concat(Job.location(loc.strip))
+    unless params[:location].empty?
+      jobs_by_location = return_jobs_by_location
     end
 
-    params[:skills].split(",").each do |s|
-      skills = Skill.skill_name(s.strip)
-      skills.each do |skill|
-        jobs_by_skills.concat(skill.jobs)
+    unless params[:skills].empty?
+      jobs_by_skills = return_jobs_by_skills
+    end
+
+    unless params[:sal_min].empty? && params[:sal_max].empty?
+      min_sal_jobs = Job.salary_type(params[:sal_type]).salary_minimum(params[:sal_min])
+      max_sal_jobs = Job.salary_type(params[:sal_type]).salary_maximum(params[:sal_max])
+      jobs_by_salary.concat(min_sal_jobs & max_sal_jobs)
+    end
+
+    if jobs_by_location.empty?
+      if jobs_by_skills.empty?
+        if jobs_by_salary.empty?
+          selected_jobs = []
+        else
+          selected_jobs = jobs_by_salary
+        end
+      else
+        if jobs_by_salary.empty?
+          selected_jobs = jobs_by_skills
+        else
+          selected_jobs = (jobs_by_skills & jobs_by_salary)
+        end
+      end
+    else
+      if jobs_by_skills.empty?
+        if jobs_by_salary.empty?
+          selected_jobs = jobs_by_location
+        else
+          selected_jobs = jobs_by_location & jobs_by_salary
+        end
+      else
+        if jobs_by_salary.empty?
+          selected_jobs = jobs_by_location & jobs_by_skills
+        else
+          selected_jobs = jobs_by_location & jobs_by_skills & jobs_by_salary
+        end
       end
     end
-    selected_jobs = jobs_by_location & jobs_by_skills
-    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+
+  @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+  end
+
+  def return_jobs_by_location
+    temp = []
+    params[:location].split(",").each do |loc|
+      temp.concat(Job.location(loc.strip))
+    end
+    temp
+  end
+
+  def return_jobs_by_skills
+    temp = []
+    params[:skills].split(",").each do |s|
+      temp.concat(Skill.skill_name(s.strip)[0].jobs)
+    end
+    temp
   end
 
   def destroy

@@ -6,7 +6,6 @@ class JobSeeker < ActiveRecord::Base
                   :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
                   :resume_file_name, :resume_content_type, :resume_file_size, :resume_updated_at
 
-
   attr_accessor :skill_name
 
   has_many :job_applications
@@ -48,10 +47,7 @@ class JobSeeker < ActiveRecord::Base
   
   validates :password_confirmation, :presence => true, :if => :password
 
-  validates :mobile_number,
-            :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, 
-            :length => { :is => 10 }, 
-            :allow_blank => true
+  validates :mobile_number, :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, :length => { :is => 10 }, :allow_blank => true
 
   validates :gender, :presence => true
 

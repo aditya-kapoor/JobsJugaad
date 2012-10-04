@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  include SessionsHelper
+  include SessionsControllerHelperFunctions
 
   before_filter :is_valid_user?, :only => [:change_password]
   before_filter :decode_user_type, :only => [:login, :register]

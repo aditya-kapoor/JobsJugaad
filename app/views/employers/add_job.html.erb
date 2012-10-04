@@ -3,6 +3,9 @@
     <div class="error_messages">
       <h2><%= pluralize(@job.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
+    <% if @job.errors[:title].any? %>
+      <div id="error"><%= @job.errors[:title] %></div>
+    <% end %>
   <% end %>
   <fieldset>
     <legend>Adding New Job</legend>
@@ -47,7 +50,7 @@
       </tr>
       <tr>
         <td></td><td>
-          <%= f.select :salary_type, [["LPA", "LPA"], ["pm", "pm"]], :prompt => "Salary Type" %>
+          <%= f.select :salary_type, Job::SALARY_TYPE, :prompt => "Salary Type" %>
         </td>
         <% unless error_present?(:salary_type, @job) %>
           <td class="error-notice"><%= get_errors(:salary_type, @job) %></td>

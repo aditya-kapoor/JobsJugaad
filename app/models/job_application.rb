@@ -4,9 +4,8 @@ class JobApplication < ActiveRecord::Base
   belongs_to :job_seeker
   
   validate :interview_on_cannot_be_in_past, :if => :interview_on
-  validate :correct_interview_on_format#, :if => :interview_on
-  # validate , :if => :interview_on
-  
+  validate :correct_interview_on_format, :on => :update
+
   def interview_on_cannot_be_in_past
     if interview_on < Date.today
       errors.add(:interview_on, "cannot be scheduled in past")

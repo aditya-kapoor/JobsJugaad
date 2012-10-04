@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include TweetButton
   def error_present?(parameter, reference)
     reference.errors[parameter].empty?
   end

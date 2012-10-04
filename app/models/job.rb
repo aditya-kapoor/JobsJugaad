@@ -13,8 +13,6 @@ class Job < ActiveRecord::Base
   has_many :skillsassociation, :as => :skillable, :dependent => :destroy
   has_many :skills, :through => :skillsassociation
 
-
-
   validates :title, :presence => true
 
   validates :description, :presence => true
@@ -27,9 +25,21 @@ class Job < ActiveRecord::Base
   validates_presence_of :salary_type, :message => "Please Enter the Salary Type in either LPA or pm"
   validates :salary_min, :numericality => true, :unless => proc { |job| job.salary_min.blank? }
   validates :salary_max, :numericality => true, :unless => proc { |job| job.salary_max.blank? }
+  validates :title, :uniqueness => { :scope => [:description, :location, :salary_min, 
+                  :salary_max, :salary_type, :employer_id], :message => "You have already entered this job" }
 
   scope :location, lambda { |place| where("location like ?", "#{place}")}
-    
+
+  scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? or salary_max >= ?", min.to_i, max.to_i)   }
+
+  scope :salary_minimum, lambda { |min=0| where("salary_min >= ? ", min.to_i) }
+
+  scope :salary_maximum, lambda { |max=0| where("salary_max <= ?", max.to_i) }
+
+  scope :salary_type, lambda { |type| where("salary_type = ?", type)}
+
+  SALARY_TYPE = { 'pm' => "pm", "LPA" => "LPA" }
+
   def skill_name
     get_skill_set
   end
