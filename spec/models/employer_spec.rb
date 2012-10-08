@@ -1,33 +1,7 @@
 require 'spec_helper'
 
-module EmployerSpecHelper
-  def valid_user_attributes
-  { :name => "Testing Employer", 
-    :email => "employer@testing.com",
-    :website => "http://testing.com",
-    :description => "This is the test description for the testing employer",
-    :password => "123456",
-    :password_confirmation => "123456",
-    :activated => true,
-    :photo_file_name => "photo.jpeg",
-    :photo_content_type => "image/jpeg",
-    :photo_file_size => 17185,
-    :photo_updated_at => Time.now
-  }
-  end
-  def valid_job_attributes
-  { :title => "Testing Job", 
-    :description => "This is the description of the testing jobs which is specifically used for testing in the RSpec",
-    :location => "Delhi",
-    :salary_min => 15000,
-    :salary_max => 25000,
-    :salary_type => "pm",
-    :skill_name => "php, java"
-  }
-  end
-end
 describe Employer do
-  include EmployerSpecHelper
+  include ValidAttributeCollection
   before(:each) do
     @employer = Employer.new
   end
@@ -35,33 +9,34 @@ describe Employer do
   describe "Relationships" do 
     before(:each) do
       @employer = Employer.new
-    end
-
-    it "should have a valid job" do
-      @job = Job.create
-      @employer.jobs << @job
-      @employer.should have(1).error_on(:jobs)
-      @employer.errors[:jobs].should eq(["is invalid"])
+      @employer1 = Employer.create(valid_employer_attributes)
+      @job1 = @employer1.jobs.create(valid_job_attributes)
+      @job2 = @employer1.jobs.create(valid_job_attributes.with(:title => "Testing Job 1"))
     end
 
     it "should have a number of jobs" do 
-      @employer.attributes = valid_user_attributes
-      @employer.save
-      @employer.should respond_to(:jobs)
-      @employer.should have(0).error_on(:jobs)
+      @employer1.should respond_to(:jobs)
+      @employer1.should have(0).error_on(:jobs)
     end
 
-    it "should post only unique jobs" do
-      @employer.attributes = valid_user_attributes
-      @employer.save
-      @job = @employer.jobs.build
-      @job.attributes = valid_job_attributes
-      @job.save
-      @job1 = @employer.jobs.build
-      @job1.attributes = valid_job_attributes
-      @job1.save
-      @employer.should have(1).error_on(:jobs)
-      @employer.errors[:jobs].should eq(["is invalid"])
+    it "Should have more than one jobs" do
+      @employer1.should have(0).error_on(:jobs)
+    end
+
+    it "should return an array of jobs" do
+      @employer1.jobs.should eq([@job1, @job2])
+    end
+
+    it "The Employer Once deleted must have all the jobs deleted " do
+      jobs_of_employer = @employer1.jobs
+      @employer1.destroy
+      Job.all.should_not include(jobs_of_employer)
+    end
+
+    it "should post unique jobs on the portal" do
+      @job3 = @employer1.jobs.create(valid_job_attributes)
+      @employer1.should have(1).error_on(:jobs)
+      @employer1.errors[:jobs].should eq(["is invalid"])
     end
   end
 
@@ -74,80 +49,88 @@ describe Employer do
       Employer.create.should_not be_persisted
     end
     it "name should not be nil" do
-      @employer.attributes = valid_user_attributes.except(:name)
+      @employer.attributes = valid_employer_attributes.except(:name)
       @employer.should have(1).error_on(:name)
       @employer.errors[:name].should eq(["can't be blank"])
     end
     it "Valid Name" do
-      @employer.attributes = valid_user_attributes.only(:name)
+      @employer.attributes = valid_employer_attributes.only(:name)
       @employer.should have(0).error_on(:name)
     end
     it "Invalid Email Format" do
-      @employer.attributes = valid_user_attributes.with(:email => "abc@cde")
+      @employer.attributes = valid_employer_attributes.with(:email => "abc@cde")
       @employer.should have(1).error_on(:email)
       @employer.errors[:email].should eq(["Doesn't Looks the correct email ID"])
     end
     it "Email Should not be null" do
-      @employer.attributes = valid_user_attributes.except(:email)
+      @employer.attributes = valid_employer_attributes.except(:email)
       @employer.should have(1).error_on(:email)
       @employer.errors[:email].should eq(["can't be blank"])
     end
     it "Email must be unique" do
-      @employer.attributes = valid_user_attributes
+      @employer.attributes = valid_employer_attributes
       @employer.save
       @employer1 = Employer.new()
-      @employer1.attributes = valid_user_attributes
+      @employer1.attributes = valid_employer_attributes
       @employer1.save
       @employer1.should have(1).error_on(:email)
       @employer1.errors[:email].should eq(["has already been taken"])
     end
     it "Valid Email" do
-      @employer.attributes = valid_user_attributes.only(:email)
+      @employer.attributes = valid_employer_attributes.only(:email)
       @employer.should have(0).error_on(:email)
     end
     it "password should not be blank" do
-      @employer.attributes = valid_user_attributes.with(:password => "")
+      @employer.attributes = valid_employer_attributes.with(:password => "")
       @employer.should have(2).error_on(:password)
       @employer.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
     end
     it "password confirmation should not be blank" do
-      @employer.attributes = valid_user_attributes.except(:password_confirmation)
+      @employer.attributes = valid_employer_attributes.except(:password_confirmation)
       @employer.should have(1).error_on(:password_confirmation)
       @employer.errors[:password_confirmation].should eq(["can't be blank"])
     end
     it "password should have at least six characters" do
-      @employer.attributes = valid_user_attributes.with(:password => "1234")
+      @employer.attributes = valid_employer_attributes.with(:password => "1234")
       @employer.should have(2).error_on(:password)
       @employer.errors[:password].should eq(["doesn't match confirmation", "is too short (minimum is 6 characters)"])
     end
     it "password should match the password confirmation" do
-      @employer.attributes = valid_user_attributes.with(:password => "123456", :password_confirmation => "1234")
+      @employer.attributes = valid_employer_attributes.with(:password => "123456", :password_confirmation => "1234")
       @employer.should have(1).error_on(:password)
       @employer.errors[:password].should eq(["doesn't match confirmation"])
     end
     it "password and confirmation should have at least six characters" do
-      @employer.attributes = valid_user_attributes.with(:password => "1234", :password_confirmation => "1234")
+      @employer.attributes = valid_employer_attributes.with(:password => "1234", :password_confirmation => "1234")
       @employer.should have(1).error_on(:password)
       @employer.errors[:password].should eq(["is too short (minimum is 6 characters)"])
     end
     it "Valid Password" do
-      @employer.attributes = valid_user_attributes.with(:password => "123456", :password_confirmation => "123456")
+      @employer.attributes = valid_employer_attributes.with(:password => "123456", :password_confirmation => "123456")
       @employer.should have(0).error_on(:password)
     end
     it "Must Have a Valid Profile Photo" do
-      @employer.attributes = valid_user_attributes.with(:photo_file_name => "photo.pdf")
+      @employer.attributes = valid_employer_attributes.with(:photo_file_name => "photo.pdf")
       @employer.should have(1).error_on(:photo_file_name)
       @employer.errors[:photo_file_name].should eq(["Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"])
     end
     it "The size of the Photo must be less than 6 MB" do
-      @employer.attributes = valid_user_attributes.with(:photo_file_size => 9999999999)
+      @employer.attributes = valid_employer_attributes.with(:photo_file_size => 9999999999)
       @employer.should have(1).error_on(:photo_file_size)
       @employer.errors[:photo_file_size].should eq(["Must be less than 6 MB"])
     end
     it "Has Valid Profile Photo" do
-      @employer.attributes = valid_user_attributes.with(:photo_file_name => "photo.jpg")
+      @employer.attributes = valid_employer_attributes.with(:photo_file_name => "photo.jpg")
       @employer.should have(0).error_on(:photo_file_name)
     end
   end
-  
+
+  describe "Callbacks" do
+    describe "After Create" do
+      it "should receive a mail and an auth token" do
+        @employer = Employer.create(valid_employer_attributes)
+        @employer.auth_token.should_not be_nil
+      end
+    end
+  end
 end

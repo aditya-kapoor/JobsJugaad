@@ -37,6 +37,77 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+module ValidAttributeCollection
+  def valid_job_seeker_attributes
+    { :name => "Testing Job Seeker", 
+      :email => "testing@testing.com",
+      :gender => "Male", 
+      :date_of_birth => "01/01/1990", 
+      :password => "123456",
+      :password_confirmation => "123456", 
+      :mobile_number => "1234567890",
+      :location => "Mumbai",
+      :experience => 5,
+      :industry => "IT",
+      :activated => false,
+      :photo_file_name => "photo.jpeg",
+      :photo_content_type => "image/jpeg",
+      :photo_file_size => 17185,
+      :photo_updated_at => Time.now,
+      :resume_file_name => "resume.pdf",
+      :resume_content_type => "application/pdf",
+      :resume_file_size => 17185,
+      :resume_updated_at => Time.now,
+      :skill_name => "php, ruby"
+    }
+  end
+  def valid_employer_attributes
+    {
+    :name => "Testing Employer", 
+    :email => "employer@testing.com",
+    :website => "http://testing.com",
+    :description => "This is the test description for the testing employer",
+    :password => "123456",
+    :password_confirmation => "123456",
+    :activated => true,
+    :photo_file_name => "photo.jpeg",
+    :photo_content_type => "image/jpeg",
+    :photo_file_size => 17185,
+    :photo_updated_at => Time.now
+    }
+  end
+  def valid_job_attributes 
+    {
+    :title => "Testing Job", 
+    :description => "This is the description of the testing jobs which is specifically used for testing in the RSpec",
+    :location => "Delhi",
+    :salary_min => 15000,
+    :salary_max => 25000,
+    :salary_type => "pm",
+    :skill_name => "php, java"
+    }
+  end
+  def valid_admin_attributes
+    { :name => "Testing Job Seeker", 
+      :email => "testing@testing.com",
+      :password => "123456",
+      :password_confirmation => "123456"
+    }
+  end
+  def valid_job_application_attributes
+    { 
+      :job_seeker_id => 1,
+      :job_id => 1,
+      :interview_on => Date.today,
+      :remarks => "This column is for place and time of interview"
+    }
+  end
+  def valid_skill_attributes
+    { :name => "testing skill"
+    }
+  end
+end
+
 class Hash
 
   ##

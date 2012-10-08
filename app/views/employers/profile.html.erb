@@ -45,6 +45,7 @@
               <%= link_to 'Show', job %>
               <%= link_to 'Edit', edit_job_path(job) %> 
               <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
+              <%= link_to 'Post on Twitter', post_job_on_twitter_job_path(job) %>
               <%= link_to 'View Applicants', view_applicants_job_url(job) %>
               <%= truncate(job.description, :length => 50) %>
             </td>

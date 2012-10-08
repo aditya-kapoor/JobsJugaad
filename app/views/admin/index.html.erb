@@ -1,5 +1,5 @@
 <fieldset><legend>Login As Administrator</legend>
-<%= form_tag(:controller => "admin", :action => "login") do %>
+<%= form_tag(:controller => "sessions", :action => "login") do %>
   <table>
     <tr>
       <td><%= label_tag :email, "Enter Email" %></td>
@@ -8,6 +8,11 @@
     <tr>
       <td><%= label_tag :password, "Enter Password" %></td>
       <td><%= password_field_tag :password, nil, :placeholder => "Enter Password" %></td>
+    </tr>
+    <tr>
+      <td>
+        <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("admin") %>
+      </td>
     </tr>
     <tr>
       <td></td><td><%= submit_tag "Login" %></td>

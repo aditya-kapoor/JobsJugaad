@@ -1,8 +1,10 @@
 class Job < ActiveRecord::Base
   attr_accessible :title, :description, :location, :salary_min, 
                   :salary_max, :salary_type, :skill_name
+  
   belongs_to :employer
-  has_many :job_applications
+
+  has_many :job_applications, :dependent => :destroy
   has_many :job_seekers, :through => :job_applications #has-many through
   
   # has_many :skills, :as => :key_skill, :dependent => :destroy
@@ -25,8 +27,8 @@ class Job < ActiveRecord::Base
   validates_presence_of :salary_type, :message => "Please Enter the Salary Type in either LPA or pm"
   validates :salary_min, :numericality => true, :unless => proc { |job| job.salary_min.blank? }
   validates :salary_max, :numericality => true, :unless => proc { |job| job.salary_max.blank? }
-  validates :title, :uniqueness => { :scope => [:description, :location, :salary_min, 
-                  :salary_max, :salary_type, :employer_id], :message => "You have already entered this job" }
+  validates :title, :uniqueness => { :scope => [ :description, :location, :salary_min, 
+                  :salary_max, :salary_type, :employer_id ], :message => "You have already entered this job" }
 
   scope :location, lambda { |place| where("location like ?", "#{place}")}
 

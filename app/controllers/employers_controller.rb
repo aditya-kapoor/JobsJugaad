@@ -67,6 +67,15 @@ class EmployersController < ApplicationController
     # Notifier.call_for_interview(@employer, @job_seeker, @job).deliver
   end
 
+  def post_to_twitter
+    @job = Job.find(params[:id])
+    t = Twitter::Client.new
+    tweet_text = "#{(@job.description).slice(0, 20)}...#{url_for(@job)}"
+    t.update(tweet_text)
+    flash[:notice] = "Successfully Tweeted Job Posting"
+    redirect_to :eprofile
+  end
+
   def add_job
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build

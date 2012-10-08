@@ -1,4 +1,6 @@
+require_relative '../../lib/sessions_controller_helper_functions'
 class SessionsController < ApplicationController
+
   include SessionsControllerHelperFunctions
 
   before_filter :is_valid_user?, :only => [:change_password]
@@ -24,13 +26,18 @@ class SessionsController < ApplicationController
 
   def login
     if session[:id].nil?
-      if(params[:user_type] == 'job_seeker')
+      case params[:user_type]
+      when "job_seeker"
         class_name = "JobSeeker"
         redirection = :profile
         check_credentials(class_name, redirection)
-      else
+      when "employer"    
         class_name = "Employer"
         redirection = :eprofile
+        check_credentials(class_name, redirection)        
+      when "admin"
+        class_name = "Admin"
+        redirection = :admin_profile
         check_credentials(class_name, redirection)
       end
     else

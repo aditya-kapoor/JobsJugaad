@@ -8,7 +8,7 @@ class JobSeeker < ActiveRecord::Base
 
   attr_accessor :skill_name
 
-  has_many :job_applications
+  has_many :job_applications, :dependent => :destroy
   has_many :jobs, :through => :job_applications # has-many through
   
   # has_many :xyz, :as => :skillable, :dependent => :destroy
@@ -51,8 +51,6 @@ class JobSeeker < ActiveRecord::Base
 
   validates :gender, :presence => true
 
-  after_create :send_authentication_email
-
   def skill_name
     self.get_skill_set
   end
@@ -61,6 +59,8 @@ class JobSeeker < ActiveRecord::Base
     self.set_skill_set(skill_arr)
   end
 
+  after_create :send_authentication_email
+  
   def send_authentication_email
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)

@@ -1,7 +1,6 @@
 JobsJugaad::Application.routes.draw do
-  get "admin/index"
 
-  match "/auth/twitter/callback" => "authentication#create"
+  match "/auth/twitter/callback" => "employers#post_to_twitter"
 
   resources :job_seekers, :controller => "job_seekers", :except => [:new]
   controller 'job_seekers' do
@@ -34,6 +33,7 @@ JobsJugaad::Application.routes.draw do
   resources :jobs do
     member do 
       get "view_applicants" => :view_applicants
+      get "post_job_on_twitter" => "employers#post_to_twitter"
     end
   end
   
@@ -77,10 +77,12 @@ JobsJugaad::Application.routes.draw do
   end
 
   resources :job_applications, :only => [:update]
+  
   resources :admin, :except => [:new]
+  
   controller :admin do
-    get "admin_login" => :login 
-    post "admin_login" => :login
+    # get "admin_login" => :login 
+    # post "admin_login" => :login
     get "admin_profile" => :profile
     # get "change_admin_password" => :change_password
   end
@@ -90,6 +92,5 @@ JobsJugaad::Application.routes.draw do
     end
   end
 
-  resources :authentication
   root :to => 'home#index'
 end

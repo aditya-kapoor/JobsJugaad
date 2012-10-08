@@ -14,7 +14,13 @@ module SessionsControllerHelperFunctions
   def check_credentials(class_name, redirection)
     @class_object = class_name.constantize.find_by_email(params[:email])
     if @class_object && @class_object.authenticate(params[:password])
-      check_for_activation(@class_object, redirection)
+      unless @class_object.class.to_s == "Admin"
+        check_for_activation(@class_object, redirection)
+      else
+        session[:id] = @class_object.id
+        session[:user_type] = params[:user_type] #params[:user_type]
+        redirect_to redirection
+      end
     else
       flash[:error] = "Invalid Email and Password Combination"
       redirect_to request.referrer

@@ -34,4 +34,5 @@ end
 group :development, :test do
   # gem 'shoulda'
   gem 'rspec-rails'
+  gem 'simplecov', :git => 'https://github.com/colszowka/simplecov'
 end

@@ -32,6 +32,9 @@ class Employer < ActiveRecord::Base
     :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
 
+  CONSUMER_KEY = "eZ17eRpN1In39HuCfM5WA"
+  CONSUMER_SECRET = "SfXvytpQro7PctvJhFAEbxjiY5uTT6ICqc52gzwQxMc"
+
   after_create :send_authentication_email
   
   def send_authentication_email
