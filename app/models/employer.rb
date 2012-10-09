@@ -38,8 +38,6 @@ class Employer < ActiveRecord::Base
   after_create :send_authentication_email
   
   def send_authentication_email
-    auth_token = BCrypt::Password.create("Tutu")
-    self.update_attributes(:auth_token => auth_token, :activated => false)
-    Notifier.activate_user(self, auth_token).deliver
+    self.send_activation_mail
   end
 end
