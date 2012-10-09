@@ -82,6 +82,7 @@ describe JobSeekersController do
       it "Must Go to the edit page" do
         JobSeeker.should_receive(:find).with(@job_seeker.id.to_s).and_return(@job_seeker)
         do_edit
+        response.should render_template("job_seekers/edit")
       end
     end
     context "When Invalid User" do 
@@ -255,7 +256,7 @@ describe JobSeekersController do
       end
       # it "employer should be able to download the resume of job seeker" do
       #   JobSeeker.should_receive(:find).with(@job_seeker.id.to_s).and_return(@job_seeker)
-      #   @job_seeker.should_receive(:send_file).and_return(true)
+      #   @job_seeker.should_receive(:send_file).with(@job_seeker.resume.path, @job_seeker.resume.content_type).and_return(true)
       #   do_download_resume
       #   response.should be_success 
       # end

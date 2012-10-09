@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   before_filter :decode_user_type, :only => [:login, :register]
 
   def decode_user_type
-    params[:user_type] = ActiveSupport::Base64.decode64(params[:user_type])
+    params[:user_type] = Base64.decode64(params[:user_type])
   end
 
   def register
@@ -59,7 +59,7 @@ class SessionsController < ApplicationController
   def is_valid_user?
     unless params[:id].to_s == session[:id].to_s
       flash[:error] = "You are not authorised to do this"
-      redirect_to get_redirection_route
+      redirect_to root_url
     end 
   end
 
@@ -78,7 +78,7 @@ class SessionsController < ApplicationController
   end
 
   def forgot_password
-    @par = params[:user]  
+    @par = params[:user]
   end
 
   def reset_password # forgot password credentials are sent to this action....
@@ -87,11 +87,11 @@ class SessionsController < ApplicationController
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
       Notifier.send_password_reset(@class_object, auth_token).deliver
-      redirect_to root_url, :notice => "Reset Password instructions has been sent to your mail account"
+      flash[:notice] = "Reset Password instructions has been sent to your mail account"
     else
       flash[:error] = "There Was An Error With your email"
-      redirect_to root_url
     end
+    redirect_to root_url
   end
 
   def reset_user_password
@@ -113,8 +113,7 @@ class SessionsController < ApplicationController
     @class_object = determine_class_name.constantize.find(session[:id])
     if @class_object.update_attributes(params[session[:user_type].to_sym])
       @class_object.update_attributes(:password_reset_token => nil)
-      session[:id] = nil
-      session[:user_type] = nil
+      reset_session
       redirect_to root_url, :notice => "Your Password has been reset successfully..Login now!!"
     else
       render :action => :set_new_password 
@@ -122,8 +121,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy #logout
-    session[:id] = nil
-    session[:user_type] = nil
+    reset_session
     redirect_to root_url, :notice => "You have been logged out from all the pages of this website"
   end
 end

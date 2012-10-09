@@ -71,7 +71,7 @@ module ValidAttributeCollection
     :description => "This is the test description for the testing employer",
     :password => "123456",
     :password_confirmation => "123456",
-    :activated => true,
+    :activated => false,
     :photo_file_name => "photo.jpeg",
     :photo_content_type => "image/jpeg",
     :photo_file_size => 17185,
