@@ -87,42 +87,23 @@ class JobsController < ApplicationController
     end
 
     unless params[:sal_min].empty? && params[:sal_max].empty?
-      min_sal_jobs = Job.salary_type(params[:sal_type]).salary_minimum(params[:sal_min])
-      max_sal_jobs = Job.salary_type(params[:sal_type]).salary_maximum(params[:sal_max])
-      jobs_by_salary.concat(min_sal_jobs & max_sal_jobs)
+      jobs_by_salary = return_jobs_by_salary
     end
 
-    if jobs_by_location.empty?
-      if jobs_by_skills.empty?
-        if jobs_by_salary.empty?
-          selected_jobs = []
-        else
-          selected_jobs = jobs_by_salary
-        end
-      else
-        if jobs_by_salary.empty?
-          selected_jobs = jobs_by_skills
-        else
-          selected_jobs = (jobs_by_skills & jobs_by_salary)
-        end
-      end
-    else
-      if jobs_by_skills.empty?
-        if jobs_by_salary.empty?
-          selected_jobs = jobs_by_location
-        else
-          selected_jobs = jobs_by_location & jobs_by_salary
-        end
-      else
-        if jobs_by_salary.empty?
-          selected_jobs = jobs_by_location & jobs_by_skills
-        else
-          selected_jobs = jobs_by_location & jobs_by_skills & jobs_by_salary
-        end
-      end
-    end
+    temp_jobs = [jobs_by_location, jobs_by_skills, jobs_by_salary]
 
-  @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+    temp_jobs.reject! { |x| x.empty? }
+    
+    selected_jobs = temp_jobs.inject { |a,b| a & b } if temp_jobs.any? 
+
+    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+  end
+
+  def return_jobs_by_salary
+    temp = []
+    min_sal_jobs = Job.salary_type(params[:sal_type]).salary_minimum(params[:sal_min])
+    max_sal_jobs = Job.salary_type(params[:sal_type]).salary_maximum(params[:sal_max])
+    temp.concat(min_sal_jobs & max_sal_jobs)
   end
 
   def return_jobs_by_location
@@ -136,7 +117,9 @@ class JobsController < ApplicationController
   def return_jobs_by_skills
     temp = []
     params[:skills].split(",").each do |s|
-      temp.concat(Skill.skill_name(s.strip)[0].jobs)
+      Skill.skill_name(s.strip).each do |sks|
+        temp.concat(sks.jobs)
+      end
     end
     temp
   end

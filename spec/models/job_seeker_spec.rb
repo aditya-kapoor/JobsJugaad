@@ -6,6 +6,15 @@ describe JobSeeker do
     @job_seeker = JobSeeker.new
   end
 
+  describe "Methods" do
+    before(:each) do 
+      @job_seeker.attributes = valid_job_seeker_attributes
+    end
+    it "skill name should return the comma separed string of skills of job" do
+      @job_seeker.skill_name.should eq ("php, ruby")
+    end
+  end
+
   describe "Relationships" do
     
     before(:each) do

@@ -87,8 +87,8 @@ class SessionsController < ApplicationController
   end
 
   def reset_password # forgot password credentials are sent to this action....
-    auth_token = BCrypt::Password.create("Tutu")
     @class_object = params[:user].constantize.find_by_email(params[:email])
+    auth_token = BCrypt::Password.create("Tutu")
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
       Notifier.send_password_reset(@class_object, auth_token).deliver

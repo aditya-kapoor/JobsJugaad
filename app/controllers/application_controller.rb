@@ -35,5 +35,4 @@ class ApplicationController < ActionController::Base
   def authorized_ids(job_seeker)
     job_seeker.jobs.collect(&:id)
   end
-
 end

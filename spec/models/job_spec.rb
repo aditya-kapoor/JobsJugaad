@@ -6,6 +6,16 @@ describe Job do
     @job = Job.new
   end
 
+  describe "Methods" do
+    before(:each) do 
+      @job.attributes = valid_job_attributes
+    end
+    it "skill name should return the comma separed string of skills of job" do
+      @job.skill_name.should eq ("php, java")
+    end
+    
+  end
+
   describe "Relationships" do 
     before(:each) do 
       @employer = Employer.create(valid_employer_attributes)
@@ -19,6 +29,9 @@ describe Job do
       it "Must Belong to Employer" do
         @job.should respond_to(:employer)
       end
+      it "must return the employer" do
+        @job.employer.should eq(@employer)
+      end 
     end
 
     describe "Job Seeker" do

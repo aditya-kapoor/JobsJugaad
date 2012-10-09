@@ -89,5 +89,4 @@ module SessionsControllerHelperFunctions
     end
   end
 
-
 end

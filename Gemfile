@@ -31,8 +31,8 @@ end
   gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
   gem 'tweet-button'
 
+  gem 'simplecov', :require => false, :group => :test
 group :development, :test do
   # gem 'shoulda'
   gem 'rspec-rails'
-  gem 'simplecov', :git => 'https://github.com/colszowka/simplecov'
 end

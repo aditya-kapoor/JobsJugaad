@@ -1,8 +1,11 @@
+require_relative '../../lib/job_seekers_helper_functions'
 class JobSeekersController < ApplicationController
-    
-  before_filter :is_valid_access?, :except => [:new, :forgot_password, :autocomplete_skill_name]
+
+  include JobSeekersControllerHelperFunctions
+  
+  before_filter :is_valid_access?, :except => [:new, :forgot_password, :update, :autocomplete_skill_name]
   # skip_before_filter :is_valid_access?
-  before_filter :is_authorised_access?, :only => [:edit]
+  before_filter :is_authorised_access?, :only => [:edit, :update]
   before_filter :remove_params, :only => [:update]
   autocomplete :skill, :name
   
@@ -14,7 +17,7 @@ class JobSeekersController < ApplicationController
 
   def is_valid_access?
     if session[:id].nil? 
-      redirect_to root_path , :notice => "You are not currently logged into the system..."      
+      redirect_to root_path , :notice => "You are not currently logged into the system..." 
     else
       if session['user_type'] == 'employer'
         unless employer_authorised_to_see_profile?
@@ -26,7 +29,7 @@ class JobSeekersController < ApplicationController
 
   def remove_params
     if params[:job_seeker][:email].present?
-      params[:job_seeker][:email].delete
+      params[:job_seeker].delete('email')
     end
   end
 
@@ -83,25 +86,6 @@ class JobSeekersController < ApplicationController
     apply_to_job_after_login
     if @job_seeker.nil?
       redirect_to root_path, :notice => "You have already logged out of the system"
-    end
-  end
-
-  def check_for_already_applied
-    if authorized_ids(@job_seeker).include?(Integer(session[:job_to_be_added].id))
-      session[:job_to_be_added] = nil
-      redirect_to :profile, :notice => "You have already applied for this job"
-    else
-      @job_seeker.jobs << session[:job_to_be_added]
-      Notifier.send_email_to_employer(session[:job_to_be_added], @job_seeker).deliver
-      session[:job_to_be_added] = nil
-      redirect_to :profile, :notice => "You have successfully applied for this job"
-    end
-  end
-
-  def apply_to_job_after_login
-    unless session[:job_to_be_added].nil?
-      @job_seeker = JobSeeker.find(session[:id])
-      check_for_already_applied 
     end
   end
 
