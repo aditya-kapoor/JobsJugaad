@@ -40,6 +40,15 @@ module SessionsControllerHelperFunctions
     end    
   end
 
+  def save_password
+    if @object.update_attributes(get_params)
+      redirect_to get_redirection_route, :notice => "Password has been changed successfully."
+    else
+      flash[:error] = "There Were Some Errors"
+      render "change_password.html.erb"   
+    end
+  end
+
   def get_class_name
     case session[:user_type]
     when "job_seeker"

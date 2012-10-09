@@ -70,12 +70,7 @@ class SessionsController < ApplicationController
   def update_password
     @object = params[:user_type].constantize.find(session[:id])
     if @object.authenticate(params[:old_password])
-      if @object.update_attributes(get_params)
-        redirect_to get_redirection_route, :notice => "Password has been changed successfully."
-      else
-        flash[:error] = "There Were Some Errors"
-        render "change_password.html.erb"
-      end
+      save_password
     else
       flash[:error] = "Invalid Password"
       redirect_to request.referrer
