@@ -24,4 +24,18 @@
     temp
   end
 
+  def apply_to_job
+    @job_seeker = JobSeeker.find(session[:id])
+    authorized_ids = authorized_ids(@job_seeker)
+    if authorized_ids.include?(params[:job_id].to_i)
+      flash[:notice] = "You have already applied for this job"
+    else
+      job = Job.find(params[:job_id])
+      @job_seeker.jobs << job
+      Notifier.send_email_to_employer(job, @job_seeker).deliver
+      flash[:notice] = "You have successfully applied to this job"
+    end
+    redirect_to :profile
+  end
+
 end

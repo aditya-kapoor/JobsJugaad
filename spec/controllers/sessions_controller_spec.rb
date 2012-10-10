@@ -181,9 +181,72 @@ describe SessionsController do
     end
   end
 
-  describe "Action Change Password" do
+  describe "Action Change Password" do 
+    context "For Job Seeker" do
+      def do_change_password(id)
+        get :change_password, :id => id
+      end
+      before do 
+        @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+        session[:id] = 1
+        session[:user_type] = "job_seeker"
+      end
+      it "should display the change password template" do
+        do_change_password(@job_seeker.id)
+        response.should be_success
+        response.should render_template("sessions/change_password")
+      end
+      it "Filter Fails" do
+        do_change_password(100)
+        flash[:error].should eq("You are not authorised to do this")
+        response.should redirect_to(root_path)
+      end
+    end
+    context "For Job Seeker" do
+      def do_change_password(id)
+        get :change_password, :id => id
+      end
+      before do 
+        @employer = Employer.create(valid_employer_attributes)
+        session[:id] = 1
+        session[:user_type] = "employer"
+      end
+      it "should display the change password template" do
+        do_change_password(@employer.id)
+        response.should be_success
+        response.should render_template("sessions/change_password")
+      end
+      it "Filter Fails" do
+        do_change_password(100)
+        flash[:error].should eq("You are not authorised to do this")
+        response.should redirect_to(root_path)
+      end
+    end
+    context "For Admin" do
+      def do_change_password(id)
+        get :change_password, :id => id
+      end
+      before do 
+        @admin = Admin.create(valid_admin_attributes)
+        session[:id] = 1
+        session[:user_type] = "admin"
+      end
+      it "should display the change password template" do
+        do_change_password(@admin.id)
+        response.should be_success
+        response.should render_template("sessions/change_password")
+      end
+      it "Filter Fails" do
+        do_change_password(100)
+        flash[:error].should eq("You are not authorised to do this")
+        response.should redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "Action Update Password" do
     context "When Job Seeker is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "JobSeeker", :old_password => "123456", 
           :job_seeker => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -193,13 +256,13 @@ describe SessionsController do
         session[:user_type] = "job_seeker"
       end
       it "should successfully change the password" do
-        do_change_password
+        do_update_password
         flash[:notice].should eq("Password has been changed successfully.")
         response.should redirect_to(profile_path)
       end
     end
     context "When Job Seeker is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "JobSeeker", :old_password => "1234", 
           :job_seeker => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -210,13 +273,13 @@ describe SessionsController do
       end
       it "should not change the password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("Invalid Password")
         response.should redirect_to(request.referrer)
       end
     end
     context "When Job Seeker is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "JobSeeker", :old_password => "123456", 
           :job_seeker => { :password => "qwerty", :password_confirmation => "" }
       end 
@@ -227,14 +290,14 @@ describe SessionsController do
       end
       it "should not change the password due to some validation issues in new password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("There Were Some Errors")
         response.should be_success
         response.should render_template("sessions/change_password")
       end
     end
     context "When Employer is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Employer", :old_password => "123456", 
           :employer => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -244,13 +307,13 @@ describe SessionsController do
         session[:user_type] = "employer"
       end
       it "should successfully change the password" do
-        do_change_password
+        do_update_password
         flash[:notice].should eq("Password has been changed successfully.")
         response.should redirect_to(eprofile_path)
       end
     end
     context "When Employer is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Employer", :old_password => "1234", 
           :employer => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -261,13 +324,13 @@ describe SessionsController do
       end
       it "should not change the password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("Invalid Password")
         response.should redirect_to(request.referrer)
       end
     end
     context "When Employer is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Employer", :old_password => "123456", 
           :employer => { :password => "qwerty", :password_confirmation => "" }
       end 
@@ -278,14 +341,14 @@ describe SessionsController do
       end
       it "should not change the password due to some validation issues in new password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("There Were Some Errors")
         response.should be_success
         response.should render_template("sessions/change_password")
       end
     end
     context "When Admin is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Admin", :old_password => "123456", 
           :admin => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -295,13 +358,13 @@ describe SessionsController do
         session[:user_type] = "admin"
       end
       it "should successfully change the password" do
-        do_change_password
+        do_update_password
         flash[:notice].should eq("Password has been changed successfully.")
         response.should redirect_to(admin_profile_path)
       end
     end
     context "When Admin is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Admin", :old_password => "1234", 
           :admin => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
@@ -312,13 +375,13 @@ describe SessionsController do
       end
       it "should not change the password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("Invalid Password")
         response.should redirect_to(request.referrer)
       end
     end
     context "When Admin is logged in the system" do
-      def do_change_password
+      def do_update_password
         post :update_password, :user_type => "Admin", :old_password => "123456", 
           :admin => { :password => "qwerty", :password_confirmation => "" }
       end 
@@ -329,26 +392,11 @@ describe SessionsController do
       end
       it "should not change the password due to some validation issues in new password" do
         request.stub('referrer').and_return(root_path)
-        do_change_password
+        do_update_password
         flash[:error].should eq("There Were Some Errors")
         response.should be_success
         response.should render_template("sessions/change_password")
       end
-    end
-    context "When Filter Fails" do
-      def do_change_password
-        post :update_password, :user_type => "JobSeeker", :old_password => "123456", 
-          :job_seeker => { :password => "qwerty", :password_confirmation => "qwerty"}
-      end 
-      before do
-        @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
-        session[:id] = 1
-        session[:user_type] = "job_seeker"
-      end
-      # it "should successfully change the password" do
-      #   do_change_password
-      #   response.should redirect_to(root_path)
-      # end
     end
   end
 

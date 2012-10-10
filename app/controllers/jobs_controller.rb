@@ -2,7 +2,9 @@ require_relative '../../lib/jobs_controller_helper_functions'
 class JobsController < ApplicationController
     include JobsControllerHelperFunctions
 
-  before_filter :check_unauthorised_access, :only => [:edit, :create]
+  before_filter :check_for_valid_access, :only => [:view_applicants]
+  before_filter :check_unauthorised_access, :only => [:edit, :create, :view_applicants]
+  before_filter :check_for_session, :only => [:apply]
 
   @@rpp = 10
   def create
@@ -12,7 +14,7 @@ class JobsController < ApplicationController
       if @job.save
         format.html { redirect_to :eprofile, :notice => "A new job has been posted successfully" }
       else
-        format.html { render :template => "employers/add_job.html.erb", :notice => "Job Could not be saved" }
+        format.html { render :template => "employers/add_job", :notice => "Job Could not be saved" }
       end
     end
   end
@@ -21,6 +23,26 @@ class JobsController < ApplicationController
     unless session[:user_type] == "employer"
       flash[:error] = "You are not authorised to do this"
       redirect_to root_url
+    end
+  end
+
+  def check_for_valid_access
+    employer = Employer.find_by_id(session[:id])
+    if employer && session[:user_type] == "employer"
+      unless employer.jobs.collect(&:id).include?(params[:id].to_i)
+        flash[:error] = "Security Breach Detected"
+        redirect_to root_url
+      end
+    else
+      flash[:error] = "You are not logged in as employer"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_session
+    if session[:id].nil?
+      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
+      redirect_to :root, :notice => "Please Login or Register as the job seeker"
     end
   end
 
@@ -36,29 +58,11 @@ class JobsController < ApplicationController
     @job = Job.find_by_id(params[:id])
   end
 
-  def apply_to_job
-    @job_seeker = JobSeeker.find(session[:id])
-    authorized_ids = authorized_ids(@job_seeker)
-    if authorized_ids.include?(Integer(params[:job_id]))
-      redirect_to :profile, :notice => "You have already applied for this job"
-    else
-      job = Job.find(params[:job_id])
-      @job_seeker.jobs << job
-      Notifier.send_email_to_employer(job, @job_seeker).deliver
-      redirect_to :profile, :notice => "You have successfully applied to this job"
-    end
-  end
-
   def apply
-    if session[:id].nil?
-      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
-      redirect_to :root, :notice => "Please Login or Register as the job seeker"
+    if session[:user_type] == "employer"
+      redirect_to :root, :notice => "You are Logged in as employer. Please login as the Job Seeker"
     else
-      if session[:user_type] == "employer"
-        redirect_to :root, :notice => "You are Logged in as employer. Please login as the Job Seeker"
-      else
-        apply_to_job
-      end
+      apply_to_job
     end
   end
 

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe JobSeekersController do
+  include ValidAttributeCollection
   before do
     @job_seeker = double(JobSeeker, :id => 1)
   end
@@ -219,6 +220,18 @@ describe JobSeekersController do
         response.should redirect_to(root_path)
       end
     end
+    context "User Already logged in and tries to change the id of the session" do
+      before do
+        session[:id] = 100
+        session[:user_type] = "job_seeker"
+      end
+      it "must be redirect to the root path" do 
+        do_profile
+        flash[:notice].should eq("You have already logged out of the system")
+        response.should redirect_to(root_path)
+      end
+
+    end
     context "Correct User in the system" do
       before do
         session[:id] = 1
@@ -250,16 +263,32 @@ describe JobSeekersController do
     
     context "Valid User In the system" do 
       before do
+        @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
         session[:id] = 1
         session[:user_type] = "employer"
         controller.stub(:employer_authorised_to_see_profile?).and_return(true)
       end
-      # it "employer should be able to download the resume of job seeker" do
-      #   JobSeeker.should_receive(:find).with(@job_seeker.id.to_s).and_return(@job_seeker)
-      #   @job_seeker.should_receive(:send_file).with(@job_seeker.resume.path, @job_seeker.resume.content_type).and_return(true)
-      #   do_download_resume
-      #   response.should be_success 
-      # end
+      it "employer should be able to download the resume of job seeker" do
+        JobSeeker.should_receive(:find).and_return(@job_seeker)
+        @job_seeker.stub!(:send_file).and_return(true)
+        do_download_resume
+        response.should be_success 
+      end
+    end
+  end
+
+  describe "Action Remove Photo" do
+    def do_remove_photo(id)
+      get :remove_photo, :id => id
+    end
+    before do 
+      @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+      session[:id] = @job_seeker.id
+      session[:user_type] = "job_seeker"
+    end
+    it "should destroy the profile photo of the job seeker" do
+      do_remove_photo(@job_seeker.id)
+      response.should redirect_to(profile_path)
     end
   end
 end
