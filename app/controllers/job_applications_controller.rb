@@ -11,7 +11,7 @@ class JobApplicationsController < ApplicationController
         format.html { redirect_to view_applicants_job_path(@job_application.job_id), 
                       :notice => "An email has been sent to the job seeker" }
       else
-        format.html { render :template => "employers/call_for_interview.html.erb" }
+        format.html { render :template => "employers/call_for_interview" }
       end
     end
   end 

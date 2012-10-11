@@ -260,6 +260,20 @@ describe JobSeekersController do
         response.should redirect_to(root_path)
       end
     end
+
+    context "Valid User trying to access other job seekers resumes" do 
+      before do
+        @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+        session[:id] = 1
+        session[:user_type] = "employer"
+        controller.stub(:employer_authorised_to_see_profile?).and_return(false)
+      end
+      it "should redirect to the root path" do
+        do_download_resume
+        flash[:notice].should eq("You are not allowed to see this particular profile")
+        response.should redirect_to(root_path)
+      end
+    end
     
     context "Valid User In the system" do 
       before do
@@ -270,9 +284,9 @@ describe JobSeekersController do
       end
       it "employer should be able to download the resume of job seeker" do
         JobSeeker.should_receive(:find).and_return(@job_seeker)
-        @job_seeker.stub!(:send_file).and_return(true)
+        controller.stub!(:send_file).and_return(nil)
         do_download_resume
-        response.should be_success 
+        response.should render_template("jobs/view_applicants")
       end
     end
   end

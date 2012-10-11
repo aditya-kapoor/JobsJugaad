@@ -29,12 +29,16 @@ class JobsController < ApplicationController
   def check_for_valid_access
     employer = Employer.find_by_id(session[:id])
     if employer && session[:user_type] == "employer"
-      unless employer.jobs.collect(&:id).include?(params[:id].to_i)
-        flash[:error] = "Security Breach Detected"
-        redirect_to root_url
-      end
+      check_for_security_breach(employer)
     else
       flash[:error] = "You are not logged in as employer"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_security_breach(employer)
+    unless employer.jobs.collect(&:id).include?(params[:id].to_i)
+      flash[:error] = "Security Breach Detected"
       redirect_to root_url
     end
   end
@@ -113,4 +117,5 @@ class JobsController < ApplicationController
       format.html { redirect_to request.referer, :notice => "Job has been successfully removed" }
     end
   end
+  
 end

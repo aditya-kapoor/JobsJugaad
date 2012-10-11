@@ -9,53 +9,53 @@
     <table>
       <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("job_seeker") %>
     <tr>
-      <td><%= f.label :name %></td>
+      <td><%= f.label :name %><%= mark_required(@class_object, :name) %></td>
       <td><%= f.text_field :name %></td>
       <% unless error_present?(:name, @class_object) %>
         <td class="error-notice"><%= get_errors(:name, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :email %></td>
+      <td><%= f.label :email %><%= mark_required(@class_object, :email) %></td>
       <td><%= f.email_field :email %></td>
       <% unless error_present?(:email, @class_object) %>
         <td class="error-notice"><%= get_errors(:email, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :password %></td>
+      <td><%= f.label :password %><%= mark_required(@class_object, :password) %></td>
       <td><%= f.password_field :password %></td>
       <% unless error_present?(:password, @class_object) %>
         <td class="error-notice"><%= get_errors(:password, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :password_confirmation %></td>
+      <td><%= f.label :password_confirmation %><%= mark_required(@class_object, :password_confirmation) %></td>
       <td><%= f.password_field :password_confirmation %></td>
       <% unless error_present?(:password_confirmation, @class_object) %>
         <td class="error-notice"><%= get_errors(:password_confirmation, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :gender %></td>
+      <td><%= f.label :gender %><%= mark_required(@class_object, :gender) %></td>
       <td><%= f.select :gender, JobSeeker::GENDER, :prompt => "Select Gender" %></td>
       <% unless error_present?(:gender, @class_object) %>
         <td class="error-notice"><%= get_errors(:gender, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :date_of_birth %></td>
+      <td><%= f.label :date_of_birth %><%= mark_required(@class_object, :date_of_birth) %></td>
       <td><%= f.date_select :date_of_birth, :start_year => 1962, :end_year => Time.now.year - 16, :order => [:day, :month, :year] %></td>
     </tr>
     <tr>
-      <td><%= f.label :location %> (City in India)</td>
+      <td><%= f.label :location %> (City in India) <%= mark_required(@class_object, :location) %></td>
       <td><%= f.text_field :location %></td>
       <% unless error_present?(:location, @class_object) %>
         <td><%= get_errors(:location, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :mobile_number %></td>
+      <td><%= f.label :mobile_number %><%= mark_required(@class_object, :mobile_number) %></td>
       <td><%= f.telephone_field :mobile_number %></td>
       <% unless error_present?(:mobile_number, @class_object) %>
         <td class="error-notice"><%= get_errors(:mobile_number, @class_object) %></td>
@@ -65,18 +65,18 @@
       <td><h2>Profile Details</h2></td>
     </tr>
     <tr>
-      <td><%= f.label :experience %></td>
+      <td><%= f.label :experience %><%= mark_required(@class_object, :experience) %></td>
       <td><%= f.select "experience", JobSeeker::EXPERIENCE %> years</td>
     </tr>
     <tr>
-      <td><%= f.label :skill_name %></td>
+      <td><%= f.label :skill_name %><%= mark_required(@class_object, :skill_name) %></td>
       <td><%= f.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
       <% unless error_present?(:skills, @class_object) %>
         <td class="error-notice"><%= get_errors(:skills, @class_object) %></td>
       <% end %>
     </tr>
     <tr>
-      <td><%= f.label :industry %></td>
+      <td><%= f.label :industry %><%= mark_required(@class_object, :industry) %></td>
       <td><%= f.select :industry, JobSeeker::INDUSTRY %></td>
     </tr>
     <tr>

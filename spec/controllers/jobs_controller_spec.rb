@@ -134,19 +134,26 @@ describe JobsController do
     end
   end
 
-  describe "Action Update" do 
-    def do_update
-      put :update, :id => @job.id, :job => valid_job_attributes
+  describe "Action Update" do
+    def do_update(attributes)
+        put :update, :id => @job.id, :job => attributes
     end
-    context "When Correct User is logged in" do
-      before do
-        session[:id] = 1
-        session[:user_type] = "employer"
-      end
+    before do
+      session[:id] = 1
+      session[:user_type] = "employer"
+    end
+    context "When Validations Pass" do
       it "should be able to update job successfully" do 
-        do_update
+        do_update(valid_job_attributes)
         flash[:notice].should eq("Job was successfully updated.")
         response.should redirect_to(eprofile_path)
+      end
+    end 
+    context "When Validations Fail" do
+      it "should not be able to update the attributes" do 
+        do_update(valid_job_attributes.with(:title => ""))
+        response.should be_success
+        response.should render_template("jobs/edit")
       end
     end
   end
@@ -207,7 +214,9 @@ describe JobsController do
         @job = mock_model(Job, :id => 1)
 
       end
-      it "should be able to successfully apply for job" do    
+      it "should be able to successfully apply for job" do
+        Notifier.stub!(:send_email_to_employer).and_return(@send_email_to_employer)
+        @send_email_to_employer.stub!(:deliver).and_return(true)
         do_apply
         response.should redirect_to(profile_path)
       end

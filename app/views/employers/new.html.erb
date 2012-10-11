@@ -9,42 +9,42 @@
     <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("employer") %>
     <table>
       <tr>
-        <td><%= f.label :name %></td>
+        <td><%= f.label :name %><%= mark_required(@class_object, :name) %></td>
         <td><%= f.text_field :name %></td>
         <% unless error_present?(:name, @class_object) %>
           <td class="error-notice"><%= get_errors(:name, @class_object) %></td>
         <% end %>
       </tr>
       <tr>
-        <td><%= f.label :email %></td>
+        <td><%= f.label :email %><%= mark_required(@class_object, :email) %></td>
         <td><%= f.email_field :email %></td>
         <% unless error_present?(:email, @class_object) %>
           <td class="error-notice"><%= get_errors(:email, @class_object) %></td>
         <% end %>
       </tr>
       <tr>
-        <td><%= f.label :password %></td>
+        <td><%= f.label :password %><%= mark_required(@class_object, :password) %></td>
         <td><%= f.password_field :password %></td>
         <% unless error_present?(:password, @class_object) %>
           <td class="error-notice"><%= get_errors(:password, @class_object) %></td>
         <% end %>
         </tr>
       <tr>
-        <td><%= f.label :password_confirmation %></td>
+        <td><%= f.label :password_confirmation %><%= mark_required(@class_object, :password_confirmation) %></td>
         <td><%= f.password_field :password_confirmation %></td>
         <% unless error_present?(:password_confirmation, @class_object) %>
           <td class="error-notice"><%= get_errors(:password_confirmation, @class_object) %></td>
         <% end %>
         </tr>
       <tr>
-        <td><%= f.label :website %></td>
+        <td><%= f.label :website %><%= mark_required(@class_object, :website) %></td>
         <td><%= f.url_field :website %> (include http:// Prefix) </td>
         <% unless error_present?(:website, @class_object) %>
           <td class="error-notice"><%= get_errors(:website, @class_object) %></td>
         <% end %>
         </tr>
       <tr>
-        <td><%= f.label :description %></td>
+        <td><%= f.label :description %><%= mark_required(@class_object, :description) %></td>
         <td><%= f.text_area :description, :rows => 10 %></td>
       </tr>
       <tr>
