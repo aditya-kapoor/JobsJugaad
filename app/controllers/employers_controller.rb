@@ -1,23 +1,30 @@
 class EmployersController < ApplicationController
 
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :show, :login]
-  before_filter :is_valid_user?, :only => [:edit, :add_job]
+  before_filter :is_valid_user?, :only => [:edit, :add_job, :update]
+  before_filter :remove_params, :only => [:update]
 
   def is_valid_access?
     if session[:id].nil? 
-      redirect_to root_path , :notice => "You are not currently logged into the system..."      
+      redirect_to root_path , :notice => "You are not currently logged into the system..."
     end
   end
 
-  def profile
-    @employer = Employer.find(session[:id])
-  end
-  
   def is_valid_user?
     unless params[:id].to_s == session[:id].to_s && session[:user_type] == "employer"
       flash[:error] = "You are not authorised to do this"
       redirect_to root_url
     end
+  end
+
+  def remove_params
+    if params[:employer][:email].present?
+      params[:employer].delete('email')
+    end
+  end
+
+  def profile
+    @employer = Employer.find(session[:id])
   end
 
   def edit
@@ -64,13 +71,13 @@ class EmployersController < ApplicationController
     @job_seeker = JobSeeker.find(params[:id])
     @job = Job.find(params[:job_id])
     @job_application = JobApplication.find_by_job_seeker_id_and_job_id(@job_seeker.id, @job.id) 
-    # Notifier.call_for_interview(@employer, @job_seeker, @job).deliver
+    
   end
 
   def post_to_twitter
     @job = Job.find(params[:id])
     t = Twitter::Client.new
-    tweet_text = "#{(@job.description).slice(0, 20)}...#{url_for(@job)}"
+    tweet_text = "#{(@job.description).slice(0, 50)}...#{url_for(@job)}"
     t.update(tweet_text)
     flash[:notice] = "Successfully Tweeted Job Posting"
     redirect_to :eprofile
