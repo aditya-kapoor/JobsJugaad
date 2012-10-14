@@ -34,6 +34,7 @@ JobsJugaad::Application.routes.draw do
     member do 
       get "view_applicants" => :view_applicants
       get "post_job_on_twitter" => "employers#post_to_twitter"
+      post "post_tweet" => "employers#post_tweet"
     end
   end
   

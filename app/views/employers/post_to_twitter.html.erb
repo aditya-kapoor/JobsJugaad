@@ -1,4 +1,13 @@
-<fieldset>
-<legend>Tweet your description here</legend>
+<h3>
+  <%= link_to "Click here to authorize yourself", @link, :id => "authorize-link" %>
+</h3>
 
-</fieldset>
+OR 
+
+<h3> 
+  You can enter the pin number which is given to you by Twitter
+</h3>
+<%= form_tag :action => "post_tweet" do %>
+  <%= text_field_tag :oauth_verifier, nil, :placeholder => "Enter the pin" %>
+  <%= submit_tag "Submit and Post on Twitter" %>
+<% end %>

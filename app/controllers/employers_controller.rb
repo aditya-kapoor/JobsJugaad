@@ -3,6 +3,7 @@ class EmployersController < ApplicationController
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :show, :login]
   before_filter :is_valid_user?, :only => [:edit, :add_job, :update]
   before_filter :remove_params, :only => [:update]
+  @@request_token = ""
 
   def is_valid_access?
     if session[:id].nil? 
@@ -76,11 +77,22 @@ class EmployersController < ApplicationController
 
   def post_to_twitter
     @job = Job.find(params[:id])
-    t = Twitter::Client.new
-    tweet_text = "#{(@job.description).slice(0, 50)}...#{url_for(@job)}"
-    t.update(tweet_text)
+    @employer = Employer.find_by_id(session[:id])
+    @@request_token = @employer.generate_request_token
+    @link = @@request_token.authorize_url
+  end
+
+  def post_tweet
+    @employer = Employer.find_by_id(session[:id])
+    @job = Job.find_by_id(params[:id])
+    oauth_verifier = params[:oauth_verifier]
+    access_token = @@request_token.get_access_token(:oauth_verifier => oauth_verifier )
+    token = access_token.token
+    secret = access_token.secret
+    @employer.configure_twitter(token, secret)
+    Twitter.update(@job.description)
     flash[:notice] = "Successfully Tweeted Job Posting"
-    redirect_to :eprofile
+    redirect_to eprofile_path
   end
 
   def add_job

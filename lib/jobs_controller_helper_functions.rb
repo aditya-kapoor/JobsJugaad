@@ -24,6 +24,11 @@
     temp
   end
 
+  def return_consolidated_results(temp_jobs)
+    temp_jobs.reject! { |x| x.empty? }
+    temp_jobs.inject { |a,b| a & b } if temp_jobs.any?
+  end
+
   def apply_to_job
     @job_seeker = JobSeeker.find(session[:id])
     authorized_ids = authorized_ids(@job_seeker)

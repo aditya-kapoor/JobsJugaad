@@ -1,7 +1,7 @@
 module SessionsControllerHelperFunctions 
 
   def check_for_activation(class_object, redirection)
-    if class_object.activated
+    if class_object.activated?
       session[:id] = @class_object.id
       session[:user_type] = params[:user_type] #params[:user_type]
       redirect_to redirection

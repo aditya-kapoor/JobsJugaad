@@ -1,4 +1,4 @@
-require_relative '../../lib/sessions_controller_helper_functions'
+require'sessions_controller_helper_functions'
 class SessionsController < ApplicationController
 
   include SessionsControllerHelperFunctions

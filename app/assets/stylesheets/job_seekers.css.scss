@@ -1,7 +1,3 @@
-// Place all the styles related to the JobSeekers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 fieldset {
   background-color: #E1E2DB;
   width: 750px;
@@ -17,22 +13,33 @@ fieldset {
   }
 }
 
+.container { 
+  margin-top: 200px;
+}
+
 .upload-class {
   background-color: white;
 }
-
 div#upload-resume-div {
   display:none;
+  background: black;
+  width: 100%;
+  height: 100%;
   position: fixed;
-  z-index: 1 !important;
-  top: 250px;
+  z-index: 999;
+  top: 0px;
+  opacity: 0.90
 }
 
 div#upload-photo-div {
   display:none;
+  background: black;
+  width: 100%;
+  height: 100%;
   position: fixed;
-  z-index: 1 !important;
-  top: 250px;
+  z-index: 999;
+  top: 0px;
+  opacity: 0.90
 }
 
 div.close-div {

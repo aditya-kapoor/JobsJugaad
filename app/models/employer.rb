@@ -1,8 +1,10 @@
+require_relative '../../lib/twitter'
 class Employer < ActiveRecord::Base
+  include TwitterClone
   attr_accessible :name, :email, :website, :description, 
                   :password, :password_confirmation, :photo,
-                  :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
-                  :auth_token, :activated, :password_reset_token
+                  :photo_file_name, :photo_content_type, :photo_file_size, 
+                  :photo_updated_at, :auth_token, :activated, :password_reset_token
 
   has_many :jobs, :dependent => :destroy
   has_secure_password

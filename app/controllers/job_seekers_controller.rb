@@ -1,4 +1,4 @@
-require_relative '../../lib/job_seekers_helper_functions'
+require 'job_seekers_helper_functions'
 class JobSeekersController < ApplicationController
 
   include JobSeekersControllerHelperFunctions
