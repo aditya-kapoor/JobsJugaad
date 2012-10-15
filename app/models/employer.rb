@@ -16,6 +16,7 @@ class Employer < ActiveRecord::Base
   validates :password_confirmation, :presence => true, :if => :password 
   
   validates :email, :presence => true, :uniqueness => true
+  #FIXME_AB: These regexps are being repeated. We can extract them as a hash constant and use them everywhere. PATTERNS = {:email => /fsaffsdfsafsadfas/ }
   validates_format_of :email,
     :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
     :message => "Doesn't Looks the correct email ID", :unless => proc { |user| user.email.blank? }
@@ -34,12 +35,14 @@ class Employer < ActiveRecord::Base
     :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
 
+  #FIXME_AB: These keys should also be moved to hash based on environments.
   CONSUMER_KEY = "eZ17eRpN1In39HuCfM5WA"
   CONSUMER_SECRET = "SfXvytpQro7PctvJhFAEbxjiY5uTT6ICqc52gzwQxMc"
 
   after_create :send_authentication_email
   
   def send_authentication_email
+    #FIXME_AB: shouldn't be confirmation mail. Method name says authentication mail and you are calling activation_mail
     self.send_activation_mail
   end
 end

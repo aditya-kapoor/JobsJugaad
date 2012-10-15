@@ -5,12 +5,14 @@ class EmployersController < ApplicationController
   before_filter :remove_params, :only => [:update]
   @@request_token = ""
 
+  #FIXME_AB: authorize
   def is_valid_access?
     if session[:id].nil? 
       redirect_to root_path , :notice => "You are not currently logged into the system..."
     end
   end
 
+  #FIXME_AB: authorize_user
   def is_valid_user?
     unless params[:id].to_s == session[:id].to_s && session[:user_type] == "employer"
       flash[:error] = "You are not authorised to do this"
@@ -18,12 +20,14 @@ class EmployersController < ApplicationController
     end
   end
 
+  #FIXME_AB: Why? why don't you protect this attribute
   def remove_params
     if params[:employer][:email].present?
       params[:employer].delete('email')
     end
   end
 
+  #FIXME_AB: what if not found?
   def profile
     @employer = Employer.find(session[:id])
   end
@@ -36,9 +40,11 @@ class EmployersController < ApplicationController
     @employer = Employer.find_by_id(params[:id])
     
     respond_to do |format|
+      #FIXME_AB: Don't you think this if-else and redirect thing should go in before_filter.
       if(@employer)
         format.html
       else
+        #FIXME_AB: No message for user.
         format.html { redirect_to root_url }
       end
     end
@@ -64,6 +70,7 @@ class EmployersController < ApplicationController
   end
 
   def new
+    #FIXME_AB: Use proper variable names
     @class_object = Employer.new
   end
 

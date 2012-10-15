@@ -12,6 +12,7 @@ class Job < ActiveRecord::Base
   # has_many :xyz, :as => :skillable, :dependent => :destroy
   # has_many :skills, :through => :xyz
 
+  #FIXME_AB: skillsassociation or skills_associations
   has_many :skillsassociation, :as => :skillable, :dependent => :destroy
   has_many :skills, :through => :skillsassociation
 
@@ -30,8 +31,9 @@ class Job < ActiveRecord::Base
   validates :title, :uniqueness => { :scope => [ :description, :location, :salary_min, 
                   :salary_max, :salary_type, :employer_id ], :message => "You have already entered this job" }
 
+  #FIXME_AB: is this working fine. Dont we need % signs
   scope :location, lambda { |place| where("location like ?", "#{place}")}
-
+  #FIXME_AB: I don't see any need of this scope. Same can be achieved by other two scopes Job.salary_minimum.salary_maximum
   scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? or salary_max >= ?", min.to_i, max.to_i)   }
 
   scope :salary_minimum, lambda { |min=0| where("salary_min >= ? ", min.to_i) }
@@ -40,8 +42,10 @@ class Job < ActiveRecord::Base
 
   scope :salary_type, lambda { |type| where("salary_type = ?", type)}
 
+  #FIXME_AB: I really don't understand use of the following hash
   SALARY_TYPE = { 'pm' => "pm", "LPA" => "LPA" }
 
+  #FIXME_AB: if getter and setter are defined in a module then why can't we move following two methods to the same module.
   def skill_name
     get_skill_set
   end
@@ -49,4 +53,5 @@ class Job < ActiveRecord::Base
   def skill_name=(skill_arr)
     set_skill_set(skill_arr)
   end
+
 end

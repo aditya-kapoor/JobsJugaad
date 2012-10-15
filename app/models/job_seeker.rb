@@ -1,4 +1,5 @@
 class JobSeeker < ActiveRecord::Base
+  #FIXME_AB: Why dont just protect the required one. use attr_protected
   attr_accessible :name, :email, :gender, :date_of_birth, 
                   :password, :password_confirmation, :auth_token,
                   :location, :mobile_number, :skill_name, :experience,
@@ -14,6 +15,7 @@ class JobSeeker < ActiveRecord::Base
   # has_many :xyz, :as => :skillable, :dependent => :destroy
   # has_many :skills, :through => :xyz
 
+#FIXME_AB: skillsassociation => skills_association
   has_many :skillsassociation, :as => :skillable, :dependent => :destroy
   has_many :skills, :through => :skillsassociation
 
@@ -48,10 +50,11 @@ class JobSeeker < ActiveRecord::Base
   validates :password_confirmation, :presence => true, :if => :password
 
   validates :mobile_number, :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, :length => { :is => 10 }, :allow_blank => true
-
+  #FIXME_AB: You can club most of the presence validations into one.
   validates :gender, :presence => true
 
   def skill_name
+    #FIXME_AB: Why self. ? Don't you read ruby?
     self.get_skill_set
   end
 
@@ -65,7 +68,10 @@ class JobSeeker < ActiveRecord::Base
     self.send_activation_mail
   end
 
+  #FIXME_AB: As a good practice put all constants, validation, associations, callbacks grouped together and  put them on the top of file i.e. before start defining methods
+  #FIXME_AB: You can use F, M , O
   GENDER = { 'Male' => 1, 'Female' => 2, 'Others' => 3 }
+
 
   INDUSTRY = {
     "IT" => "IT",

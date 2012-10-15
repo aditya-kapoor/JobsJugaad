@@ -1,3 +1,4 @@
+#FIXME_AB: Should't it be namespaced?
 class AdminController < ApplicationController
   
   def index
