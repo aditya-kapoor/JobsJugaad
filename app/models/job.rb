@@ -32,7 +32,7 @@ class Job < ActiveRecord::Base
 
   scope :location, lambda { |place| where("location like ?", "#{place}")}
 
-  scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? or salary_max >= ?", min.to_i, max.to_i)   }
+  scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? and salary_max >= ?", min.to_i, max.to_i)   }
 
   scope :salary_minimum, lambda { |min=0| where("salary_min >= ? ", min.to_i) }
 
