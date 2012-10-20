@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Skillsassociation do
+describe SkillsAssociation do
   include ValidAttributeCollection
   before(:each) do
-    @skillsAssociation = Skillsassociation.new
+    @skillsAssociation = SkillsAssociation.new
   end
 
   describe "Relationships" do 

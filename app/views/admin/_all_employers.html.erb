@@ -1,21 +1,23 @@
 <% if @employers.empty? %>
   <p> No Employers have registered on Jobs Jugaad Yet!!!</p>
 <% else %>
-  <table id="all-employers">
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Email</th>
-      <th>Website</th>
-    </tr>
-    <% @employers.each do |employer| %>
-    <tr>
-      <td><%= link_to employer.name, employer %></td>
-      <td><%= employer.description %></td>
-      <td><%= employer.email %></td>
-      <td><%= link_to employer.website, employer.website %></td>
-      <td><%= link_to 'Delete Employer', employer, :method => :delete, :confirm => "Are You Sure to delete this employer?" %></td>
-    </tr>
-    <% end %>
-  </table>
+  <div id="all-employers">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Email</th>
+        <th>Website</th>
+      </tr>
+      <% @employers.each do |employer| %>
+      <tr>
+        <td><%= link_to employer.name, employer %></td>
+        <td><%= employer.description %></td>
+        <td><%= employer.email %></td>
+        <td><%= link_to employer.website, employer.website %></td>
+        <td><%= link_to 'Delete Employer', employer, :method => :delete, :confirm => "Are You Sure to delete this employer?" %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
 <% end %>

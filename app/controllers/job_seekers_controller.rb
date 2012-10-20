@@ -6,7 +6,6 @@ class JobSeekersController < ApplicationController
   before_filter :is_valid_access?, :except => [:new, :forgot_password, :update, :autocomplete_skill_name]
   # skip_before_filter :is_valid_access?
   before_filter :is_authorised_access?, :only => [:edit, :update]
-  before_filter :remove_params, :only => [:update]
   autocomplete :skill, :name
   
   def is_authorised_access?
@@ -20,16 +19,8 @@ class JobSeekersController < ApplicationController
       redirect_to root_path , :notice => "You are not currently logged into the system..." 
     else
       if session['user_type'] == 'employer'
-        unless employer_authorised_to_see_profile?
-          redirect_to root_path, :notice => "You are not allowed to see this particular profile"
-        end
+        check_if_employer_can_see_job_seeker_profile?
       end
-    end
-  end
-
-  def remove_params
-    if params[:job_seeker][:email].present?
-      params[:job_seeker].delete('email')
     end
   end
 
@@ -48,7 +39,7 @@ class JobSeekersController < ApplicationController
     @job_seeker = JobSeeker.find(params[:id])
     
     respond_to do |format|
-      if @job_seeker.update_attributes(params[:job_seeker])
+      if @job_seeker.update_attributes(params[:job_seeker].except(:email))
         format.html { redirect_to profile_path, notice: 'Your profile has been successfully updated.' }
       else
         format.html { render action: "edit" }
@@ -78,7 +69,11 @@ class JobSeekersController < ApplicationController
   end
 
   def new
-    @class_object = JobSeeker.new
+    @job_seeker = JobSeeker.new
+    respond_to do |format|
+      format.html { render "new", :locals => { :@class_object => @job_seeker } }
+
+    end
   end
 
   def profile

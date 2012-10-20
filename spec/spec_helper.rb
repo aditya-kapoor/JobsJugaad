@@ -41,9 +41,8 @@ end
 
 module ValidAttributeCollection
   def valid_job_seeker_attributes
-    { :name => "Testing Job Seeker", 
-      :email => "testing@testing.com",
-      :gender => "Male", 
+    { :name => "Testing Job Seeker",
+      :gender => 1, 
       :date_of_birth => "01/01/1990", 
       :password => "123456",
       :password_confirmation => "123456", 
@@ -66,7 +65,6 @@ module ValidAttributeCollection
   def valid_employer_attributes
     {
     :name => "Testing Employer", 
-    :email => "employer@testing.com",
     :website => "http://testing.com",
     :description => "This is the test description for the testing employer",
     :password => "123456",

@@ -28,7 +28,9 @@ module SessionsControllerHelperFunctions
   end
 
   def save_credentials(class_name, registration_stuff, template)
-    @class_object = class_name.constantize.new(registration_stuff)
+    @class_object = class_name.constantize.new
+    @class_object.email = registration_stuff['email']
+    @class_object.assign_attributes(registration_stuff.except(:email))
     respond_to do |format|
       if @class_object.save
         format.html { 

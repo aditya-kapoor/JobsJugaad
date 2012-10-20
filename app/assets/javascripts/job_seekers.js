@@ -1,6 +1,7 @@
 $('document').ready(function(){
+
   $('#profile-info-legend').click(function(){
-    $('#profile-container').slideToggle("slow")  
+    $('#profile-container').slideToggle("slow")
   })
   
   $('#jobs-applied-legend').click(function(){

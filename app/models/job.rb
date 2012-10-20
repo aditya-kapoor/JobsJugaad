@@ -1,4 +1,7 @@
+require 'global_funcs'
+
 class Job < ActiveRecord::Base
+  include CommonSkillFunctions
   attr_accessible :title, :description, :location, :salary_min, 
                   :salary_max, :salary_type, :skill_name
   
@@ -7,13 +10,8 @@ class Job < ActiveRecord::Base
   has_many :job_applications, :dependent => :destroy
   has_many :job_seekers, :through => :job_applications #has-many through
   
-  # has_many :skills, :as => :key_skill, :dependent => :destroy
-  
-  # has_many :xyz, :as => :skillable, :dependent => :destroy
-  # has_many :skills, :through => :xyz
-
-  has_many :skillsassociation, :as => :skillable, :dependent => :destroy
-  has_many :skills, :through => :skillsassociation
+  has_many :skills_association, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :skills_association
 
   validates :title, :presence => true
 
@@ -30,15 +28,17 @@ class Job < ActiveRecord::Base
   validates :title, :uniqueness => { :scope => [ :description, :location, :salary_min, 
                   :salary_max, :salary_type, :employer_id ], :message => "You have already entered this job" }
 
-  scope :location, lambda { |place| where("location like ?", "#{place}")}
+  scope :location, lambda { |place| where("location like ?", "#{place}%")}
 
-  scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? and salary_max >= ?", min.to_i, max.to_i)   }
+  # scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? and salary_max >= ?", min.to_i, max.to_i)   }
 
-  scope :salary_minimum, lambda { |min=0| where("salary_min >= ? ", min.to_i) }
+  # scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? or salary_max >= ?", min.to_i, max.to_i)   }
 
-  scope :salary_maximum, lambda { |max=0| where("salary_max <= ?", max.to_i) }
+  scope :salary_minimum, lambda { |min=0| where("salary_min <= ? ", min.to_i) }
 
-  scope :salary_type, lambda { |type| where("salary_type = ?", type)}
+  scope :salary_maximum, lambda { |max=0| where("salary_max >= ?", max.to_i) }
+
+  scope :salary_type, lambda { |type| where("salary_type = ?", "#{type}%")}
 
   SALARY_TYPE = { 'pm' => "pm", "LPA" => "LPA" }
 

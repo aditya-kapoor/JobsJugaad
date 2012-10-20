@@ -21,10 +21,13 @@ describe JobApplication do
   describe "Validations" do 
     before(:each) do 
       @job = Job.create(valid_job_attributes)
-      @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+      @job_seeker = JobSeeker.new(valid_job_seeker_attributes)
+      @job_seeker.email = "abc@gmail.com"
+      @job_seeker.save
       @job_seeker.jobs << @job
     end
     it "Interview cannot be in the past" do
+      @job_application = @job_seeker.job_applications.first
       @job_application.attributes = valid_job_application_attributes.with(:interview_on => Date.parse("28/10/2011"))
       @job_application.should have(1).error_on(:interview_on)
       @job_application.errors[:interview_on].should eq(["cannot be scheduled in past"])
@@ -33,13 +36,13 @@ describe JobApplication do
       @job_application = @job_seeker.job_applications.first
       @job_application.attributes = valid_job_application_attributes.with(:interview_on => "2222/2222/111121")
       @job_application.should have(1).error_on(:interview_on)
-      @job_application.errors[:interview_on].should eq(["must be Entered in correct format"])
+      @job_application.errors[:interview_on].should eq(["must be Entered correctly"])
     end
     it "Date should not be null" do 
       @job_application = @job_seeker.job_applications.first
       @job_application.attributes = valid_job_application_attributes.except(:interview_on)
       @job_application.should have(1).error_on(:interview_on)
-      @job_application.errors[:interview_on].should eq(["must be Entered in correct format"])
+      @job_application.errors[:interview_on].should eq(["must be Entered correctly"])
     end
     it "Valid Interview Date" do
       @job_application.attributes = valid_job_application_attributes.with(:interview_on => "28/12/2012")

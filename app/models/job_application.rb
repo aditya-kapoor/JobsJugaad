@@ -4,18 +4,21 @@ class JobApplication < ActiveRecord::Base
   belongs_to :job
   belongs_to :job_seeker
   
-  validate :interview_on_cannot_be_in_past, :if => :interview_on
-  validate :correct_interview_on_format, :on => :update
+  validate :validate_interview_schedule, :on => :update
+  # validate :validate_interview_schedule, :unless => proc { |application| application.interview_on.blank? }
 
-  def interview_on_cannot_be_in_past
+  def validate_interview_schedule
+    unless interview_on
+      errors.add(:interview_on, "must be Entered correctly")
+    else
+      check_for_past_date
+    end
+  end
+
+  def check_for_past_date
     if interview_on < Date.today
       errors.add(:interview_on, "cannot be scheduled in past")
     end
   end
 
-  def correct_interview_on_format
-    if interview_on.nil?
-      errors.add(:interview_on, "must be Entered in correct format")
-    end
-  end
 end

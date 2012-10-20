@@ -1,7 +1,6 @@
-class CreateSkillsassociations < ActiveRecord::Migration
+class CreateSkillsAssociations < ActiveRecord::Migration
   def change
-    create_table :skillsassociations do |t|
-
+    create_table :skills_associations do |t|
       t.integer :skillable_id
       t.string :skillable_type
       t.integer :skill_id

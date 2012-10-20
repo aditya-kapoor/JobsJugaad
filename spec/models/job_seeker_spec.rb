@@ -18,7 +18,8 @@ describe JobSeeker do
   describe "Relationships" do
     
     before(:each) do
-      @employer = Employer.create(valid_employer_attributes)
+      @employer = Employer.new
+      @employer.save(:validate => false)
       @job = @employer.jobs.create(valid_job_attributes)
       @job1 = @employer.jobs.create(valid_job_attributes.with(:title => "Testing Job 2"))
       @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
@@ -50,7 +51,7 @@ describe JobSeeker do
         @job_seeker.should respond_to(:skills)
       end
       it "should have a number of skill associations (XYZ)" do 
-        @job_seeker.should respond_to(:skillsassociation)
+        @job_seeker.should respond_to(:skills_association)
       end
       it "should have a number of skills" do
         @job_seeker.should have(0).error_on(:skills)
@@ -60,7 +61,7 @@ describe JobSeeker do
         @job_seeker.should have(0).error_on(:skills)
       end
       it "Once Job Seeker is destroyed all its skills are removed from skills associations" do
-        associated_skills = @job_seeker.skillsassociation
+        associated_skills = @job_seeker.skills_association
         @job_seeker.destroy
         associated_skills.should be_empty
       end
@@ -72,9 +73,6 @@ describe JobSeeker do
     it "It can be instantiated" do
       JobSeeker.new.should be_an_instance_of(JobSeeker)
     end
-    it "cannot be saved successfully" do
-      JobSeeker.create.should_not be_persisted
-    end
     it "name should not be nil" do
       @job_seeker.attributes = valid_job_seeker_attributes.except(:name)
       @job_seeker.should have(1).error_on(:name)
@@ -85,26 +83,30 @@ describe JobSeeker do
       @job_seeker.should have(0).error_on(:name)
     end
     it "Invalid Email Format" do
-      @job_seeker.attributes = valid_job_seeker_attributes.with(:email => "abc@cde")
+      @job_seeker.attributes = valid_job_seeker_attributes
+      @job_seeker.email = "abc@cde"
       @job_seeker.should have(1).error_on(:email)
       @job_seeker.errors[:email].should eq(["Doesn't Looks the correct email ID"])
     end
     it "Email Should not be null" do
-      @job_seeker.attributes = valid_job_seeker_attributes.except(:email)
+      @job_seeker.attributes = valid_job_seeker_attributes
       @job_seeker.should have(1).error_on(:email)
       @job_seeker.errors[:email].should eq(["can't be blank"])
     end
     it "Email must be unique" do
       @job_seeker.attributes = valid_job_seeker_attributes
+      @job_seeker.email = "testing@testing.com"
       @job_seeker.save
       @job_seeker1 = JobSeeker.new()
       @job_seeker1.attributes = valid_job_seeker_attributes
+      @job_seeker1.email = "testing@testing.com"
       @job_seeker1.save
       @job_seeker1.should have(1).error_on(:email)
       @job_seeker1.errors[:email].should eq(["has already been taken"])
     end
     it "Valid Email" do
-      @job_seeker.attributes = valid_job_seeker_attributes.only(:email)
+      @job_seeker.attributes = valid_job_seeker_attributes
+      @job_seeker.email = "testing@testing.com"
       @job_seeker.should have(0).error_on(:email)
     end
     # it "password should not be blank" do
@@ -113,9 +115,9 @@ describe JobSeeker do
     #   @job_seeker.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
     # end
     it "password confirmation should not be blank" do
-      @job_seeker.attributes = valid_job_seeker_attributes.except(:password_confirmation)
-      @job_seeker.should have(1).error_on(:password_confirmation)
-      @job_seeker.errors[:password_confirmation].should eq(["can't be blank"])
+      @job_seeker.attributes = valid_job_seeker_attributes.with(:password_confirmation => "")
+      @job_seeker.should have(1).error_on(:password)
+      @job_seeker.errors[:password].should eq(["doesn't match confirmation"])
     end
     it "password should have at least six characters" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password => "1234")
@@ -189,6 +191,8 @@ describe JobSeeker do
     describe "After Create" do 
       it "should receive a mail and authentication token" do
         @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+        @job_seeker.email = "testing@testing.com"
+        @job_seeker.save
         @job_seeker.auth_token.should_not be_nil
       end
     end

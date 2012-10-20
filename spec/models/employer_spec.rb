@@ -8,35 +8,34 @@ describe Employer do
 
   describe "Relationships" do 
     before(:each) do
-      @employer = Employer.new
-      @employer1 = Employer.create(valid_employer_attributes)
-      @job1 = @employer1.jobs.create(valid_job_attributes)
-      @job2 = @employer1.jobs.create(valid_job_attributes.with(:title => "Testing Job 1"))
+      @employer.save(:validate => false)
+      @job1 = @employer.jobs.create(valid_job_attributes)
+      @job2 = @employer.jobs.create(valid_job_attributes.with(:title => "Testing Job 1"))
     end
 
     it "should have a number of jobs" do 
-      @employer1.should respond_to(:jobs)
-      @employer1.should have(0).error_on(:jobs)
+      @employer.should respond_to(:jobs)
+      @employer.should have(0).error_on(:jobs)
     end
 
     it "Should have more than one jobs" do
-      @employer1.should have(0).error_on(:jobs)
+      @employer.should have(0).error_on(:jobs)
     end
 
     it "should return an array of jobs" do
-      @employer1.jobs.should eq([@job1, @job2])
+      @employer.jobs.should eq([@job1, @job2])
     end
 
     it "The Employer Once deleted must have all the jobs deleted " do
-      jobs_of_employer = @employer1.jobs
-      @employer1.destroy
+      jobs_of_employer = @employer.jobs
+      @employer.destroy
       Job.all.should_not include(jobs_of_employer)
     end
 
     it "should post unique jobs on the portal" do
-      @job3 = @employer1.jobs.create(valid_job_attributes)
-      @employer1.should have(1).error_on(:jobs)
-      @employer1.errors[:jobs].should eq(["is invalid"])
+      @job3 = @employer.jobs.create(valid_job_attributes)
+      @employer.should have(1).error_on(:jobs)
+      @employer.errors[:jobs].should eq(["is invalid"])
     end
   end
 
@@ -58,7 +57,7 @@ describe Employer do
       @employer.should have(0).error_on(:name)
     end
     it "Invalid Email Format" do
-      @employer.attributes = valid_employer_attributes.with(:email => "abc@cde")
+      @employer.email = "abc@cde"
       @employer.should have(1).error_on(:email)
       @employer.errors[:email].should eq(["Doesn't Looks the correct email ID"])
     end
@@ -69,15 +68,17 @@ describe Employer do
     end
     it "Email must be unique" do
       @employer.attributes = valid_employer_attributes
+      @employer.email = "abc@cde.com"
       @employer.save
       @employer1 = Employer.new()
       @employer1.attributes = valid_employer_attributes
+      @employer1.email = "abc@cde.com"
       @employer1.save
       @employer1.should have(1).error_on(:email)
       @employer1.errors[:email].should eq(["has already been taken"])
     end
     it "Valid Email" do
-      @employer.attributes = valid_employer_attributes.only(:email)
+      @employer.email = "abc@cde.com"
       @employer.should have(0).error_on(:email)
     end
     it "password should not be blank" do
@@ -86,9 +87,9 @@ describe Employer do
       @employer.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
     end
     it "password confirmation should not be blank" do
-      @employer.attributes = valid_employer_attributes.except(:password_confirmation)
-      @employer.should have(1).error_on(:password_confirmation)
-      @employer.errors[:password_confirmation].should eq(["can't be blank"])
+      @employer.attributes = valid_employer_attributes.with(:password_confirmation => "789121")
+      @employer.should have(1).error_on(:password)
+      @employer.errors[:password].should eq(["doesn't match confirmation"])
     end
     it "password should have at least six characters" do
       @employer.attributes = valid_employer_attributes.with(:password => "1234")
@@ -128,7 +129,9 @@ describe Employer do
   describe "Callbacks" do
     describe "After Create" do
       it "should receive a mail and an auth token" do
-        @employer = Employer.create(valid_employer_attributes)
+        @employer.attributes = valid_employer_attributes
+        @employer.email = "abc@cde.com"
+        @employer.save
         @employer.auth_token.should_not be_nil
       end
     end

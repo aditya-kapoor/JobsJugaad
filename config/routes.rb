@@ -1,5 +1,5 @@
 JobsJugaad::Application.routes.draw do
-
+  
   match "/auth/twitter/callback" => "employers#post_to_twitter"
 
   resources :job_seekers, :controller => "job_seekers", :except => [:new]
@@ -92,6 +92,6 @@ JobsJugaad::Application.routes.draw do
       get "change_password" => "sessions#change_password"
     end
   end
-
   root :to => 'home#index'
+ 
 end

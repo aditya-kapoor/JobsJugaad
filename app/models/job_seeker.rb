@@ -1,5 +1,10 @@
+require 'validation_patterns'
+require 'global_funcs'
 class JobSeeker < ActiveRecord::Base
-  attr_accessible :name, :email, :gender, :date_of_birth, 
+  include ValidationPatterns
+  include CommonSkillFunctions
+  attr_protected :email
+  attr_accessible :name, :gender, :date_of_birth,
                   :password, :password_confirmation, :auth_token,
                   :location, :mobile_number, :skill_name, :experience,
                   :industry, :photo, :resume, :activated, :password_reset_token,
@@ -10,16 +15,15 @@ class JobSeeker < ActiveRecord::Base
 
   has_many :job_applications, :dependent => :destroy
   has_many :jobs, :through => :job_applications # has-many through
-  
-  # has_many :xyz, :as => :skillable, :dependent => :destroy
-  # has_many :skills, :through => :xyz
 
-  has_many :skillsassociation, :as => :skillable, :dependent => :destroy
-  has_many :skills, :through => :skillsassociation
+  has_secure_password
+
+  has_many :skills_association, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :skills_association
 
   has_attached_file :resume
   validates :resume_file_name, :allow_blank => true, :format => {
-    :with => %r{[.](pdf|docx|doc|txt)$}i, 
+    :with => PATTERNS['resume'], 
     :message => "Invalid Resume Format: Allowed Formats Are Only in PDF, DOCx, Doc and Text"
   }
   
@@ -28,42 +32,40 @@ class JobSeeker < ActiveRecord::Base
 
   validates_attachment_size :photo, :less_than => 6.megabytes, :message => "Must be less than 6 MB"
   validates :photo_file_name, :allow_blank => true, :format => {
-    :with => %r{[.](jpg|jpeg|png|ico|gif)$}i, 
+    :with => PATTERNS['photo'],
     :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
   
-  has_secure_password
   validates :name, :email, :presence  => true
-
+  validates :gender, :inclusion => 1..3
   validates :email, :uniqueness => true, :unless => proc { |user| user.email.blank? }
   validates_format_of :email,
-    :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+    :with => PATTERNS['email'],
     :message => "Doesn't Looks the correct email ID", 
     :unless => proc { |user| user.email.blank? }
 
   validates :password, :presence => true, :if => :password
   validates :password, :length => { :minimum => 6 }, 
             :unless => proc { |user| user.password.blank? }
-  
-  validates :password_confirmation, :presence => true, :if => :password
+  validates :password_confirmation, :presence => true, :unless => proc { |job_seeker| job_seeker.password.blank? } 
 
   validates :mobile_number, :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, :length => { :is => 10 }, :allow_blank => true
 
-  validates :gender, :presence => true
-
   def skill_name
-    self.get_skill_set
+    get_skill_set
   end
 
   def skill_name=(skill_arr)
-    self.set_skill_set(skill_arr)
+    set_skill_set(skill_arr)
   end
 
-  after_create :send_authentication_email
+  after_create :send_confirmation_email
   
-  def send_authentication_email
-    self.send_activation_mail
+  def send_confirmation_email
+   send_confirmation_mail_with_link
   end
+
+  #FIXME_AB: As a good practice put all constants, validation, associations, callbacks grouped together and put them on the top of file i.e. before start defining methods
 
   GENDER = { 'Male' => 1, 'Female' => 2, 'Others' => 3 }
 

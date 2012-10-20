@@ -43,4 +43,8 @@
     redirect_to :profile
   end
 
+  def authorized_ids(job_seeker)
+    job_seeker.job_ids  
+  end
+
 end

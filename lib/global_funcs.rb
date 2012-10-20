@@ -1,11 +1,5 @@
-public
-
-  def check_image_type
-    unless ['image/jpeg', 'image/png', 'image/bmp', 'image/gif'].include?(self.photo_content_type)
-      errors.add('attachment', "#{self.photo_file_name} is not a valid image type" )
-    end
-  end
-
+module CommonSkillFunctions
+  
   def get_skill_set
     self.skills.collect(&:name).join(", ")
   end
@@ -26,8 +20,9 @@ public
       self.skills << sk   
     end
   end
+end
 
-  def send_activation_mail
+  def send_confirmation_mail_with_link
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)
     Notifier.activate_user(self, auth_token).deliver

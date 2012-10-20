@@ -18,7 +18,7 @@ describe Skill do
       @job1.skills << @skill
     end
     it "should have skills associations method" do
-      @skill.should respond_to(:skillsassociation)
+      @skill.should respond_to(:skills_association)
     end
     
     it "should have jobs method" do

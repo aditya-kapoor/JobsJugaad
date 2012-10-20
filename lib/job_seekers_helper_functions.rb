@@ -18,4 +18,28 @@ module JobSeekersControllerHelperFunctions
       check_for_already_applied 
     end
   end
+
+  def check_if_employer_can_see_job_seeker_profile?
+    unless employer_authorised_to_see_profile?
+      flash[:error] = "You are not allowed to see this particular profile"
+      redirect_to root_path
+    end
+  end
+
+  def employer_authorised_to_see_profile?    
+    employer = Employer.find(session[:id])
+    if(get_authorized_ids(employer).include?(params["id"].to_i))
+      return true
+    else 
+      return false
+    end
+  end
+
+  def get_authorized_ids(employer)
+    authorized_ids = []
+    employer.jobs.each do |job|
+      authorized_ids.concat(job.job_seeker_ids)
+    end
+    return authorized_ids
+  end
 end

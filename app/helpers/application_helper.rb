@@ -32,7 +32,7 @@ module ApplicationHelper
 
   def current_user
     if session[:id] && session[:user_type] == 'job_seeker'
-      @current_job_seeker ||= JobSeeker.find(session[:id])
+      @current_job_seeker ||= JobSeeker.find_by_id(session[:id])
     elsif session[:id] && session[:user_type] == 'employer'
       # Don't use joins as it would generate an error
       @current_employer ||= Employer.includes(:jobs).find(session[:id])

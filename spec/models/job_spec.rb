@@ -59,7 +59,7 @@ describe Job do
         @job.should respond_to(:skills)
       end
       it "should have a number of skill associations (XYZ)" do 
-        @job.should respond_to(:skillsassociation)
+        @job.should respond_to(:skills_association)
       end
       it "should have a number of skills" do
         @job.should have(0).error_on(:skills)
@@ -69,7 +69,7 @@ describe Job do
         @job.should have(0).error_on(:skills)
       end
       it "Once Job Seeker is destroyed all its skills are removed from skills associations" do
-        associated_skills = @job.skillsassociation
+        associated_skills = @job.skills_association
         @job.destroy
         associated_skills.should be_empty
       end

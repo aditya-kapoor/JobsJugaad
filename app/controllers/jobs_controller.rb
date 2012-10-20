@@ -5,8 +5,49 @@ class JobsController < ApplicationController
   before_filter :check_for_valid_access, :only => [:view_applicants]
   before_filter :check_unauthorised_access, :only => [:edit, :create, :view_applicants]
   before_filter :check_for_session, :only => [:apply]
+  before_filter :is_job_found, :only => [:edit, :view_applicants, :show]
 
   @@rpp = 10
+
+  def check_unauthorised_access
+    unless session[:user_type] == "employer"
+      flash[:error] = "You are not authorised to do this"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_valid_access
+    employer = Employer.find_by_id(session[:id])
+    if employer && session[:user_type] == "employer"
+      does_job_belongs_to_employer?(employer)
+    else
+      flash[:error] = "You are not logged in as employer"
+      redirect_to root_url
+    end
+  end
+
+  def does_job_belongs_to_employer?(employer)
+    unless employer.job_ids.include?(params[:id].to_i)
+      flash[:error] = "You Don't Own This Job"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_session
+    if session[:id].nil?
+      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
+      redirect_to :root, :notice => "Please Login or Register as the job seeker"
+    end
+  end
+
+  def is_job_found
+    job = Job.find_by_id(params[:id])
+    unless job
+      flash[:error] = "No Job Found"
+      redirect_to root_url
+    end
+  end
+
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
@@ -19,43 +60,12 @@ class JobsController < ApplicationController
     end
   end
 
-  def check_unauthorised_access
-    unless session[:user_type] == "employer"
-      flash[:error] = "You are not authorised to do this"
-      redirect_to root_url
-    end
-  end
-
-  def check_for_valid_access
-    employer = Employer.find_by_id(session[:id])
-    if employer && session[:user_type] == "employer"
-      check_for_security_breach(employer)
-    else
-      flash[:error] = "You are not logged in as employer"
-      redirect_to root_url
-    end
-  end
-
-  def check_for_security_breach(employer)
-    unless employer.jobs.collect(&:id).include?(params[:id].to_i)
-      flash[:error] = "Security Breach Detected"
-      redirect_to root_url
-    end
-  end
-
-  def check_for_session
-    if session[:id].nil?
-      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
-      redirect_to :root, :notice => "Please Login or Register as the job seeker"
-    end
-  end
-
   def edit
     @job = Job.find_by_id(params[:id])
   end
 
   def view_applicants
-    @job = Job.find(params[:id])
+    @job = Job.find_by_id(params[:id])
   end
 
   def show
@@ -92,7 +102,7 @@ class JobsController < ApplicationController
     jobs_by_skills = return_jobs_by_skills unless params[:skills].empty?
     jobs_by_salary = return_jobs_by_salary unless params[:sal_min].empty? && params[:sal_max].empty?
     
-    selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary])
+    selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
     @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
   end
 
