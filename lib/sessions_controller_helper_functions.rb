@@ -42,12 +42,12 @@ module SessionsControllerHelperFunctions
     end    
   end
 
-  def save_password
-    if @object.update_attributes(get_params)
+  def save_password(object)
+    if object.update_attributes(get_params)
       redirect_to get_redirection_route, :notice => "Password has been changed successfully."
     else
       flash[:error] = "There Were Some Errors"
-      render "change_password.html.erb"   
+      redirect_to request.referrer
     end
   end
 

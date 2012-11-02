@@ -2,7 +2,7 @@ JobsJugaad::Application.routes.draw do
   
   match "/auth/twitter/callback" => "employers#post_to_twitter"
 
-  resources :job_seekers, :controller => "job_seekers", :except => [:new]
+  resources :job_seekers, :except => [:new]
   controller 'job_seekers' do
     get "profile" => :profile
     get "register" => :new
@@ -18,23 +18,21 @@ JobsJugaad::Application.routes.draw do
     end
   end
 
-  resources :employers, :controller => "employers", :except => [:new]
+  resources :employers, :except => [:new]
   controller 'employers' do
     get "elogin" => :login
     get "eregister" => :new
     get "eprofile" => :profile
-    # get "add_job" => :add_job
     get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
     get "call_for_interview" => :call_for_interview
-    # get "post_job_on_twitter" => :post_job_on_twitter
   end
 
   resources :jobs do
     member do 
       get "view_applicants" => :view_applicants
       get "post_job_on_twitter" => "employers#post_to_twitter"
-      post "post_tweet" => "employers#post_tweet"
+      get "post_tweet" => "employers#post_tweet"
     end
   end
   
@@ -79,19 +77,20 @@ JobsJugaad::Application.routes.draw do
 
   resources :job_applications, :only => [:update]
   
+  # namespace :admin do
   resources :admin, :except => [:new]
-  
+  # end
+
   controller :admin do
-    # get "admin_login" => :login 
-    # post "admin_login" => :login
     get "admin_profile" => :profile
-    # get "change_admin_password" => :change_password
   end
+
   resources :admin do
     member do 
       get "change_password" => "sessions#change_password"
     end
   end
+  
   root :to => 'home#index'
- 
+
 end

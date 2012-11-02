@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>module JobsHelper - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/helpers/jobs_helper.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-get_submit_label">#get_submit_label</a>
+    
+    <li><a href="#method-i-is_resume_missing-3F">#is_resume_missing?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Admin.html">Admin</a>
+  
+    <li><a href="./AdminController.html">AdminController</a>
+  
+    <li><a href="./AdminHelper.html">AdminHelper</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./CommonSkillFunctions.html">CommonSkillFunctions</a>
+  
+    <li><a href="./Employer.html">Employer</a>
+  
+    <li><a href="./EmployersController.html">EmployersController</a>
+  
+    <li><a href="./EmployersControllerHelperFunctions.html">EmployersControllerHelperFunctions</a>
+  
+    <li><a href="./EmployersHelper.html">EmployersHelper</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./HomeHelper.html">HomeHelper</a>
+  
+    <li><a href="./Job.html">Job</a>
+  
+    <li><a href="./JobApplication.html">JobApplication</a>
+  
+    <li><a href="./JobApplicationsController.html">JobApplicationsController</a>
+  
+    <li><a href="./JobApplicationsHelper.html">JobApplicationsHelper</a>
+  
+    <li><a href="./JobSeeker.html">JobSeeker</a>
+  
+    <li><a href="./JobSeekersController.html">JobSeekersController</a>
+  
+    <li><a href="./JobSeekersControllerHelperFunctions.html">JobSeekersControllerHelperFunctions</a>
+  
+    <li><a href="./JobSeekersHelper.html">JobSeekersHelper</a>
+  
+    <li><a href="./JobsController.html">JobsController</a>
+  
+    <li><a href="./JobsControllerHelperFunctions.html">JobsControllerHelperFunctions</a>
+  
+    <li><a href="./JobsHelper.html">JobsHelper</a>
+  
+    <li><a href="./Notifier.html">Notifier</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsControllerHelperFunctions.html">SessionsControllerHelperFunctions</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Skill.html">Skill</a>
+  
+    <li><a href="./SkillsAssociation.html">SkillsAssociation</a>
+  
+    <li><a href="./SkillsController.html">SkillsController</a>
+  
+    <li><a href="./SkillsHelper.html">SkillsHelper</a>
+  
+    <li><a href="./TwitterClone.html">TwitterClone</a>
+  
+    <li><a href="./ValidationPatterns.html">ValidationPatterns</a>
+  
+    <li><a href="./Xyz.html">Xyz</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module JobsHelper</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-get_submit_label" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_submit_label</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_submit_label-source">
+            <pre><span class="ruby-comment"># File app/helpers/jobs_helper.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_submit_label</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:id</span>].<span class="ruby-identifier">nil?</span> 
+    <span class="ruby-string">&quot;Apply to Job&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;Login to apply to job&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_submit_label-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_submit_label-method -->
+
+    
+      <div id="method-i-is_resume_missing-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_resume_missing?</span><span
+            class="method-args">(url)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_resume_missing-3F-source">
+            <pre><span class="ruby-comment"># File app/helpers/jobs_helper.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_resume_missing?</span>(<span class="ruby-identifier">url</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;/&quot;</span>).<span class="ruby-identifier">pop</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;missing.png&quot;</span>
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_resume_missing-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_resume_missing-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

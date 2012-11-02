@@ -22,17 +22,21 @@ group :assets do
   gem 'bcrypt-ruby', '~> 3.0'
   # gem 'autocomplete'
 end
+
+
   gem 'paperclip', '~> 3.0.0'
   gem 'jquery-rails'
   gem 'kaminari'
   gem "rails3-jquery-autocomplete"
   gem 'validates_timeliness', '~> 3.0'
   gem 'omniauth-twitter'
+  gem 'oauth'
   gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
   gem 'tweet-button'
 
   gem 'simplecov', :require => false, :group => :test
-group :development, :test do
-  # gem 'shoulda'
-  gem 'rspec-rails'
-end
+  
+  group :development, :test do
+    # gem 'shoulda'
+    gem 'rspec-rails'
+  end

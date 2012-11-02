@@ -1,7 +1,6 @@
 module TwitterClone
   CONSUMER_KEY = "eZ17eRpN1In39HuCfM5WA"
   CONSUMER_SECRET = "SfXvytpQro7PctvJhFAEbxjiY5uTT6ICqc52gzwQxMc"
-
   def get_consumer
     consumer = OAuth::Consumer.new( CONSUMER_KEY, CONSUMER_SECRET, 
       :site => "http://api.twitter.com",
@@ -9,15 +8,15 @@ module TwitterClone
       :sign_in => true )
   end
 
-  def generate_request_token
+  def generate_request_token(callback)
     consumer = get_consumer
-    consumer.get_request_token
+    consumer.get_request_token(:oauth_callback => callback)
   end
 
-  def get_authorize_link
-    @@request_token = generate_request_token
-    @@request_token.authorize_url
-  end
+  # def get_authorize_link
+  #   @@request_token = generate_request_token
+  #   @@request_token.authorize_url
+  # end
 
   def configure_twitter(token, secret)
     Twitter.configure do |config|

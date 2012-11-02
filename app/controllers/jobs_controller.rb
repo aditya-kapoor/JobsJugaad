@@ -93,17 +93,26 @@ class JobsController < ApplicationController
   end
 
   def search_results
-    jobs_by_location = []
-    jobs_by_skills = []
-    jobs_by_salary = []
-    selected_jobs = []
+    ActiveSupport::Notifications.instrument("jobs.search", 
+      :search => {
+        :location => params[:location], 
+        :skills => params[:skills], 
+        :salary_min => params[:sal_min], 
+        :salary_max => params[:sal_max],
+        :salary_type => params[:sal_type]
+        }) do
+      jobs_by_location = []
+      jobs_by_skills = []
+      jobs_by_salary = []
+      selected_jobs = []
 
-    jobs_by_location = return_jobs_by_location unless params[:location].empty? 
-    jobs_by_skills = return_jobs_by_skills unless params[:skills].empty?
-    jobs_by_salary = return_jobs_by_salary unless params[:sal_min].empty? && params[:sal_max].empty?
-    
-    selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
-    @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+      jobs_by_location = return_jobs_by_location unless params[:location].empty? 
+      jobs_by_skills = return_jobs_by_skills unless params[:skills].empty?
+      jobs_by_salary = return_jobs_by_salary unless params[:sal_min].empty? && params[:sal_max].empty?
+      
+      selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
+      @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+    end
   end
 
   def destroy

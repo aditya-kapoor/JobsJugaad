@@ -176,6 +176,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jquery-rails
   kaminari
+  oauth
   omniauth-twitter
   paperclip (~> 3.0.0)
   rails (= 3.2.3)

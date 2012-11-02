@@ -70,7 +70,7 @@ class SessionsController < ApplicationController
   def update_password
     @object = params[:user_type].constantize.find(session[:id])
     if @object.authenticate(params[:old_password])
-      save_password
+      save_password(@object)
     else
       flash[:error] = "Invalid Password"
       redirect_to request.referrer

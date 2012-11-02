@@ -90,8 +90,8 @@ class EmployersController < ApplicationController
   def post_to_twitter
     @job = Job.find_by_id(params[:id])
     @employer = Employer.find_by_id(session[:id])
-    @@request_token = @employer.generate_request_token
-    @link = @@request_token.authorize_url
+    @@request_token = @employer.generate_request_token(post_tweet_job_url)
+    redirect_to @@request_token.authorize_url
   end
 
   def post_tweet
@@ -105,6 +105,7 @@ class EmployersController < ApplicationController
     Twitter.update(@job.description)
     flash[:notice] = "Successfully Tweeted Job Posting"
     redirect_to eprofile_path
+
   end
 
   def destroy

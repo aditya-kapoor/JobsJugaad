@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class JobsController - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/controllers/jobs_controller.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="JobsControllerHelperFunctions.html">JobsControllerHelperFunctions</a>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-apply">#apply</a>
+    
+    <li><a href="#method-i-check_for_session">#check_for_session</a>
+    
+    <li><a href="#method-i-check_for_valid_access">#check_for_valid_access</a>
+    
+    <li><a href="#method-i-check_unauthorised_access">#check_unauthorised_access</a>
+    
+    <li><a href="#method-i-create">#create</a>
+    
+    <li><a href="#method-i-destroy">#destroy</a>
+    
+    <li><a href="#method-i-does_job_belongs_to_employer-3F">#does_job_belongs_to_employer?</a>
+    
+    <li><a href="#method-i-edit">#edit</a>
+    
+    <li><a href="#method-i-is_job_found">#is_job_found</a>
+    
+    <li><a href="#method-i-search_results">#search_results</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-update">#update</a>
+    
+    <li><a href="#method-i-view_applicants">#view_applicants</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Admin.html">Admin</a>
+  
+    <li><a href="./AdminController.html">AdminController</a>
+  
+    <li><a href="./AdminHelper.html">AdminHelper</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./CommonSkillFunctions.html">CommonSkillFunctions</a>
+  
+    <li><a href="./Employer.html">Employer</a>
+  
+    <li><a href="./EmployersController.html">EmployersController</a>
+  
+    <li><a href="./EmployersControllerHelperFunctions.html">EmployersControllerHelperFunctions</a>
+  
+    <li><a href="./EmployersHelper.html">EmployersHelper</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./HomeHelper.html">HomeHelper</a>
+  
+    <li><a href="./Job.html">Job</a>
+  
+    <li><a href="./JobApplication.html">JobApplication</a>
+  
+    <li><a href="./JobApplicationsController.html">JobApplicationsController</a>
+  
+    <li><a href="./JobApplicationsHelper.html">JobApplicationsHelper</a>
+  
+    <li><a href="./JobSeeker.html">JobSeeker</a>
+  
+    <li><a href="./JobSeekersController.html">JobSeekersController</a>
+  
+    <li><a href="./JobSeekersControllerHelperFunctions.html">JobSeekersControllerHelperFunctions</a>
+  
+    <li><a href="./JobSeekersHelper.html">JobSeekersHelper</a>
+  
+    <li><a href="./JobsController.html">JobsController</a>
+  
+    <li><a href="./JobsControllerHelperFunctions.html">JobsControllerHelperFunctions</a>
+  
+    <li><a href="./JobsHelper.html">JobsHelper</a>
+  
+    <li><a href="./Notifier.html">Notifier</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsControllerHelperFunctions.html">SessionsControllerHelperFunctions</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Skill.html">Skill</a>
+  
+    <li><a href="./SkillsAssociation.html">SkillsAssociation</a>
+  
+    <li><a href="./SkillsController.html">SkillsController</a>
+  
+    <li><a href="./SkillsHelper.html">SkillsHelper</a>
+  
+    <li><a href="./TwitterClone.html">TwitterClone</a>
+  
+    <li><a href="./ValidationPatterns.html">ValidationPatterns</a>
+  
+    <li><a href="./Xyz.html">Xyz</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class JobsController</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-apply" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">apply</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="apply-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">apply</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_type</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;employer&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:root</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;You are Logged in as employer. Please login as the Job Seeker&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">apply_to_job</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- apply-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- apply-method -->
+
+    
+      <div id="method-i-check_for_session" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_for_session</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_for_session-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_for_session</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:id</span>].<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:job_to_be_added</span>] = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:job_id</span>])
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:root</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Please Login or Register as the job seeker&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_for_session-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_for_session-method -->
+
+    
+      <div id="method-i-check_for_valid_access" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_for_valid_access</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_for_valid_access-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_for_valid_access</span>
+  <span class="ruby-identifier">employer</span> = <span class="ruby-constant">Employer</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">employer</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_type</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;employer&quot;</span>
+    <span class="ruby-identifier">does_job_belongs_to_employer?</span>(<span class="ruby-identifier">employer</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;You are not logged in as employer&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_url</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_for_valid_access-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_for_valid_access-method -->
+
+    
+      <div id="method-i-check_unauthorised_access" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_unauthorised_access</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_unauthorised_access-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_unauthorised_access</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_type</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;employer&quot;</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;You are not authorised to do this&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_url</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_unauthorised_access-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_unauthorised_access-method -->
+
+    
+      <div id="method-i-create" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
+  <span class="ruby-ivar">@employer</span> = <span class="ruby-constant">Employer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@job</span> = <span class="ruby-ivar">@employer</span>.<span class="ruby-identifier">jobs</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:job</span>])
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@job</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:eprofile</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;A new job has been posted successfully&quot;</span> }
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-value">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;employers/add_job&quot;</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Job Could not be saved&quot;</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+      <div id="method-i-destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="destroy-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-ivar">@job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-ivar">@job</span>.<span class="ruby-identifier">destroy</span>
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">referer</span>, <span class="ruby-value">:notice</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Job has been successfully removed&quot;</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- destroy-method -->
+
+    
+      <div id="method-i-does_job_belongs_to_employer-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">does_job_belongs_to_employer?</span><span
+            class="method-args">(employer)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="does_job_belongs_to_employer-3F-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">does_job_belongs_to_employer?</span>(<span class="ruby-identifier">employer</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">employer</span>.<span class="ruby-identifier">job_ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>].<span class="ruby-identifier">to_i</span>)
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;You Don't Own This Job&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_url</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- does_job_belongs_to_employer-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- does_job_belongs_to_employer-3F-method -->
+
+    
+      <div id="method-i-edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="edit-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">edit</span>
+  <span class="ruby-ivar">@job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- edit-method -->
+
+    
+      <div id="method-i-is_job_found" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_job_found</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_job_found-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_job_found</span>
+  <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">job</span>
+    <span class="ruby-identifier">flash</span>[<span class="ruby-value">:error</span>] = <span class="ruby-string">&quot;No Job Found&quot;</span>
+    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">root_url</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- is_job_found-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_job_found-method -->
+
+    
+      <div id="method-i-search_results" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search_results</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="search_results-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search_results</span>
+  <span class="ruby-identifier">jobs_by_location</span> = []
+  <span class="ruby-identifier">jobs_by_skills</span> = []
+  <span class="ruby-identifier">jobs_by_salary</span> = []
+  <span class="ruby-identifier">selected_jobs</span> = []
+
+  <span class="ruby-identifier">jobs_by_location</span> = <span class="ruby-identifier">return_jobs_by_location</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:location</span>].<span class="ruby-identifier">empty?</span> 
+  <span class="ruby-identifier">jobs_by_skills</span> = <span class="ruby-identifier">return_jobs_by_skills</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:skills</span>].<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">jobs_by_salary</span> = <span class="ruby-identifier">return_jobs_by_salary</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sal_min</span>].<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sal_max</span>].<span class="ruby-identifier">empty?</span>
+  
+  <span class="ruby-identifier">selected_jobs</span> = <span class="ruby-identifier">return_consolidated_results</span>([<span class="ruby-identifier">jobs_by_location</span>, <span class="ruby-identifier">jobs_by_skills</span>, <span class="ruby-identifier">jobs_by_salary</span>]) <span class="ruby-operator">||</span> []
+  <span class="ruby-ivar">@jobs</span> = <span class="ruby-constant">Kaminari</span>.<span class="ruby-identifier">paginate_array</span>(<span class="ruby-identifier">selected_jobs</span>).<span class="ruby-identifier">page</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:page</span>]).<span class="ruby-identifier">per</span>(<span class="ruby-identifier">@@rpp</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- search_results-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- search_results-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-ivar">@job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-ivar">@job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@job</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:job</span>])
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:eprofile</span>, <span class="ruby-identifier">notice</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Job was successfully updated.&quot;</span> }
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">action</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;edit&quot;</span> }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- update-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- update-method -->
+
+    
+      <div id="method-i-view_applicants" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">view_applicants</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="view_applicants-source">
+            <pre><span class="ruby-comment"># File app/controllers/jobs_controller.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">view_applicants</span>
+  <span class="ruby-ivar">@job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">find_by_id</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- view_applicants-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- view_applicants-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
