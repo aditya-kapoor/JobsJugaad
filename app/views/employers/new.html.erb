@@ -1,4 +1,4 @@
-<%= form_for(@class_object, :url => { :controller => "sessions", :action => "register" }) do |f| %>
+<%= form_for(@class_object, :url => "register" ) do |f| %>
   <% if @class_object.errors.any? %>
     <div class="error_messages">
      <h2><%= pluralize(@class_object.errors.count, "error") %> prohibited the details from being saved:</h2>

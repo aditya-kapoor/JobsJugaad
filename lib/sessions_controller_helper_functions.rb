@@ -37,7 +37,7 @@ module SessionsControllerHelperFunctions
           redirect_to root_path, 
           notice: "#{class_name.to_s.capitalize} Account was successfully created. A verification mail has been sent to your email so that we can identify you.." }
       else
-        format.html { render template: template }
+        format.html { render :template => template }
       end
     end    
   end

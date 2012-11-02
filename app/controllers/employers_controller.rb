@@ -91,21 +91,24 @@ class EmployersController < ApplicationController
     @job = Job.find_by_id(params[:id])
     @employer = Employer.find_by_id(session[:id])
     @@request_token = @employer.generate_request_token(post_tweet_job_url)
-    redirect_to @@request_token.authorize_url
+    token, secret = @employer.check_for_existing_tokens(@@request_token)
+    if token && secret
+      @employer.configure_twitter(token, secret)
+      update_tweet_on_timeline(@job.description)
+    else
+      redirect_to @@request_token.authorize_url
+    end
   end
 
   def post_tweet
     @employer = Employer.find_by_id(session[:id])
     @job = Job.find_by_id(params[:id])
-    oauth_verifier = params[:oauth_verifier]
-    access_token = @@request_token.get_access_token(:oauth_verifier => oauth_verifier )
-    token = access_token.token
-    secret = access_token.secret
-    @employer.configure_twitter(token, secret)
-    Twitter.update(@job.description)
-    flash[:notice] = "Successfully Tweeted Job Posting"
-    redirect_to eprofile_path
 
+    access_token = @employer.generate_access_token(params[:oauth_verifier])
+    token, secret = access_token.token, access_token.secret
+    @employer.save_token(token, secret)
+    @employer.configure_twitter(token, secret)
+    update_tweet_on_timeline(@job.description)
   end
 
   def destroy

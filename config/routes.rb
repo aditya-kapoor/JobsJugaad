@@ -2,26 +2,38 @@ JobsJugaad::Application.routes.draw do
   
   match "/auth/twitter/callback" => "employers#post_to_twitter"
 
-  resources :job_seekers, :except => [:new]
-  controller 'job_seekers' do
-    get "profile" => :profile
-    get "register" => :new
-    post "upload_photo" => :upload_asset
-    post "upload_resume" => :upload_asset
-  end
-  match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
-  
-  resources :job_seekers do
+  resources :job_seekers, :except => [:new] do 
+    # get "profile" => :profile, :on => :member
+    collection do 
+      get "register" => :new
+      post "register" => "sessions#register"
+    end
     member do 
       get "download_resume" => :download_resume
       get "remove_photo" => :remove_photo 
     end
   end
+  controller 'job_seekers' do
+    get "profile" => :profile
+    post "upload_photo" => :upload_asset
+    post "upload_resume" => :upload_asset
+  end
+  match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
+  
 
-  resources :employers, :except => [:new]
+  resources :employers, :except => [:new] do 
+    collection do 
+      get "register" => :new
+      get "login" => :login
+      post "register" => "sessions#register", :as => "emp_reg"
+    end
+    member do
+      get "change_password" => "sessions#change_password"
+      get "add_job" => :add_job
+    end
+  end
+
   controller 'employers' do
-    get "elogin" => :login
-    get "eregister" => :new
     get "eprofile" => :profile
     get "emp_edit" => :edit
     get "remove_photo_emp" => :remove_photo
@@ -48,22 +60,13 @@ JobsJugaad::Application.routes.draw do
     end
   end
 
-  resources :employers do
-    member do
-      get "change_password" => "sessions#change_password"
-      get "add_job" => :add_job
-    end
-  end
-
   resources :sessions, :except => [:destroy]
 
   controller :sessions do
     get "logout" => :destroy
     post "login" => :login
-    post "eregister" => :register
-    post "register" => :register
     get "activate_user" => :activate_user
-    
+
     get "update_password" => :update_password
     post "update_password" => :update_password
 
@@ -78,14 +81,13 @@ JobsJugaad::Application.routes.draw do
   resources :job_applications, :only => [:update]
   
   # namespace :admin do
-  resources :admin, :except => [:new]
   # end
 
   controller :admin do
     get "admin_profile" => :profile
   end
 
-  resources :admin do
+  resources :admin, :except => [:new, :destroy] do
     member do 
       get "change_password" => "sessions#change_password"
     end

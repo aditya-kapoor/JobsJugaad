@@ -14,12 +14,12 @@ class SessionsController < ApplicationController
     if(params[:user_type] == 'job_seeker')
       class_name = "JobSeeker"
       registration_stuff = params[:job_seeker]
-      template = "job_seekers/new.html.erb"
+      template = "job_seekers/new"
       save_credentials(class_name, registration_stuff, template)
     else
       class_name = "Employer"
       registration_stuff = params[:employer]
-      template = "employers/new.html.erb"
+      template = "employers/new"
       save_credentials(class_name, registration_stuff, template)
     end
   end
