@@ -9,7 +9,8 @@ $('document').ready(function(){
   })
 
   $('a#upload-resume').click(function(){
-    $('#upload-resume-div').toggle()
+    // alert("HELLO resume")
+    $('div#upload-resume-div').show()
   })
 
   $('img#close-div-img').click(function(){
@@ -17,7 +18,8 @@ $('document').ready(function(){
   })
 
   $('a#upload-photo').click(function(){
-    $('#upload-photo-div').toggle()
+    // alert("HELLO photo")
+    $('div#upload-photo-div').show()
   })
 
   $('img#close-photo-div').click(function(){

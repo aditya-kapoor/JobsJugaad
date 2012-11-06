@@ -46,4 +46,5 @@ JobsJugaad::Application.configure do
     password: "jobsjugaad",
     enable_starttls_auto: true
   }
+
 end

@@ -1,11 +1,12 @@
-<%= form_for(@employer) do |post_form| %>
+<%= form_for(@employer, :html => { :multipart => true }) do |post_form| %>
   <% if @employer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@employer.errors.count, "error") %> prohibited the details from being saved:</h2>
     </div>
   <% end %>
   
-  <fieldset><legend>Editing Profile</legend>
+  <fieldset>
+    <legend>Editing Profile</legend>
   <div id="form">
       <table id="edit_table">
         <tr>
@@ -32,11 +33,14 @@
           <td>Profile Image: </td>
           <td><%= post_form.file_field :photo %></td>
           <% unless error_present?(:photo, @employer) %>
-            <td class="error_notice"><%= get_errors(:photo, @employer) %></td>
+            <td class="error_notice">
+              <%= get_errors(:photo, @employer) %>
+            </td>
           <% end %>
         </tr>
         <tr>
           <td><%= post_form.submit %></td>
+        </tr>
       </table>
     <%= link_to 'Back to Profile', eprofile_path %>
   </div>

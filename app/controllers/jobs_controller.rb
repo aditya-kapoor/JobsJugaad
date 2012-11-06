@@ -101,6 +101,7 @@ class JobsController < ApplicationController
         :salary_max => params[:sal_max],
         :salary_type => params[:sal_type]
         }) do
+    end
       jobs_by_location = []
       jobs_by_skills = []
       jobs_by_salary = []
@@ -112,7 +113,6 @@ class JobsController < ApplicationController
       
       selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
       @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
-    end
   end
 
   def destroy

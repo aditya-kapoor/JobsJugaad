@@ -5,15 +5,13 @@
     <table>
       <tr>
         <th>Name</th>
-        <th>Description</th>
         <th>Email</th>
         <th>Website</th>
       </tr>
       <% @employers.each do |employer| %>
       <tr>
         <td><%= link_to employer.name, employer %></td>
-        <td><%= employer.description %></td>
-        <td><%= employer.email %></td>
+        <td><%= mail_to employer.email %></td>
         <td><%= link_to employer.website, employer.website %></td>
         <td><%= link_to 'Delete Employer', employer, :method => :delete, :confirm => "Are You Sure to delete this employer?" %></td>
       </tr>

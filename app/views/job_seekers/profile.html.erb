@@ -9,12 +9,6 @@
   </center> 
 <% else %>
   <div id = "main-container">
-    <div id="upload-assets">
-      <div id="upload-resume-div">
-        <%= render "upload-resume" %>
-      </div>
-      <div id="upload-photo-div"><%= render "upload-photo" %></div>
-    </div>
     <h3> Welcome <%= @job_seeker.name %></h3>
     <fieldset id="profile-info" class="profile-fieldset">
       <legend id="profile-info-legend">Your Profile Information</legend>
@@ -31,8 +25,14 @@
               <% if is_image_missing?(@job_seeker.photo.to_s) %>
                 <li><%= link_to 'Remove Image', remove_photo_job_seeker_path(@job_seeker) %></li>
               <% end %>
-              <li><%= link_to 'Upload Profile Image', '#', :id => "upload-photo" %></li>
+              <li><%= link_to 'Upload Profile Image', '#', :id=>"upload-photo" %></li>
+              <div id="upload-photo-div">
+                <%= render "upload-photo" %>
+              </div>
               <li><%= link_to 'Upload Resume', "#", :id => "upload-resume" %></li>
+              <div id="upload-resume-div">
+                <%= render "upload-resume" %>
+              </div>
             </ul>
           </div>
           <div id="profile_table">

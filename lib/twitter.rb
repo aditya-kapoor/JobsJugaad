@@ -1,7 +1,7 @@
 module TwitterClone
   CONSUMER_KEY = "eZ17eRpN1In39HuCfM5WA"
   CONSUMER_SECRET = "SfXvytpQro7PctvJhFAEbxjiY5uTT6ICqc52gzwQxMc"
-  $request_token = ""
+  @@request_token = ""
   def get_consumer
     consumer = OAuth::Consumer.new( CONSUMER_KEY, CONSUMER_SECRET, 
       :site => "http://api.twitter.com",
@@ -11,22 +11,22 @@ module TwitterClone
 
   def generate_request_token(callback)
     consumer = get_consumer
-    $request_token = consumer.get_request_token(:oauth_callback => callback)
+    @@request_token = consumer.get_request_token(:oauth_callback => callback)
   end
 
   def generate_access_token(oauth_verifier)
-    $request_token.get_access_token(:oauth_verifier => oauth_verifier)
+    @@request_token.get_access_token(:oauth_verifier => oauth_verifier)
   end
 
   def save_token(token, secret)
     self.oauth_access_token = token
     self.oauth_access_token_secret = secret
-    self.save
+    self.save!
   end
 
-  def check_for_existing_tokens(request_token)
-    if self.oauth_access_token && self.oauth_access_token_secret
-      token, secret = self.oauth_access_token, self.oauth_access_token_secret
+  def check_for_existing_tokens
+    if oauth_access_token && oauth_access_token_secret
+      token, secret = oauth_access_token, oauth_access_token_secret
     end
   end
 

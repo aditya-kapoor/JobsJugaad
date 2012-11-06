@@ -6,7 +6,7 @@
     </div>
     <%= form_for(@job_seeker, :url => upload_resume_path, :html => { :multipart => true }, :method => "post") do |f| %>
     <table>
-        <tr><td><%= f.file_field :resume %></td></tr>
+        <tr><td>Choose File for Resume : </td><td><%= f.file_field :resume %></td></tr>
         <tr><td><%= f.submit "Update Resume" %></td></tr>
         <span></span>
       <% end %>

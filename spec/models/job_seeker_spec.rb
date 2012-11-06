@@ -156,7 +156,7 @@ describe JobSeeker do
     it "Gender Should have a legal value" do
       @job_seeker.attributes = valid_job_seeker_attributes.except(:gender)
       @job_seeker.should have(1).error_on(:gender)
-      @job_seeker.errors[:gender].should eq(["can't be blank"])
+      @job_seeker.errors[:gender].should eq(["is not included in the list"])
     end
     it "Valid Gender Value" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:gender => 1)

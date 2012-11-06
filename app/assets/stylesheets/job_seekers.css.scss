@@ -20,6 +20,7 @@ fieldset {
 .upload-class {
   background-color: white;
 }
+
 div#upload-resume-div {
   display:none;
   background: black;
@@ -28,6 +29,7 @@ div#upload-resume-div {
   position: fixed;
   z-index: 999;
   top: 0px;
+  left: 0px;
   opacity: 0.90
 }
 
@@ -39,6 +41,7 @@ div#upload-photo-div {
   position: fixed;
   z-index: 999;
   top: 0px;
+  left: 0px;
   opacity: 0.90
 }
 

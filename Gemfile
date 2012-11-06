@@ -24,7 +24,7 @@ group :assets do
 end
 
 
-  gem 'paperclip', '~> 3.0.0'
+  gem 'paperclip'
   gem 'jquery-rails'
   gem 'kaminari'
   gem "rails3-jquery-autocomplete"
@@ -39,4 +39,5 @@ end
   group :development, :test do
     # gem 'shoulda'
     gem 'rspec-rails'
+    gem 'debugger'
   end

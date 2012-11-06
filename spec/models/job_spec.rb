@@ -4,6 +4,9 @@ describe Job do
   include ValidAttributeCollection
   before(:each) do
     @job = Job.new
+    @employer = Employer.create(valid_employer_attributes)
+    @employer.email = "testing_emp1@testing.com"
+    @employer.save
   end
 
   describe "Methods" do
@@ -17,11 +20,14 @@ describe Job do
   end
 
   describe "Relationships" do 
-    before(:each) do 
-      @employer = Employer.create(valid_employer_attributes)
+    before(:each) do
       @job = @employer.jobs.create(valid_job_attributes)
       @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
-      @job_seeker1 = JobSeeker.create(valid_job_seeker_attributes.with(:email => "tutu@vinsole.com"))
+      @job_seeker.email = "testing_js1@testing.com"
+      @job_seeker.save
+      @job_seeker1 = JobSeeker.create(valid_job_seeker_attributes)
+      @job_seeker1.email = "testing_js2@testing.com"
+      @job_seeker1.save
       @job_seeker.jobs << @job
       @job_seeker1.jobs << @job
     end
@@ -87,7 +93,6 @@ describe Job do
       @job.should have(0).error_on(:title)
     end
     it "duplicate job should not be posted" do
-      @employer= Employer.create(valid_employer_attributes)
       @job1 = @employer.jobs.create(valid_job_attributes)
       @job2 = @employer.jobs.create(valid_job_attributes)
       @job2.should have(1).error_on(:title)

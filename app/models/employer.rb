@@ -35,9 +35,12 @@ class Employer < ActiveRecord::Base
     :default_url => '/assets/default-photo/default.gif'
 
   validates_attachment_size :photo, :less_than => 6.megabytes, :message => "Must be less than 6 MB"
-  validates :photo_file_name, :allow_blank => true, :format => {
-    :with => PATTERNS['photo'], 
-    :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+  
+  # validates_format_of :photo_content_type, :with => /^image/, 
+  #   :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+
+  validates :photo_file_name, :allow_blank => true, :format => { :with => PATTERNS['photo'],
+   :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
  
   after_create :send_confirmation_email

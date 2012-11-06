@@ -57,7 +57,7 @@ describe Employer do
       @employer.should have(0).error_on(:name)
     end
     it "Invalid Email Format" do
-      @employer.email = "abc@cde"
+      @employer.email = "abc@"
       @employer.should have(1).error_on(:email)
       @employer.errors[:email].should eq(["Doesn't Looks the correct email ID"])
     end
@@ -70,8 +70,7 @@ describe Employer do
       @employer.attributes = valid_employer_attributes
       @employer.email = "abc@cde.com"
       @employer.save
-      @employer1 = Employer.new()
-      @employer1.attributes = valid_employer_attributes
+      @employer1 = Employer.new(valid_employer_attributes)
       @employer1.email = "abc@cde.com"
       @employer1.save
       @employer1.should have(1).error_on(:email)

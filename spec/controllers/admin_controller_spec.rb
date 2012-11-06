@@ -35,11 +35,11 @@ describe AdminController do
       response.should be_success
     end
     it "should fetch all the jobs that are posted" do
-      Job.should_receive(:all).and_return(@jobs)
+      Job.should_receive(:includes).with(:employer).and_return(@jobs)
       do_profile
     end
     it "should fetch all the employers" do
-      Employer.should_receive(:all).and_return(@employers)
+      Employer.should_receive(:scoped).and_return(@employers)
       do_profile
     end
   end

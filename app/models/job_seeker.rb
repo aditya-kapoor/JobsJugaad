@@ -11,15 +11,15 @@ class JobSeeker < ActiveRecord::Base
                   :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
                   :resume_file_name, :resume_content_type, :resume_file_size, :resume_updated_at
 
-  attr_accessor :skill_name
+  # attr_accessor :skill_name
 
   has_many :job_applications, :dependent => :destroy
   has_many :jobs, :through => :job_applications # has-many through
 
   has_secure_password
 
-  has_many :skills_association, :as => :skillable, :dependent => :destroy
-  has_many :skills, :through => :skills_association
+  has_many :skills_associations, :as => :skillable, :dependent => :destroy
+  has_many :skills, :through => :skills_associations
 
   has_attached_file :resume
   validates :resume_file_name, :allow_blank => true, :format => {
@@ -29,11 +29,9 @@ class JobSeeker < ActiveRecord::Base
   
   has_attached_file :photo, :styles => { :small => "175x175>"}, 
   :default_url => '/assets/default-photo/default.gif'
-
-  validates_attachment_size :photo, :less_than => 6.megabytes, :message => "Must be less than 6 MB"
-  validates :photo_file_name, :allow_blank => true, :format => {
-    :with => PATTERNS['photo'],
-    :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
+  validates :photo_file_name, :allow_blank => true, :format => { 
+   :with => PATTERNS['photo'],
+   :message => "Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"
   }
   
   validates :name, :email, :presence  => true

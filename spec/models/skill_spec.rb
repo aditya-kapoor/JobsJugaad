@@ -8,7 +8,11 @@ describe Skill do
   describe "Relationships" do
     before(:each) do
       @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
-      @job_seeker1 = JobSeeker.create(valid_job_seeker_attributes.with(:email => "testing2@vinsol.com"))
+      @job_seeker.email = "testing_js1@testing.com"
+      @job_seeker.save
+      @job_seeker1 = JobSeeker.create(valid_job_seeker_attributes)
+      @job_seeker1.email = "testing_js2@testing.com"
+      @job_seeker1.save
       @job = Job.create(valid_job_attributes)
       @job1 = Job.create(valid_job_attributes.with(:title => "testing job 2"))
       @skill = Skill.create(valid_skill_attributes)

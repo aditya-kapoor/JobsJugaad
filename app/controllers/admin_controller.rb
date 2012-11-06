@@ -6,8 +6,8 @@ class AdminController < ApplicationController
 
   def profile
     @admin = Admin.find_by_id(session[:id])
-    @jobs = Job.all
-    @employers = Employer.all
+    @jobs = Job.includes(:employer)
+    @employers = Employer.scoped
   end
 
 end

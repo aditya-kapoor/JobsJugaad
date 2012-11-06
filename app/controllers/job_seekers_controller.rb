@@ -39,7 +39,7 @@ class JobSeekersController < ApplicationController
     @job_seeker = JobSeeker.find(params[:id])
     
     respond_to do |format|
-      if @job_seeker.update_attributes(params[:job_seeker].except(:email))
+      if @job_seeker.update_attributes(params[:job_seeker])
         format.html { redirect_to profile_path, notice: 'Your profile has been successfully updated.' }
       else
         format.html { render action: "edit" }
