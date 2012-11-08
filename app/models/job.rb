@@ -28,7 +28,7 @@ class Job < ActiveRecord::Base
   validates :title, :uniqueness => { :scope => [ :description, :location, :salary_min, 
                   :salary_max, :salary_type, :employer_id ], :message => "You have already entered this job" }
 
-  scope :location, lambda { |place| where("location like ?", "#{place}%")}
+  # scope :location, lambda { |place| where("location like ?", "#{place}%")}
 
   # scope :salary_range, lambda { |min=0, max=0| where("salary_min <= ? and salary_max >= ?", min.to_i, max.to_i)   }
 
@@ -40,7 +40,33 @@ class Job < ActiveRecord::Base
 
   scope :salary_type, lambda { |type| where("salary_type = ?", "#{type}%")}
 
-  SALARY_TYPE = { 'pm' => "pm", "LPA" => "LPA" }
+  SALARY_TYPE = { 'pm' => "pm" }
+
+  define_index do 
+    indexes description
+    indexes location
+    indexes skills(:name), :as => :skills
+    has salary_max
+    has salary_min
+    indexes salary_type
+    indexes title
+  end
+
+  sphinx_scope(:location) do |place|
+    { :conditions => {:location => "#{place}"} }
+  end
+
+  sphinx_scope(:skills) do |skill|
+    { :conditions => {:skills => "#{skill}"} }
+  end
+
+  sphinx_scope(:sal_min) do |min = 0|
+    { :with => { :salary_min => (min..0xfffffff) } }
+  end
+
+  sphinx_scope(:sal_max) do |max = 0|
+    { :with => { :salary_max => (0..max) } }
+  end
 
   def skill_name
     get_skill_set

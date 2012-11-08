@@ -7,6 +7,7 @@
   </center>
 <% else %>
   <center>
+    <%= paginate @jobs %>
   <table id = "job-listings" border="2">
     <% @jobs.each do |job| %>
         <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
@@ -28,5 +29,4 @@
         </tr> 
     <% end %>
   </center>
-  <%= paginate @jobs %>
 <% end %>

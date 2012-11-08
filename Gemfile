@@ -23,7 +23,9 @@ group :assets do
   # gem 'autocomplete'
 end
 
-
+  gem 'bullet'
+  gem 'thinking-sphinx'
+  gem 'yaml_db'
   gem 'paperclip'
   gem 'jquery-rails'
   gem 'kaminari'
@@ -35,7 +37,8 @@ end
   gem 'tweet-button'
 
   gem 'simplecov', :require => false, :group => :test
-  
+  gem 'mysql2'
+
   group :development, :test do
     # gem 'shoulda'
     gem 'rspec-rails'

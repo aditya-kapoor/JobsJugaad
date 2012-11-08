@@ -91,7 +91,7 @@ class SessionsController < ApplicationController
     else
       flash[:error] = "There Was An Error With your email"
     end
-    redirect_to root_url
+    redirect_to root_path
   end
 
   def reset_user_password

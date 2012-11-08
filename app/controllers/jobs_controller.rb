@@ -7,7 +7,7 @@ class JobsController < ApplicationController
   before_filter :check_for_session, :only => [:apply]
   before_filter :is_job_found, :only => [:edit, :view_applicants, :show]
 
-  @@rpp = 10
+  @@rpp = 2
 
   def check_unauthorised_access
     unless session[:user_type] == "employer"
@@ -102,16 +102,23 @@ class JobsController < ApplicationController
         :salary_type => params[:sal_type]
         }) do
     end
-      jobs_by_location = []
-      jobs_by_skills = []
-      jobs_by_salary = []
-      selected_jobs = []
+      # jobs_by_location = []
+      # jobs_by_skills = []
+      # jobs_by_salary = []
+      # selected_jobs = []
 
-      jobs_by_location = return_jobs_by_location unless params[:location].empty? 
-      jobs_by_skills = return_jobs_by_skills unless params[:skills].empty?
-      jobs_by_salary = return_jobs_by_salary unless params[:sal_min].empty? && params[:sal_max].empty?
+      # jobs_by_location = return_jobs_by_location unless params[:location].empty? 
+      # jobs_by_skills = return_jobs_by_skills unless params[:skills].empty?
+      # jobs_by_salary = return_jobs_by_salary unless params[:sal_min].empty? && params[:sal_max].empty?
       
-      selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
+      # selected_jobs = return_consolidated_results([jobs_by_location, jobs_by_skills, jobs_by_salary]) || []
+      # @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
+
+      selected_jobs = params[:location].blank? ? Job.search : Job.location("#{params[:location].gsub(', ', '|')}")
+      selected_jobs = params[:skills].blank? ? selected_jobs : selected_jobs.skills("#{params[:skills].gsub(', ','|')}")
+      selected_jobs = params[:sal_min].to_i == 0 ? selected_jobs : selected_jobs.sal_min(params[:sal_min].to_i)
+      selected_jobs = params[:sal_max].to_i == 0 ? selected_jobs : selected_jobs.sal_max(params[:sal_max].to_i)
+
       @jobs = Kaminari.paginate_array(selected_jobs).page(params[:page]).per(@@rpp)
   end
 

@@ -7,7 +7,7 @@ module SessionsControllerHelperFunctions
       redirect_to redirection
     else
       flash[:error] = "You have not activated your account yet!!"
-      redirect_to request.referrer
+      redirect_to root_path
     end
   end
 
@@ -23,7 +23,7 @@ module SessionsControllerHelperFunctions
       end
     else
       flash[:error] = "Invalid Email and Password Combination"
-      redirect_to request.referrer
+      redirect_to root_path
     end
   end
 
@@ -47,7 +47,7 @@ module SessionsControllerHelperFunctions
       redirect_to get_redirection_route, :notice => "Password has been changed successfully."
     else
       flash[:error] = "There Were Some Errors"
-      redirect_to request.referrer
+      redirect_to root_path
     end
   end
 

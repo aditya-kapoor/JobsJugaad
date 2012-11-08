@@ -77,7 +77,7 @@ class JobSeekersController < ApplicationController
   end
 
   def profile
-    @job_seeker = JobSeeker.find_by_id(session[:id])
+    @job_seeker = JobSeeker.includes(:jobs => :employer).find_by_id(session[:id])
     apply_to_job_after_login
     if @job_seeker.nil?
       redirect_to root_path, :notice => "You have already logged out of the system"

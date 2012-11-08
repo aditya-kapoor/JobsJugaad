@@ -1,0 +1,816 @@
+
+---
+job_applications:
+  columns:
+  - id
+  - interview_on
+  - remarks
+  - job_id
+  - job_seeker_id
+  - created_at
+  - updated_at
+  records: 
+  - - 24
+    - 
+    - 
+    - 6
+    - 1
+    - '2012-10-18 08:07:33.397611'
+    - '2012-10-18 08:07:33.397611'
+  - - 26
+    - 
+    - 
+    - 25
+    - 1
+    - '2012-11-04 12:04:17.739893'
+    - '2012-11-04 12:04:17.739893'
+
+---
+employers:
+  columns:
+  - id
+  - name
+  - email
+  - website
+  - description
+  - password_digest
+  - created_at
+  - updated_at
+  - photo_file_name
+  - photo_content_type
+  - photo_file_size
+  - photo_updated_at
+  - auth_token
+  - activated
+  - password_reset_token
+  - oauth_access_token
+  - oauth_access_token_secret
+  records: 
+  - - 1
+    - Oracle
+    - oracle@oracle.com
+    - http://www.oracle.com
+    - Oracle is the best
+    - $2a$10$R8wuTJldk.Z9CKlhQODW4uNiD7icCxQ8OMRBSR7brfKFWXmMJO0XK
+    - '2012-09-27 08:50:35.288863'
+    - '2012-11-06 06:35:03.014488'
+    - oracle.jpg
+    - image/jpeg
+    - 9157
+    - '2012-11-05 07:05:26.727263'
+    - $2a$10$xwF6DE3ukCnf90W2N1EOwO.7UNqvKN92qFbZAH8nUjNWvCh7xXB0C
+    - true
+    - 
+    - 324448615-XM1nfrHahjwBkkJsj2OHgzfZ2VnQwjxfEv0q9eFN
+    - edwfjpI0D9MEVj3lfk8xmYmW0yMwMNQ9NNNKbCC5BQk
+  - - 6
+    - Google
+    - google@google.com
+    - http://google.com
+    - Google is one of the best search engines in the world..
+    - $2a$10$vBiJH5CgIs5ruYdvnyRWWOsdIKA1s0vXtaQ07uCIUnoPB2V8.7iLm
+    - '2012-10-02 07:49:47.226686'
+    - '2012-11-06 06:27:03.241034'
+    - 
+    - 
+    - 
+    - 
+    - $2a$10$VNmfSnB8ZboP4wCq70nkouMX9Yv18fu8ykC2xCjt7wTqBR8KZuFHK
+    - true
+    - 
+    - 324448615-XM1nfrHahjwBkkJsj2OHgzfZ2VnQwjxfEv0q9eFN
+    - edwfjpI0D9MEVj3lfk8xmYmW0yMwMNQ9NNNKbCC5BQk
+
+---
+skills:
+  columns:
+  - id
+  - name
+  - skillable_id
+  - skillable_type
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - php
+    - 
+    - 
+    - '2012-09-27 07:10:13.836424'
+    - '2012-09-27 07:10:13.836424'
+  - - 2
+    - jquery
+    - 
+    - 
+    - '2012-09-27 07:10:13.846146'
+    - '2012-09-27 07:10:13.846146'
+  - - 3
+    - html
+    - 
+    - 
+    - '2012-09-27 07:12:32.186123'
+    - '2012-09-27 07:12:32.186123'
+  - - 4
+    - ruby
+    - 
+    - 
+    - '2012-09-27 09:00:57.074253'
+    - '2012-09-27 09:00:57.074253'
+  - - 5
+    - ror
+    - 
+    - 
+    - '2012-09-27 09:00:57.076147'
+    - '2012-09-27 09:00:57.076147'
+  - - 6
+    - php mysql
+    - 
+    - 
+    - '2012-09-28 07:39:16.577207'
+    - '2012-09-28 07:39:16.577207'
+  - - 7
+    - mysql
+    - 
+    - 
+    - '2012-09-30 08:23:00.357740'
+    - '2012-09-30 08:23:00.357740'
+  - - 8
+    - testing
+    - 
+    - 
+    - '2012-10-01 07:31:12.537050'
+    - '2012-10-01 07:31:12.537050'
+  - - 9
+    - sql
+    - 
+    - 
+    - '2012-10-02 04:42:02.574920'
+    - '2012-10-02 04:42:02.574920'
+  - - 10
+    - java
+    - 
+    - 
+    - '2012-10-02 04:44:30.273542'
+    - '2012-10-02 04:44:30.273542'
+  - - 11
+    - javascript
+    - 
+    - 
+    - '2012-10-02 04:44:30.276367'
+    - '2012-10-02 04:44:30.276367'
+  - - 12
+    - c/c++
+    - 
+    - 
+    - '2012-10-02 07:41:01.292892'
+    - '2012-10-02 07:41:01.292892'
+  - - 13
+    - seo
+    - 
+    - 
+    - '2012-10-02 07:45:10.155095'
+    - '2012-10-02 07:45:10.155095'
+  - - 14
+    - adsense
+    - 
+    - 
+    - '2012-10-02 07:45:10.157676'
+    - '2012-10-02 07:45:10.157676'
+  - - 15
+    - google
+    - 
+    - 
+    - '2012-10-02 07:45:10.159906'
+    - '2012-10-02 07:45:10.159906'
+  - - 16
+    - data structure
+    - 
+    - 
+    - '2012-10-02 07:51:46.975128'
+    - '2012-10-02 07:51:46.975128'
+  - - 17
+    - android
+    - 
+    - 
+    - '2012-10-02 07:53:05.707186'
+    - '2012-10-02 07:53:05.707186'
+  - - 18
+    - ios
+    - 
+    - 
+    - '2012-10-02 07:53:05.709432'
+    - '2012-10-02 07:53:05.709432'
+  - - 19
+    - nosql
+    - 
+    - 
+    - '2012-10-03 18:12:04.716400'
+    - '2012-10-03 18:12:04.716400'
+  - - 20
+    - python
+    - 
+    - 
+    - '2012-10-03 18:12:04.730978'
+    - '2012-10-03 18:12:04.730978'
+  - - 21
+    - mys
+    - 
+    - 
+    - '2012-10-15 13:55:03.829982'
+    - '2012-10-15 13:55:03.829982'
+  - - 22
+    - css
+    - 
+    - 
+    - '2012-10-19 05:43:00.448368'
+    - '2012-10-19 05:43:00.448368'
+  - - 23
+    - rspec
+    - 
+    - 
+    - '2012-11-03 20:26:33.163271'
+    - '2012-11-03 20:26:33.163271'
+  - - 24
+    - cucumber
+    - 
+    - 
+    - '2012-11-03 20:28:59.936316'
+    - '2012-11-03 20:28:59.936316'
+  - - 25
+    - rails
+    - 
+    - 
+    - '2012-11-03 20:30:13.780703'
+    - '2012-11-03 20:30:13.780703'
+  - - 26
+    - j2ee
+    - 
+    - 
+    - '2012-11-03 20:31:01.127023'
+    - '2012-11-03 20:31:01.127023'
+  - - 27
+    - j2me
+    - 
+    - 
+    - '2012-11-03 20:31:01.128897'
+    - '2012-11-03 20:31:01.128897'
+  - - 28
+    - lisp
+    - 
+    - 
+    - '2012-11-03 20:32:04.054548'
+    - '2012-11-03 20:32:04.054548'
+  - - 29
+    - algorithms
+    - 
+    - 
+    - '2012-11-03 20:32:04.059018'
+    - '2012-11-03 20:32:04.059018'
+  - - 30
+    - data structures
+    - 
+    - 
+    - '2012-11-03 20:32:04.062629'
+    - '2012-11-03 20:32:04.062629'
+  - - 31
+    - blackberry
+    - 
+    - 
+    - '2012-11-03 20:33:16.218743'
+    - '2012-11-03 20:33:16.218743'
+  - - 32
+    - wp7
+    - 
+    - 
+    - '2012-11-03 20:33:16.220769'
+    - '2012-11-03 20:33:16.220769'
+  - - 33
+    - google adsense
+    - 
+    - 
+    - '2012-11-03 20:34:45.324727'
+    - '2012-11-03 20:34:45.324727'
+
+---
+jobs:
+  columns:
+  - id
+  - description
+  - location
+  - employer_id
+  - created_at
+  - updated_at
+  - salary_min
+  - salary_max
+  - title
+  - salary_type
+  records: 
+  - - 6
+    - This is the second job posting for Oracle and I should get a number of applications
+    - Delhi
+    - 1
+    - '2012-10-02 07:41:59.165280'
+    - '2012-10-02 07:41:59.165280'
+    - 0
+    - 15000
+    - Second Job Post
+    - pm
+  - - 7
+    - We are looking for a system administrator and he should be educated also.
+    - Hyderabad
+    - 1
+    - '2012-10-02 07:42:52.562989'
+    - '2012-10-02 07:42:52.562989'
+    - 0
+    - 10000
+    - System Admin
+    - pm
+  - - 10
+    - This is the first job posting for Google and I hope to get a number of job seekers
+    - Gurgaon
+    - 6
+    - '2012-10-02 07:51:46.970309'
+    - '2012-10-02 07:51:46.970309'
+    - 35000
+    - 50000
+    - Software Engineer
+    - pm
+  - - 11
+    - ! "We need a software engineer for our Bangalore location..\r\nPlease apply
+      to it at the earliest..."
+    - Hyderabad
+    - 6
+    - '2012-10-02 07:53:05.704208'
+    - '2012-10-02 07:53:05.704208'
+    - 15000
+    - 75000
+    - Software Engineer
+    - pm
+  - - 16
+    - ! "We need a software developer for our servers and systems which can program
+      them.\r\nYou must have an extensive experience in this..."
+    - Delhi
+    - 1
+    - '2012-10-03 18:12:04.713566'
+    - '2012-10-18 14:24:56.077323'
+    - 15000
+    - 35000
+    - Software Developer
+    - pm
+  - - 24
+    - This is my fourth job description and please somebody apply to them ASAP..
+    - Delhi
+    - 1
+    - '2012-11-03 20:28:59.929256'
+    - '2012-11-03 20:28:59.929256'
+    - 10000
+    - 25000
+    - Fourth Job
+    - pm
+  - - 25
+    - This is my fifth job posting and please somebody apply them ASAP..
+    - Mumbai
+    - 1
+    - '2012-11-03 20:30:13.777289'
+    - '2012-11-03 20:30:13.777289'
+    - 25000
+    - 75000
+    - Fifth Job Posting
+    - pm
+  - - 26
+    - This is my sixth job posting and please somebody apply them ASAP..
+    - Mumbai
+    - 1
+    - '2012-11-03 20:31:01.124539'
+    - '2012-11-03 20:31:01.124539'
+    - 15000
+    - 35000
+    - Sixth Job Posting
+    - pm
+  - - 27
+    - This is my seventh job posting and please somebody apply them ASAP..
+    - Mumbai
+    - 1
+    - '2012-11-03 20:32:04.050469'
+    - '2012-11-03 20:32:04.050469'
+    - 20000
+    - 45000
+    - Seventh Job Posting
+    - pm
+  - - 28
+    - This is my job posting for a sw developer and please somebody apply them ASAP..
+    - Mumbai
+    - 1
+    - '2012-11-03 20:33:16.215357'
+    - '2012-11-03 20:33:16.215357'
+    - 25000
+    - 45000
+    - Software Developer
+    - pm
+  - - 29
+    - This is my fifth job posting and please somebody apply them ASAP..
+    - Mumbai
+    - 1
+    - '2012-11-03 20:34:45.322002'
+    - '2012-11-03 20:34:45.322002'
+    - 10000
+    - 15000
+    - Social Media Expert
+    - pm
+
+---
+
+admins:
+  columns:
+  - id
+  - name
+  - email
+  - password_digest
+  - created_at
+  - updated_at
+  records: 
+  - - 5
+    - Aditya Kapoor
+    - adityakapoor.mait@gmail.com
+    - $2a$10$gerUaMO8yzvgqIkL6GVMSOsFgfqx2fP3kIX0lJW3zw/4inToIdebe
+    - '2012-09-28 11:18:44.819233'
+    - '2012-10-06 08:12:29.195628'
+
+---
+job_seekers:
+  columns:
+  - id
+  - name
+  - email
+  - password_digest
+  - location
+  - mobile_number
+  - experience
+  - industry
+  - created_at
+  - updated_at
+  - photo_file_name
+  - photo_content_type
+  - photo_file_size
+  - photo_updated_at
+  - gender
+  - date_of_birth
+  - resume_file_name
+  - resume_content_type
+  - resume_file_size
+  - resume_updated_at
+  - auth_token
+  - activated
+  - password_reset_token
+  records: 
+  - - 1
+    - Kuldeep
+    - kd@vinsol.com
+    - $2a$10$PTeeNYMqYY7CT62WBk80be0wMD/vve7kw9EAdiYZBff6c6UN0Npse
+    - Mumbai
+    - '9898989898'
+    - '10'
+    - IT
+    - '2012-09-27 07:10:13.834358'
+    - '2012-11-05 07:39:12.266998'
+    - kuldeep.jpg
+    - image/jpeg
+    - 58219
+    - '2012-11-05 07:39:12.197639'
+    - 1
+    - '1990-08-15'
+    - robots.txt
+    - text/plain
+    - 204
+    - '2012-11-04 11:50:01.218666'
+    - $2a$10$yL7Xgf0N9ZtX31hyWj50VuPWkUpwZvvay1WmqvTR.9NNov98chJpK
+    - true
+    - $2a$10$y0GfmTmNr8gC30Laar9oFO2xftKxrYJ2U0Mlj11fy2kcWhafW7eIW
+  - - 13
+    - Testing Job Seeker
+    - test_js@gmail.com
+    - $2a$10$lwmkM109t/nXgtLYGd53qOyx1RlJf.kjwb9EXvyJZ66ON4BGznOZS
+    - Mumbai
+    - '9898989898'
+    - '7'
+    - IT
+    - '2012-10-16 11:26:53.992444'
+    - '2012-10-16 11:27:29.064505'
+    - 
+    - 
+    - 
+    - 
+    - 1
+    - '1990-04-15'
+    - 
+    - 
+    - 
+    - 
+    - $2a$10$Ss8BDy8ZcLE4r5MtEeWjCum4e0e.e/qzepBhItqbm2R9DfJnybqJy
+    - true
+    - 
+
+---
+
+skills_associations:
+  columns:
+  - id
+  - skillable_id
+  - skillable_type
+  - skill_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 13
+    - JobSeeker
+    - 6
+    - '2012-10-16 11:26:54.034602'
+    - '2012-10-16 11:26:54.034602'
+  - - 6
+    - 1
+    - JobSeeker
+    - 1
+    - '2012-11-03 20:26:33.127627'
+    - '2012-11-03 20:26:33.127627'
+  - - 8
+    - 1
+    - JobSeeker
+    - 9
+    - '2012-11-03 20:26:33.132047'
+    - '2012-11-03 20:26:33.132047'
+  - - 9
+    - 1
+    - JobSeeker
+    - 3
+    - '2012-11-03 20:26:33.133178'
+    - '2012-11-03 20:26:33.133178'
+  - - 10
+    - 1
+    - JobSeeker
+    - 8
+    - '2012-11-03 20:26:33.134348'
+    - '2012-11-03 20:26:33.134348'
+  - - 11
+    - 1
+    - JobSeeker
+    - 23
+    - '2012-11-03 20:26:33.164802'
+    - '2012-11-03 20:26:33.164802'
+  - - 12
+    - 1
+    - JobSeeker
+    - 12
+    - '2012-11-03 20:26:33.166247'
+    - '2012-11-03 20:26:33.166247'
+  - - 13
+    - 24
+    - Job
+    - 1
+    - '2012-11-03 20:28:59.932143'
+    - '2012-11-03 20:28:59.932143'
+  - - 14
+    - 24
+    - Job
+    - 9
+    - '2012-11-03 20:28:59.933603'
+    - '2012-11-03 20:28:59.933603'
+  - - 15
+    - 24
+    - Job
+    - 23
+    - '2012-11-03 20:28:59.934870'
+    - '2012-11-03 20:28:59.934870'
+  - - 16
+    - 24
+    - Job
+    - 24
+    - '2012-11-03 20:28:59.937352'
+    - '2012-11-03 20:28:59.937352'
+  - - 17
+    - 24
+    - Job
+    - 12
+    - '2012-11-03 20:28:59.938143'
+    - '2012-11-03 20:28:59.938143'
+  - - 18
+    - 25
+    - Job
+    - 12
+    - '2012-11-03 20:30:13.778699'
+    - '2012-11-03 20:30:13.778699'
+  - - 19
+    - 25
+    - Job
+    - 23
+    - '2012-11-03 20:30:13.779555'
+    - '2012-11-03 20:30:13.779555'
+  - - 20
+    - 25
+    - Job
+    - 25
+    - '2012-11-03 20:30:13.782075'
+    - '2012-11-03 20:30:13.782075'
+  - - 21
+    - 25
+    - Job
+    - 5
+    - '2012-11-03 20:30:13.783187'
+    - '2012-11-03 20:30:13.783187'
+  - - 22
+    - 25
+    - Job
+    - 4
+    - '2012-11-03 20:30:13.784177'
+    - '2012-11-03 20:30:13.784177'
+  - - 23
+    - 26
+    - Job
+    - 10
+    - '2012-11-03 20:31:01.125852'
+    - '2012-11-03 20:31:01.125852'
+  - - 24
+    - 26
+    - Job
+    - 26
+    - '2012-11-03 20:31:01.127877'
+    - '2012-11-03 20:31:01.127877'
+  - - 25
+    - 26
+    - Job
+    - 27
+    - '2012-11-03 20:31:01.129761'
+    - '2012-11-03 20:31:01.129761'
+  - - 26
+    - 26
+    - Job
+    - 17
+    - '2012-11-03 20:31:01.130587'
+    - '2012-11-03 20:31:01.130587'
+  - - 27
+    - 27
+    - Job
+    - 12
+    - '2012-11-03 20:32:04.052585'
+    - '2012-11-03 20:32:04.052585'
+  - - 28
+    - 27
+    - Job
+    - 28
+    - '2012-11-03 20:32:04.055962'
+    - '2012-11-03 20:32:04.055962'
+  - - 29
+    - 27
+    - Job
+    - 10
+    - '2012-11-03 20:32:04.057225'
+    - '2012-11-03 20:32:04.057225'
+  - - 30
+    - 27
+    - Job
+    - 29
+    - '2012-11-03 20:32:04.060593'
+    - '2012-11-03 20:32:04.060593'
+  - - 31
+    - 27
+    - Job
+    - 30
+    - '2012-11-03 20:32:04.064048'
+    - '2012-11-03 20:32:04.064048'
+  - - 32
+    - 28
+    - Job
+    - 17
+    - '2012-11-03 20:33:16.216721'
+    - '2012-11-03 20:33:16.216721'
+  - - 33
+    - 28
+    - Job
+    - 18
+    - '2012-11-03 20:33:16.217563'
+    - '2012-11-03 20:33:16.217563'
+  - - 34
+    - 28
+    - Job
+    - 31
+    - '2012-11-03 20:33:16.219642'
+    - '2012-11-03 20:33:16.219642'
+  - - 35
+    - 28
+    - Job
+    - 32
+    - '2012-11-03 20:33:16.221604'
+    - '2012-11-03 20:33:16.221604'
+  - - 36
+    - 29
+    - Job
+    - 1
+    - '2012-11-03 20:34:45.323453'
+    - '2012-11-03 20:34:45.323453'
+  - - 37
+    - 29
+    - Job
+    - 33
+    - '2012-11-03 20:34:45.325674'
+    - '2012-11-03 20:34:45.325674'
+  - - 38
+    - 29
+    - Job
+    - 13
+    - '2012-11-03 20:34:45.326519'
+    - '2012-11-03 20:34:45.326519'
+
+---
+sessions:
+  columns:
+  - id
+  - session_id
+  - data
+  - created_at
+  - updated_at
+  records: 
+  - - 3
+    - 8c37f9929a411693abe4088716fee6ac
+    - ! 'BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFOMVh5NmxQd1VYTm03bUZ6M2lM
+
+      dTRuVkpuZFJaVlc0dnR4R21pQVNmeWlBPQY7AEY=
+
+'
+    - '2012-10-22 07:28:22.821323'
+    - '2012-10-22 07:28:22.821323'
+
+---
+job_search_requests:
+  columns:
+  - id
+  - location
+  - skills
+  - sal_min
+  - sal_max
+  - sal_type
+  - duration
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Gurgaon
+    - ''
+    - 1000.0
+    - 15000.0
+    - pm
+    - 65.52951
+    - '2012-11-02 07:00:56.637752'
+    - '2012-11-02 07:00:56.637752'
+  - - 2
+    - Mumbai, Delhi
+    - C/C++
+    - 0.0
+    - 150000.0
+    - pm
+    - 14.934506
+    - '2012-11-02 07:01:45.075987'
+    - '2012-11-02 07:01:45.075987'
+  - - 3
+    - Gurgaon
+    - ''
+    - 0.0
+    - 0.0
+    - pm
+    - 151.901605
+    - '2012-11-03 09:33:53.910094'
+    - '2012-11-03 09:33:53.910094'
+  - - 4
+    - ''
+    - ''
+    - 0.0
+    - 0.0
+    - pm
+    - 1.449886
+    - '2012-11-03 09:34:36.128892'
+    - '2012-11-03 09:34:36.128892'
+  - - 5
+    - Mumbai
+    - ''
+    - 0.0
+    - 0.0
+    - pm
+    - 0.004549999999999999
+    - '2012-11-03 20:33:29.555712'
+    - '2012-11-03 20:33:29.555712'
+  - - 6
+    - Mumbai, Delhi
+    - ''
+    - 0.0
+    - 0.0
+    - pm
+    - 0.0014399999999999999
+    - '2012-11-03 20:33:39.851986'
+    - '2012-11-03 20:33:39.851986'
+  - - 7
+    - Mumbai
+    - ''
+    - 0.0
+    - 0.0
+    - pm
+    - 0.002153
+    - '2012-11-04 12:04:05.731115'
+    - '2012-11-04 12:04:05.731115'

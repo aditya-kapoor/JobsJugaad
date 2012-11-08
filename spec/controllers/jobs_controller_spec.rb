@@ -3,9 +3,13 @@ require 'spec_helper'
 describe JobsController do
   include ValidAttributeCollection
   before do
-    @employer = Employer.create(valid_employer_attributes)
+    @employer = Employer.new(valid_employer_attributes)
+    @employer.email = "testing@testing.com"
+    @employer.save
     @job = Job.create(valid_job_attributes)
-    @job_seeker = JobSeeker.create(valid_job_seeker_attributes)
+    @job_seeker = JobSeeker.new(valid_job_seeker_attributes)
+    @job_seeker.email = "employer@testing.com"
+    @job_seeker.save
   end
 
   describe "Action Create" do 
@@ -128,7 +132,7 @@ describe JobsController do
       end
       it "should go to the root path" do 
         do_view_applicants
-        flash[:error].should eq("Security Breach Detected")
+        flash[:error].should eq("You Don't Own This Job")
         response.should redirect_to(root_path)
       end
     end
@@ -171,8 +175,7 @@ describe JobsController do
 
   describe "Action Search Results" do 
     def do_search_results
-      post :search_results, :location => "mumbai", :skills => "php", :sal_min => "0",
-        :sal_max => "0", :sal_type => "pm"
+      post :search_results, :location => "mumbai", :skills => "php"
     end
     it "should return the jobs according to various criterias" do
       do_search_results

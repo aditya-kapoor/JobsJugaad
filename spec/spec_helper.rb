@@ -42,23 +42,23 @@ end
 module ValidAttributeCollection
   def valid_job_seeker_attributes
     { :name => "Testing Job Seeker",
-      :gender => 1, 
-      :date_of_birth => "01/01/1990", 
+      :gender => "1", 
+      :date_of_birth => "01/01/1990",
       :password => "123456",
       :password_confirmation => "123456", 
       :mobile_number => "1234567890",
       :location => "Mumbai",
-      :experience => 5,
+      :experience => "5",
       :industry => "IT",
       :activated => false,
       :photo_file_name => "photo.jpeg",
       :photo_content_type => "image/jpeg",
-      :photo_file_size => 17185,
-      :photo_updated_at => Time.now,
+      :photo_file_size => "17185",
+      :photo_updated_at => "2012-11-07 21:34:43 +0530",
       :resume_file_name => "resume.pdf",
       :resume_content_type => "application/pdf",
-      :resume_file_size => 17185,
-      :resume_updated_at => Time.now,
+      :resume_file_size => "17185",
+      :resume_updated_at => "2012-11-07 21:34:43 +0530",
       :skill_name => "php, ruby"
     }
   end
@@ -72,8 +72,8 @@ module ValidAttributeCollection
     :activated => false,
     :photo_file_name => "photo.jpeg",
     :photo_content_type => "image/jpeg",
-    :photo_file_size => 17185,
-    :photo_updated_at => Time.now
+    :photo_file_size => "17185",
+    :photo_updated_at => "2012-11-07 21:34:43 +0530"
     }
   end
   def valid_job_attributes 
