@@ -33,6 +33,7 @@ class JobSeekersController < ApplicationController
 
   def edit 
     @job_seeker = JobSeeker.find(params[:id])
+    expire_fragment "JobSeeker-#{@job_seeker.id}"
   end
 
   def update

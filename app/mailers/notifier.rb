@@ -7,8 +7,10 @@ class Notifier < ActionMailer::Base
 
   def activate_user(user, token)
     @user = user
-    # @link = generate_token_link(user, token, activate_user_url(:host => "localhost:3000"))
-    @link = activate_user_url(:host => "localhost:3000") + "?auth_token=#{user.auth_token}&email=#{user.email}&type=#{user.class.to_s}"
+    @link = generate_token_link(user, token, activate_user_url(:host => "localhost:3000"))
+    
+
+    # @link = activate_user_url(:host => "localhost:3000") + "?auth_token=#{user.auth_token}&email=#{user.email}&type=#{user.class.to_s}"
     mail(:to => @user.email, :subject => "Activate Your Account")
   end
   

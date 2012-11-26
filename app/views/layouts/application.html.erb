@@ -12,6 +12,7 @@
     <%= link_to 'Home', root_path %>
     <%= link_to "English", set_locale_path(:locale => "en") %>
     <%= link_to "हिंदी", set_locale_path(:locale => "hi") %>
+    <%= link_to "FAQs", faqs_path %>
   </div>
   <% unless current_user.nil? %>
     <div id="logged_in_holder"> 

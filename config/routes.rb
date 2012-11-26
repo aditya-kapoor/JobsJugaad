@@ -2,6 +2,8 @@ JobsJugaad::Application.routes.draw do
   
   match "/auth/twitter/callback" => "employers#post_to_twitter"
 
+  get "faqs" => "home#faqs"
+
   resources :job_seekers, :except => [:new, :index] do 
     # get "profile" => :profile, :on => :member
     collection do 
@@ -21,7 +23,6 @@ JobsJugaad::Application.routes.draw do
   end
   match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
   
-
   resources :employers, :except => [:new, :index] do
     collection do 
       get "register" => :new
