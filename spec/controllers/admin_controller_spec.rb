@@ -12,9 +12,7 @@ describe AdminController do
   describe "index" do 
 
     def do_index
-    end
-    before do 
-      @admin = mock Admin
+      get :index
     end
     it "should display a login form" do
       do_index

@@ -3,22 +3,22 @@
     <%= form_tag(:controller => "sessions", :action => "login") do %>
       <table>
         <tr>
-          <td><%= label_tag :email, "Enter Email" %></td>
-          <td><%= email_field_tag :email, nil, :placeholder => "Enter Email" %></td>
+          <td><%= label_tag :email, t(:enter_email) %></td>
+          <td><%= email_field_tag :email, nil, :placeholder => t(:enter_email) %></td>
         </tr>
         <tr>
-          <td><%= label_tag :password, "Enter Password" %></td>
-          <td><%= password_field_tag :password, nil, :placeholder => "Enter Password" %></td>
+          <td><%= label_tag :password, t(:enter_password) %></td>
+          <td><%= password_field_tag :password, nil, :placeholder => t(:enter_password) %></td>
         </tr>
         <tr>
           <td><%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("job_seeker") %></td>
         </tr>
         <tr>
-          <td></td><td><%= submit_tag "Login" %></td>
+          <td></td><td><%= submit_tag t(:login) %></td>
         </tr>
       </table>
     <% end %>
-<%= link_to "Forgot Password?", forgot_password_path(:user => "JobSeeker") %> <br />
-<%= link_to 'Login As Employer', login_employers_path %><br />
-<%= link_to 'New Job Seeker', register_job_seekers_path %>
+<%= link_to t(:forgot_password), forgot_password_path(:user => "JobSeeker") %> <br />
+<%= link_to t(:login_as_employer), login_employers_path %><br />
+<%= link_to t(:new_job_seeker), register_job_seekers_path %>
 </div>

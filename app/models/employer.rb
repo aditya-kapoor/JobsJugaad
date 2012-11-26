@@ -29,7 +29,7 @@ class Employer < ActiveRecord::Base
 
   validates_format_of :website, 
     :with    => PATTERNS['website'],
-    :message => "Doesn't looks like correct Website URL" 
+    :message => "Doesn't looks like correct Website URL", :unless => proc { |user| user.website.blank? } 
 
   has_attached_file :photo, :styles => { :small => "175x175>" }, 
     :default_url => '/assets/default-photo/default.gif'

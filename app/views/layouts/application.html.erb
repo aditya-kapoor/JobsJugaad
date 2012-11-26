@@ -10,6 +10,8 @@
   <div id = "header">
     <h1> Welcome to Jobs Jugaad </h1>
     <%= link_to 'Home', root_path %>
+    <%= link_to "English", set_locale_path(:locale => "en") %>
+    <%= link_to "हिंदी", set_locale_path(:locale => "hi") %>
   </div>
   <% unless current_user.nil? %>
     <div id="logged_in_holder"> 

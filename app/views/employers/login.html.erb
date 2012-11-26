@@ -10,18 +10,18 @@
       <%= form_tag(:controller => "sessions", :action => "login") do %>
         <table>
           <tr>
-            <td><%= label_tag :email, "Enter Email" %></td>
-            <td><%= email_field :email, params[:email] %></td>
+            <td><%= label_tag :email, t(:enter_email) %></td>
+            <td><%= email_field :email, params[:email], :placeholder => t(:enter_email) %></td>
           </tr>
           <tr>
-            <td><%= label_tag :password, "Enter Password" %></td>
-            <td><%= password_field_tag :password %></td>
+            <td><%= label_tag :password, t(:enter_password) %></td>
+            <td><%= password_field_tag :password, nil, :placeholder => t(:enter_password) %></td>
           </tr>
           <tr>
             <td><%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("employer") %></td>
           </tr>
           <tr>
-            <td></td><td><%= submit_tag "Login" %></td>
+            <td></td><td><%= submit_tag t(:login) %></td>
           </tr>
         </table>
         <%= link_to 'Forgot Password', forgot_password_path(:user => "Employer") %>

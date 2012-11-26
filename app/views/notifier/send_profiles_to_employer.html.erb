@@ -1,0 +1,21 @@
+Welcome to JobsJugaad, <%= @employer.name %>
+
+Here are some of the job seeker profiles which you can have a look:
+<table>
+  <th>Name:</th>
+  <th>Email:</th>
+  <th>Profile Link</th>
+  <% @job_seeker_profiles.each do |job_seeker| %>
+  <tr>
+    <td><%= job_seeker.name %></td>
+    <td><%= job_seeker.email %></td>
+    <td><%= job_seeker_url(job_seeker.id, :host => "localhost:3000") %></td>
+  </tr>
+  <% end %>
+</table>
+
+Kindly log into your account in order to know more about these job seekers
+
+Regards,
+Admin
+JobsJugaad

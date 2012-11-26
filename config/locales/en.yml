@@ -1,5 +1,51 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  english: "English"
+  hindi: "हिंदी"
+  enter_email: "Enter Email"
+  enter_password: "Enter Password"
+  login: "Login"
+  forgot_password: "Forgot Password?"
+  login_as_employer: "Login As Employer"
+  new_job_seeker: "New Job Seeker?"
+  search_by_location: "Search By Location"
+  search_by_skills: "Search by Skills"
+  search_by_salary: "Search by Salary"
+  search: "Search For Jobs"
+  http_prefix: "include http:// Prefix "
+  male: "Male"
+  female: "Female"
+  others: "Others"
+  activerecord:
+    models:
+      Employer: "Employer"
+      JobSeeker: "Job Seeker"
+    attributes:
+      employer:
+        name: "Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        website: "Website"
+        description: "Description"
+      job_seeker:
+        name: "Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        website: "Website"
+        description: "Description"
+        gender: "Gender"
+        date_of_birth: "Date of Birth"
+        location: "Location"
+        mobile_number: "Mobile Number"
+        experience: "Experience"
+        skill_name: "Skill Name"
+        industry: "Industry"
+    errors:
+      messages:
+        blank: "Please Enter A Valid %{attribute}"
+        invalid: "Doesn't have correct format"
+        taken: "This %{attribute} has already been taken"
+        inclusion: "This %{attribute} is not an option in the list"
+        confirmation: "Does not match its confirmation"
+        too_short: "The %{attribute} must have at least %{count} chars"

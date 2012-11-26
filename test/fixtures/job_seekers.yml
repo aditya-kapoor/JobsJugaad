@@ -1,11 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  name: Testing Job Seeker
+  gender: 1
+  email: testing@testing.com
+  date_of_birth: 01/01/1990
+  password_digest: <%= BCrypt::Password.create("123456") %>
+  mobile_number: 1234567890
+  location: Mumbai
+  experience: 5
+  industry: IT
+  activated: true
+  photo_file_name: photo.jpeg
+  photo_content_type: image/jpeg
+  photo_file_size: 17185
+  photo_updated_at: 2012-11-07 21:34:43 +0530
+  resume_file_name: resume.pdf
+  resume_content_type: application/pdf
+  resume_file_size: 17185
+  resume_updated_at: 2012-11-07 21:34:43 +0530

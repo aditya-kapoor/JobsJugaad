@@ -11,8 +11,6 @@ class JobSeeker < ActiveRecord::Base
                   :photo_file_name, :photo_content_type, :photo_file_size, :photo_updated_at,
                   :resume_file_name, :resume_content_type, :resume_file_size, :resume_updated_at
 
-  # attr_accessor :skill_name
-
   has_many :job_applications, :dependent => :destroy
   has_many :jobs, :through => :job_applications # has-many through
 
@@ -39,7 +37,6 @@ class JobSeeker < ActiveRecord::Base
   validates :email, :uniqueness => true, :unless => proc { |user| user.email.blank? }
   validates_format_of :email,
     :with => PATTERNS['email'],
-    :message => "Doesn't Looks the correct email ID", 
     :unless => proc { |user| user.email.blank? }
 
   validates :password, :presence => true, :if => :password
@@ -49,6 +46,8 @@ class JobSeeker < ActiveRecord::Base
 
   validates :mobile_number, :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, :length => { :is => 10 }, :allow_blank => true
 
+  after_create :send_confirmation_email
+
   def skill_name
     get_skill_set
   end
@@ -57,13 +56,17 @@ class JobSeeker < ActiveRecord::Base
     set_skill_set(skill_arr)
   end
 
-  after_create :send_confirmation_email
-  
-  def send_confirmation_email
-   send_confirmation_mail_with_link
+  def self.get_gender_values
+    { I18n.t("male") => 1, I18n.t("female") => 2, I18n.t("others") => 3 }
   end
 
-  #FIXME_AB: As a good practice put all constants, validation, associations, callbacks grouped together and put them on the top of file i.e. before start defining methods
+  private
+
+  def send_confirmation_email
+    send_confirmation_mail_with_link
+  end
+
+  #FIXME_AB: As a good practice put all constants, validation, associations, callbacks grouped together and put them on the top of file i.e. before start defining method
 
   GENDER = { 'Male' => 1, 'Female' => 2, 'Others' => 3 }
 

@@ -1,0 +1,1 @@
+Delayed::Worker.read_ahead = 10

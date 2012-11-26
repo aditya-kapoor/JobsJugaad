@@ -3,15 +3,15 @@
   <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
   <table>
     <tr>
-      <td>Enter Location</td>
-      <td><%= text_field_tag :location, nil, :placeholder => "Search by Location" %></td>
+      <td><%= t(:search_by_location)%></td>
+      <td><%= text_field_tag :location, nil, :placeholder => t(:search_by_location) %></td>
     </tr>
     <tr>
-      <td>Enter Skills</td>
-      <td><%= text_field_tag :skills, nil, :placeholder => "Search by Skills" %></td>
+      <td><%=t(:search_by_skills)%></td>
+      <td><%= text_field_tag :skills, nil, :placeholder => t(:search_by_skills) %></td>
     </tr>
     <tr>
-      <td> Salary </td>
+      <td><%= t(:search_by_salary) %> </td>
       <td>
         <%= number_field_tag :sal_min, nil, :placeholder => "Minimum" , :class => "sal-fields", :value => 0 %>
          to 
@@ -20,7 +20,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= submit_tag "Search For Jobs" %></td>
+      <td><%= submit_tag t(:search) %></td>
     </tr>
     </table>
   <% end %>  

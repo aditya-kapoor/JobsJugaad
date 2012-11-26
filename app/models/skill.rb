@@ -8,7 +8,7 @@ class Skill < ActiveRecord::Base
 
   has_many :skills_association
   has_many :jobs, :through => :skills_association, :source => :skillable, :source_type => 'Job'
-  has_many :job_seekers, :through => :skills_association, :source => :skillable, :source_type => 'JobSeeker'  
+  has_many :job_seekers, :through => :skills_association, :source => :skillable, :source_type => 'JobSeeker'
 
   validates :name, :presence => true
   validates :name, :uniqueness => true, :unless => proc { |skill| skill.name.blank? }

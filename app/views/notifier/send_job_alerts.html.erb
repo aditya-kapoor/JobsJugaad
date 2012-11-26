@@ -1,0 +1,26 @@
+Welcome to JobsJugaad, <%= @job_seeker.name %>
+
+Here are some of the job recommendations based on your skill sets:
+<table>
+  <th>Employer Name:</th>
+  <th>Job Description:</th>
+  <th>Job Location:</th>
+  <th>Job Skill Set:</th>
+  <th>Profile Link: </th>
+
+  <% @jobs.each do |job| %>
+  <tr>
+    <td><%= job.employer.name %></td>
+    <td><%= job.description %></td>
+    <td><%= job.location %></td>
+    <td><%= job.skills.pluck(:name).join(", ") %></td>
+    <td><%= job_url(job.id, :host => "localhost:3000") %></td>
+  </tr>
+  <% end %>
+</table>
+
+Kindly log into your account in order to apply to these jobs
+
+Regards,
+Admin 
+JobsJugaad

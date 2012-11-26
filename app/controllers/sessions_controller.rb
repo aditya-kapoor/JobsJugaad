@@ -124,4 +124,9 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to root_url, :notice => "You have been logged out from all the pages of this website"
   end
+
+  def set_locale
+    session[:locale] = params[:locale]
+    redirect_to root_path 
+  end
 end

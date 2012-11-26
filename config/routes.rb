@@ -71,6 +71,7 @@ JobsJugaad::Application.routes.draw do
     get "reset_user_password" => :reset_user_password
     post "set_new_password" => :set_new_password
     post "save_new_password" => :save_new_password
+    get "set_locale" => :set_locale
   end
 
   resources :job_applications, :only => [:update]

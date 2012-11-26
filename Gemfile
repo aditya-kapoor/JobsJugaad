@@ -7,7 +7,6 @@ gem 'rails', '3.2.3'
 
 gem 'sqlite3'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -29,13 +28,14 @@ end
   gem 'paperclip'
   gem 'jquery-rails'
   gem 'kaminari'
-  gem "rails3-jquery-autocomplete"
-  gem 'validates_timeliness', '~> 3.0'
+  gem 'rails3-jquery-autocomplete'
   gem 'omniauth-twitter'
   gem 'oauth'
   gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
   gem 'tweet-button'
-
+  gem 'delayed_job'
+  gem 'delayed_job_active_record'
+  gem "daemons"
   gem 'simplecov', :require => false, :group => :test
   gem 'mysql2'
 

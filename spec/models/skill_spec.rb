@@ -48,13 +48,13 @@ describe Skill do
     it "should return the job seekers" do
       @skill.job_seekers.should eq([@job_seeker, @job_seeker1])
     end
-    
   end
+
   describe "Validations" do 
     it "name should not be empty" do
       @skill.attributes = valid_skill_attributes.except(:name)
       @skill.should have(1).error_on(:name)
-      @skill.errors[:name].should eq(["can't be blank"])
+      @skill.errors[:name].should eq(["Please Enter A Valid Name"])
     end
     it "should have unique skill value" do
       @skill.attributes = valid_skill_attributes
@@ -62,10 +62,10 @@ describe Skill do
       @skill1 = Skill.create(:name => "testing skill")
       @skill1.save
       @skill1.should have(1).error_on(:name)
-      @skill1.errors[:name].should eq(["has already been taken"])
+      @skill1.errors[:name].should eq(["This Name has already been taken"])
     end
     it "Valid Skill" do
-      @skill.attributes = valid_skill_attributes.with(:name => "java")
+      @skill.attributes = valid_skill_attributes
       @skill.should have(0).error_on(:name)
     end
   end

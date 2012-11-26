@@ -25,5 +25,5 @@ end
   def send_confirmation_mail_with_link
     auth_token = BCrypt::Password.create("Tutu")
     self.update_attributes(:auth_token => auth_token, :activated => false)
-    Notifier.activate_user(self, auth_token).deliver
+    Notifier.delay.activate_user(self, auth_token)
   end
