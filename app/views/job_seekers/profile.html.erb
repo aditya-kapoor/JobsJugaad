@@ -53,29 +53,29 @@
         </div>
       </fieldset>
       <fieldset class="profile-fieldset">
-      <legend id="jobs-applied-legend">Your Job Applications</legend>
-      <div id="applied-jobs-container">
-        <% if @job_seeker.jobs.empty? %>
-          No Jobs Applied For..
-        <% else %>
-          <table>
-            <tr>
-              <th> Title </th>
-              <th> Employer </th>
-              <th> Location </th>
-              <th> Status </th>
-            </tr>
-            <% @job_seeker.jobs.each do |job| %>
+        <legend id="jobs-applied-legend">Your Job Applications</legend>
+        <div id="applied-jobs-container">
+          <% if @job_seeker.jobs.empty? %>
+            No Jobs Applied For..
+          <% else %>
+            <table>
               <tr>
-                <td><%= link_to job.title, job, :target => '_blank' %></td>
-                <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
-                <td><%= job.location %> </td>
-                <td><%= get_status(current_user.id, job.id) %></td>
-              </tr>           
-            <% end %>
-          </table>
-        <% end %>
-      </div>
+                <th> Title </th>
+                <th> Employer </th>
+                <th> Location </th>
+                <th> Status </th>
+              </tr>
+              <% @job_seeker.jobs.each do |job| %>
+                <tr>
+                  <td><%= link_to job.title, job, :target => '_blank' %></td>
+                  <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
+                  <td><%= job.location %> </td>
+                  <td><%= get_status(current_user.id, job.id) %></td>
+                </tr>           
+              <% end %>
+            </table>
+          <% end %>
+        </div>
       </fieldset>
     <% end %>
     <fieldset class="profile-fieldset">
