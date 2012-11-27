@@ -54,8 +54,23 @@ class JobsController < ApplicationController
     respond_to do |format|
       if @job.save
         format.html { redirect_to :eprofile, :notice => "A new job has been posted successfully" }
+        format.json { render :text=> "A new job has been posted successfully" }
       else
         format.html { render :template => "employers/add_job", :notice => "Job Could not be saved" }
+        format.json { render :text => "There Was Some Error with your job" }
+      end
+    end
+  end
+
+  def index
+    respond_to do |format|
+      if params[:token].present?
+        @jobs = Employer.find_by_apitoken(params[:token]).jobs
+        format.html { flash[:error] = "Only JSON Format Allowed"; redirect_to root_url }
+        format.json { render :json => @jobs }
+      else
+        format.html { flash[:error] = "No token present"; redirect_to root_url }
+        format.json { flash[:error] = "No token present"; redirect_to root_url }
       end
     end
   end

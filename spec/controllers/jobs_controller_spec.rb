@@ -51,6 +51,7 @@ describe JobsController do
       before do
         session[:id] = 1
         session[:user_type] = "employer"
+        Job.should_receive(:find_by_id).with(@job.id.to_s).and_return(@job)
       end
       it "Must Go to the edit page" do
         Job.should_receive(:find_by_id).with(@job.id.to_s).and_return(@job)
@@ -76,6 +77,9 @@ describe JobsController do
       get :show, :id => @job.id
     end
     context "When Valid User" do
+      before do
+        Job.should_receive(:find_by_id).with(@job.id.to_s).and_return(@job)
+      end
       it "Must show the profile of the job seeker" do
         Job.should_receive(:find_by_id).with(@job.id.to_s).and_return(@job)
         do_show
@@ -185,7 +189,7 @@ describe JobsController do
 
   describe "Action Apply" do
     def do_apply
-      post :apply, :job_id => 1
+      post :apply, :job_id => @job.id
     end
     context "When there is no user logged into the system" do
       before do 
@@ -214,8 +218,7 @@ describe JobsController do
         session[:id] = 1
         session[:user_type] = "job_seeker"
         @job_seeker = mock_model(JobSeeker, :id => 1)
-        @job = mock_model(Job, :id => 1)
-
+        # @job = mock_model(Job, :id => 1)
       end
       it "should be able to successfully apply for job" do
         Notifier.stub!(:send_email_to_employer).and_return(@send_email_to_employer)

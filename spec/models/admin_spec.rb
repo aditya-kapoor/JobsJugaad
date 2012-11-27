@@ -16,7 +16,7 @@ describe Admin do
     it "name should not be nil" do
       @admin.attributes = valid_admin_attributes.except(:name)
       @admin.should have(1).error_on(:name)
-      @admin.errors[:name].should eq(["can't be blank"])
+      @admin.errors[:name].should eq(["Please Enter A Valid Name"])
     end
     it "Valid Name" do
       @admin.attributes = valid_admin_attributes.only(:name)
@@ -30,7 +30,7 @@ describe Admin do
     it "Email Should not be null" do
       @admin.attributes = valid_admin_attributes.except(:email)
       @admin.should have(1).error_on(:email)
-      @admin.errors[:email].should eq(["can't be blank"])
+      @admin.errors[:email].should eq(["Please Enter A Valid Email"])
     end
     it "Email must be unique" do
       @admin.attributes = valid_admin_attributes
@@ -39,7 +39,7 @@ describe Admin do
       @admin1.attributes = valid_admin_attributes
       @admin1.save
       @admin1.should have(1).error_on(:email)
-      @admin1.errors[:email].should eq(["has already been taken"])
+      @admin1.errors[:email].should eq(["This Email has already been taken"])
     end
     it "Valid Email" do
       @admin.attributes = valid_admin_attributes.only(:email)
@@ -53,23 +53,23 @@ describe Admin do
     it "password confirmation should not be blank" do
       @admin.attributes = valid_admin_attributes.except(:password_confirmation)
       @admin.should have(1).error_on(:password_confirmation)
-      @admin.errors[:password_confirmation].should eq(["can't be blank"])
+      @admin.errors[:password_confirmation].should eq(["Please Enter A Valid Password confirmation"])
     end
     it "password should have at least six characters" do
       @admin.attributes = valid_admin_attributes.with(:password => "1234")
       @admin.should have(2).error_on(:password)
-      @admin.errors[:password].should eq(["doesn't match confirmation", "is too short (minimum is 6 characters)"])
+      @admin.errors[:password].should eq(["Does not match its confirmation", "The Password must have at least 6 chars"])
     end
     it "password should match the password confirmation" do
       @admin.attributes = valid_admin_attributes.with(:password => "123456", 
         :password_confirmation => "1234")
       @admin.should have(1).error_on(:password)
-      @admin.errors[:password].should eq(["doesn't match confirmation"])
+      @admin.errors[:password].should eq(["Does not match its confirmation"])
     end
     it "password and confirmation should have at least six characters" do
       @admin.attributes = valid_admin_attributes.with(:password => "1234", :password_confirmation => "1234")
       @admin.should have(1).error_on(:password)
-      @admin.errors[:password].should eq(["is too short (minimum is 6 characters)"])
+      @admin.errors[:password].should eq(["The Password must have at least 6 chars"])
     end
     it "Valid Password" do
       @admin.attributes = valid_admin_attributes.with(:password => "123456", :password_confirmation => "123456")

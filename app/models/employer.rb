@@ -8,7 +8,7 @@ class Employer < ActiveRecord::Base
   attr_accessible :name, :website, :description, 
                   :password, :password_confirmation, :photo,
                   :photo_file_name, :photo_content_type, :photo_file_size, 
-                  :photo_updated_at, :auth_token, :activated, :password_reset_token
+                  :photo_updated_at, :auth_token, :activated, :password_reset_token, :apitoken
 
   attr_protected :email
 

@@ -21,6 +21,14 @@ class EmployersController < ApplicationController
     @employer = Employer.find_by_id(params[:id])
   end
 
+  def get_api_token
+    @employer = Employer.find(session["id"])
+    @employer.apitoken = SecureRandom.urlsafe_base64
+    @employer.save
+    flash[:notice] = "Successfully created token : #{@employer.apitoken}"
+    redirect_to eprofile_path
+  end
+
   def update
     @employer = Employer.find_by_id(params[:id])
 

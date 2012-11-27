@@ -21,4 +21,30 @@ class JobApplication < ActiveRecord::Base
     end
   end
 
+
+  state_machine :initial => :applied do 
+    event :rejected do 
+      transition :applied => :rejected
+    end
+
+    event :shortlist do 
+      transition :applied => :shortlisted
+    end
+
+    event :call_for_interview do 
+      transition :shortlisted => :called_for_interview
+    end
+
+    event :called_for_interview do 
+      transition :called_for_interview => :given_offer
+    end
+
+    event :accepted_offer do 
+      transition :given_offer => :accepted_offer
+    end
+
+    event :rejected_offer do
+      transition :given_offer => :rejected_offer
+    end
+  end
 end

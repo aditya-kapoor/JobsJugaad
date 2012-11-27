@@ -14,6 +14,7 @@
       <legend id="profile-info-legend">Your Profile Information</legend>
       <div id="profile-container">
         <div id="links_to_use">
+          <%= check_for_token %>
           <%= link_to 'Change Password', change_password_employer_path(@employer) %> | 
           <%= link_to 'Edit', edit_employer_path(@employer) %>
         </div>

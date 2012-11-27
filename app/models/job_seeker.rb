@@ -98,4 +98,5 @@ class JobSeeker < ActiveRecord::Base
     "10" => "10",
     "10+" => "10+"
   }
+
 end

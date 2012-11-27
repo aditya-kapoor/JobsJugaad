@@ -15,6 +15,7 @@
         <legend id="profile-info-legend">Your Profile Information</legend>
         <div id="profile-container">
           <div id="links_to_use">
+            <%= check_for_apitoken %> 
             <%= link_to 'Change Password', change_password_job_seeker_path(@job_seeker) %> |
             <%= link_to 'Edit', edit_job_seeker_path(@job_seeker) %> 
           </div>

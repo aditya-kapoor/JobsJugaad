@@ -81,11 +81,11 @@ describe JobSeekersController do
     end
     context "When Valid User" do 
       before do
-        session[:id] = 1
+        session[:id] = @job_seeker.id
         session[:user_type] = "job_seeker"
       end
       it "Must Go to the edit page" do
-        JobSeeker.should_receive(:find).with(@job_seeker.id.to_s).and_return(@job_seeker)
+        JobSeeker.should_receive(:find).and_return(@job_seeker)
         do_edit
         response.should render_template("job_seekers/edit")
       end
@@ -144,13 +144,14 @@ describe JobSeekersController do
     end
     context "Correct User in the system" do
       before do
-        session[:id] = 1
+        session[:id] = @job_seeker.id
         session[:user_type] = "job_seeker"
       end
       it "Should Successfully update the attributes" do
         JobSeeker.should_receive(:find).with(@job_seeker.id.to_s).and_return(@job_seeker)
         @job_seeker.should_receive(:update_attributes).with({"name"=>"testing123456"}).and_return(true)
         do_update
+        flash[:notice].should eq("Your profile has been successfully updated.")
         response.should redirect_to(profile_path)
       end
       it "Should Not Successfully update the attributes" do

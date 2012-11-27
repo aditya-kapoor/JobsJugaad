@@ -148,6 +148,7 @@ describe SessionsController do
       it "should be able to register job seeker successfully" do
         controller.should_receive(:save_credentials).with("JobSeeker", valid_job_seeker_attributes.with_indifferent_access, "job_seekers/new").and_return(true)
         do_register
+        response.should be_success
       end
     end
     #--complete
@@ -187,7 +188,7 @@ describe SessionsController do
         get :change_password, :id => id
       end
       before do 
-        session[:id] = 1
+        session[:id] = @job_seeker.id
         session[:user_type] = "job_seeker"
       end
       it "should display the change password template" do
@@ -206,7 +207,7 @@ describe SessionsController do
         get :change_password, :id => id
       end
       before do 
-        session[:id] = 1
+        session[:id] = @employer.id
         session[:user_type] = "employer"
       end
       it "should display the change password template" do
@@ -225,7 +226,7 @@ describe SessionsController do
         get :change_password, :id => id
       end
       before do 
-        session[:id] = 1
+        session[:id] = @admin.id
         session[:user_type] = "admin"
       end
       it "should display the change password template" do
@@ -368,7 +369,7 @@ describe SessionsController do
           :admin => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
       before do
-        session[:id] = 1
+        session[:id] = @admin.id
         session[:user_type] = "admin"
       end
       it "should successfully change the password" do
@@ -384,7 +385,7 @@ describe SessionsController do
           :admin => { :password => "qwerty", :password_confirmation => "qwerty" }
       end 
       before do
-        session[:id] = 1
+        session[:id] = @admin.id
         session[:user_type] = "admin"
       end
       it "should not change the password" do
@@ -401,7 +402,7 @@ describe SessionsController do
           :admin => { :password => "qwerty", :password_confirmation => "" }
       end 
       before do
-        session[:id] = 1
+        session[:id] = @admin.id
         session[:user_type] = "admin"
       end
       it "should not change the password due to some validation issues in new password" do

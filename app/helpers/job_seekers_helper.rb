@@ -8,6 +8,14 @@ module JobSeekersHelper
     end
   end
 
+  def check_for_apitoken
+    unless @job_seeker.apitoken.blank?
+      "API Token = #{@job_seeker.apitoken}"
+    else
+      link_to 'Register for a token', get_api_token_job_seeker_path(@job_seeker)
+    end
+  end
+
   def get_industry
     if @job_seeker.industry.nil?
       "Not Mentioned"

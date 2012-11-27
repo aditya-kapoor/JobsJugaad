@@ -35,7 +35,7 @@ describe Employer do
     it "should post unique jobs on the portal" do
       @job3 = @employer.jobs.create(valid_job_attributes)
       @employer.should have(1).error_on(:jobs)
-      @employer.errors[:jobs].should eq(["is invalid"])
+      @employer.errors[:jobs].should eq(["Doesn't have correct format"])
     end
   end
 
@@ -50,7 +50,7 @@ describe Employer do
     it "name should not be nil" do
       @employer.attributes = valid_employer_attributes.except(:name)
       @employer.should have(1).error_on(:name)
-      @employer.errors[:name].should eq(["can't be blank"])
+      @employer.errors[:name].should eq(["Please Enter A Valid Name"])
     end
     it "Valid Name" do
       @employer.attributes = valid_employer_attributes.only(:name)
@@ -64,7 +64,7 @@ describe Employer do
     it "Email Should not be null" do
       @employer.attributes = valid_employer_attributes.except(:email)
       @employer.should have(1).error_on(:email)
-      @employer.errors[:email].should eq(["can't be blank"])
+      @employer.errors[:email].should eq(["Please Enter A Valid Email"])
     end
     it "Email must be unique" do
       @employer.attributes = valid_employer_attributes
@@ -74,7 +74,7 @@ describe Employer do
       @employer1.email = "abc@cde.com"
       @employer1.save
       @employer1.should have(1).error_on(:email)
-      @employer1.errors[:email].should eq(["has already been taken"])
+      @employer1.errors[:email].should eq(["This Email has already been taken"])
     end
     it "Valid Email" do
       @employer.email = "abc@cde.com"
@@ -83,27 +83,27 @@ describe Employer do
     it "password should not be blank" do
       @employer.attributes = valid_employer_attributes.with(:password => "")
       @employer.should have(2).error_on(:password)
-      @employer.errors[:password].should eq(["doesn't match confirmation", "can't be blank"])
+      @employer.errors[:password].should eq(["Does not match its confirmation", "Please Enter A Valid Password"])
     end
     it "password confirmation should not be blank" do
       @employer.attributes = valid_employer_attributes.with(:password_confirmation => "789121")
       @employer.should have(1).error_on(:password)
-      @employer.errors[:password].should eq(["doesn't match confirmation"])
+      @employer.errors[:password].should eq(["Does not match its confirmation"])
     end
     it "password should have at least six characters" do
       @employer.attributes = valid_employer_attributes.with(:password => "1234")
       @employer.should have(2).error_on(:password)
-      @employer.errors[:password].should eq(["doesn't match confirmation", "is too short (minimum is 6 characters)"])
+      @employer.errors[:password].should eq(["Does not match its confirmation", "The Password must have at least 6 chars"])
     end
     it "password should match the password confirmation" do
       @employer.attributes = valid_employer_attributes.with(:password => "123456", :password_confirmation => "1234")
       @employer.should have(1).error_on(:password)
-      @employer.errors[:password].should eq(["doesn't match confirmation"])
+      @employer.errors[:password].should eq(["Does not match its confirmation"])
     end
     it "password and confirmation should have at least six characters" do
       @employer.attributes = valid_employer_attributes.with(:password => "1234", :password_confirmation => "1234")
       @employer.should have(1).error_on(:password)
-      @employer.errors[:password].should eq(["is too short (minimum is 6 characters)"])
+      @employer.errors[:password].should eq(["The Password must have at least 6 chars"])
     end
     it "Valid Password" do
       @employer.attributes = valid_employer_attributes.with(:password => "123456", :password_confirmation => "123456")

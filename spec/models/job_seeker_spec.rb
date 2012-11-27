@@ -51,7 +51,7 @@ describe JobSeeker do
         @job_seeker.should respond_to(:skills)
       end
       it "should have a number of skill associations (XYZ)" do 
-        @job_seeker.should respond_to(:skills_association)
+        @job_seeker.should respond_to(:skills_associations)
       end
       it "should have a number of skills" do
         @job_seeker.should have(0).error_on(:skills)
@@ -61,7 +61,7 @@ describe JobSeeker do
         @job_seeker.should have(0).error_on(:skills)
       end
       it "Once Job Seeker is destroyed all its skills are removed from skills associations" do
-        associated_skills = @job_seeker.skills_association
+        associated_skills = @job_seeker.skills_associations
         @job_seeker.destroy
         associated_skills.should be_empty
       end
@@ -76,7 +76,7 @@ describe JobSeeker do
     it "name should not be nil" do
       @job_seeker.attributes = valid_job_seeker_attributes.except(:name)
       @job_seeker.should have(1).error_on(:name)
-      @job_seeker.errors[:name].should eq(["can't be blank"])
+      @job_seeker.errors[:name].should eq(["Please Enter A Valid Name"])
     end
     it "Valid Name" do
       @job_seeker.attributes = valid_job_seeker_attributes.only(:name)
@@ -86,12 +86,12 @@ describe JobSeeker do
       @job_seeker.attributes = valid_job_seeker_attributes
       @job_seeker.email = "abc@cde"
       @job_seeker.should have(1).error_on(:email)
-      @job_seeker.errors[:email].should eq(["Doesn't Looks the correct email ID"])
+      @job_seeker.errors[:email].should eq(["Doesn't have correct format"])
     end
     it "Email Should not be null" do
       @job_seeker.attributes = valid_job_seeker_attributes
       @job_seeker.should have(1).error_on(:email)
-      @job_seeker.errors[:email].should eq(["can't be blank"])
+      @job_seeker.errors[:email].should eq(["Please Enter A Valid Email"])
     end
     it "Email must be unique" do
       @job_seeker.attributes = valid_job_seeker_attributes
@@ -102,7 +102,7 @@ describe JobSeeker do
       @job_seeker1.email = "testing@testing.com"
       @job_seeker1.save
       @job_seeker1.should have(1).error_on(:email)
-      @job_seeker1.errors[:email].should eq(["has already been taken"])
+      @job_seeker1.errors[:email].should eq(["This Email has already been taken"])
     end
     it "Valid Email" do
       @job_seeker.attributes = valid_job_seeker_attributes
@@ -117,23 +117,23 @@ describe JobSeeker do
     it "password confirmation should not be blank" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password_confirmation => "")
       @job_seeker.should have(1).error_on(:password)
-      @job_seeker.errors[:password].should eq(["doesn't match confirmation"])
+      @job_seeker.errors[:password].should eq(["Does not match its confirmation"])
     end
     it "password should have at least six characters" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password => "1234")
       @job_seeker.should have(2).error_on(:password)
-      @job_seeker.errors[:password].should eq(["doesn't match confirmation", "is too short (minimum is 6 characters)"])
+      @job_seeker.errors[:password].should eq(["Does not match its confirmation", "The Password must have at least 6 chars"])
     end
     it "password should match the password confirmation" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password => "123456", 
         :password_confirmation => "1234")
       @job_seeker.should have(1).error_on(:password)
-      @job_seeker.errors[:password].should eq(["doesn't match confirmation"])
+      @job_seeker.errors[:password].should eq(["Does not match its confirmation"])
     end
     it "password and confirmation should have at least six characters" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password => "1234", :password_confirmation => "1234")
       @job_seeker.should have(1).error_on(:password)
-      @job_seeker.errors[:password].should eq(["is too short (minimum is 6 characters)"])
+      @job_seeker.errors[:password].should eq(["The Password must have at least 6 chars"])
     end
     it "Valid Password" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:password => "123456", :password_confirmation => "123456")
@@ -156,7 +156,7 @@ describe JobSeeker do
     it "Gender Should have a legal value" do
       @job_seeker.attributes = valid_job_seeker_attributes.except(:gender)
       @job_seeker.should have(1).error_on(:gender)
-      @job_seeker.errors[:gender].should eq(["is not included in the list"])
+      @job_seeker.errors[:gender].should eq(["This Gender is not an option in the list"])
     end
     it "Valid Gender Value" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:gender => 1)
@@ -166,11 +166,6 @@ describe JobSeeker do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:photo_file_name => "photo.pdf")
       @job_seeker.should have(1).error_on(:photo_file_name)
       @job_seeker.errors[:photo_file_name].should eq(["Invalid Photo Format: Allowed Formats Are Only in jpeg, jpg, png, ico and gif"])
-    end
-    it "The size of the Photo must be less than 6 MB" do
-      @job_seeker.attributes = valid_job_seeker_attributes.with(:photo_file_size => 9999999999)
-      @job_seeker.should have(1).error_on(:photo_file_size)
-      @job_seeker.errors[:photo_file_size].should eq(["Must be less than 6 MB"])
     end
     it "Has Valid a Profile Photo" do
       @job_seeker.attributes = valid_job_seeker_attributes.with(:photo_file_name => "photo.jpg")

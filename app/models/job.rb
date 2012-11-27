@@ -75,4 +75,11 @@ class Job < ActiveRecord::Base
   def skill_name=(skill_arr)
     set_skill_set(skill_arr)
   end
+
+  def as_json(options = {})
+    employer_name ||= []
+    employer_name << self.employer.name
+    logger.info("self is #{employer_name}")
+    super(:include => [:employer => { :only => [:name] }], :except => [:updated_at, :created_at])
+  end
 end

@@ -86,7 +86,7 @@ describe Job do
     it "Must Have A title" do
       @job.attributes = valid_job_attributes.except(:title)
       @job.should have(1).error_on(:title)
-      @job.errors[:title].should eq(["can't be blank"])
+      @job.errors[:title].should eq(["Please Enter A Valid Title"])
     end
     it "Valid Title" do
       @job.attributes = valid_job_attributes.with(:title => "Testing Post")
@@ -101,7 +101,7 @@ describe Job do
     it "Must Have A description" do
       @job.attributes = valid_job_attributes.with(:description => "")
       @job.should have(1).error_on(:description)
-      @job.errors[:description].should eq(["can't be blank"])
+      @job.errors[:description].should eq(["Please Enter A Valid Description"])
     end
     it "Description must have at least 50 chars as length" do
       @job.attributes = valid_job_attributes.with(:description => "Testing description")
@@ -115,7 +115,7 @@ describe Job do
     it "Must Have A location" do
       @job.attributes = valid_job_attributes.except(:location)
       @job.should have(1).error_on(:location)
-      @job.errors[:location].should eq(["can't be blank"])
+      @job.errors[:location].should eq(["Please Enter A Valid Location"])
     end
     it "Valid Title" do
       @job.attributes = valid_job_attributes.with(:location => "Testing Location")

@@ -38,6 +38,7 @@ end
   gem "daemons"
   gem 'simplecov', :require => false, :group => :test
   gem 'mysql2'
+  gem 'state_machine'
 
   group :development, :test do
     # gem 'shoulda'

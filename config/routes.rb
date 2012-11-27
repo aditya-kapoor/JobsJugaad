@@ -4,7 +4,7 @@ JobsJugaad::Application.routes.draw do
 
   get "faqs" => "home#faqs"
 
-  resources :job_seekers, :except => [:new, :index] do 
+  resources :job_seekers, :except => [:new] do 
     # get "profile" => :profile, :on => :member
     collection do 
       get "register" => :new
@@ -14,6 +14,7 @@ JobsJugaad::Application.routes.draw do
       get "download_resume" => :download_resume
       get "remove_photo" => :remove_photo 
       get "change_password" => "sessions#change_password"
+      get "get_api_token" => :get_api_token
     end
   end
   controller 'job_seekers' do
@@ -32,6 +33,7 @@ JobsJugaad::Application.routes.draw do
     member do
       get "change_password" => "sessions#change_password"
       get "add_job" => :add_job
+      get "get_api_token" => :get_api_token
     end
   end
 

@@ -3,7 +3,7 @@ class JobSeekersController < ApplicationController
 
   include JobSeekersControllerHelperFunctions
   
-  before_filter :is_valid_access?, :except => [:new, :forgot_password, :update, :autocomplete_skill_name]
+  before_filter :is_valid_access?, :except => [:new, :forgot_password, :index, :update, :autocomplete_skill_name]
   # skip_before_filter :is_valid_access?
   before_filter :is_authorised_access?, :only => [:edit, :update]
   autocomplete :skill, :name
@@ -25,6 +25,17 @@ class JobSeekersController < ApplicationController
   end
 
   def index
+    respond_to do |format|
+      if params[:token].present?
+        @jobs = JobSeeker.includes(:jobs => :employer ).find_by_apitoken(params[:token]).jobs
+
+        format.html { flash[:error] = "Only JSON Format Allowed"; redirect_to root_url }
+        format.json { render :json => @jobs }
+      else
+        format.html { flash[:error] = "No token present"; redirect_to root_url }
+        format.json { flash[:error] = "No token present"; redirect_to root_url }
+      end
+    end
   end
 
   def show
@@ -88,5 +99,13 @@ class JobSeekersController < ApplicationController
   def download_resume
     @job_seeker = JobSeeker.find(params[:id])
     send_file(@job_seeker.resume.path.to_s, :type => @job_seeker.resume.content_type)
+  end
+
+  def get_api_token
+    @job_seeker = JobSeeker.find(session["id"])
+    @job_seeker.apitoken = SecureRandom.urlsafe_base64
+    @job_seeker.save
+    flash[:notice] = "Successfully created token : #{@job_seeker.apitoken}"
+    redirect_to profile_path
   end
 end
