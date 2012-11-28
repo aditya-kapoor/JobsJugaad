@@ -1,0 +1,12 @@
+<h3>Here are the short listed candidates called for interview for the Job</h3>
+<table>
+  <th>Name</th>
+  <% @job_applications.each do |application| %>
+    <tr>
+      <td><%= application.job_seeker.name %></td>
+      <td><%= application.state %></td>
+      <td><%= link_to "Accepted Offer", accepted_offer_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id)  %></td>
+      <td><%= link_to "Rejected Offer", rejected_offer_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id)  %></td> 
+    </tr>
+  <% end %>
+</table>

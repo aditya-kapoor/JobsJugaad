@@ -78,6 +78,18 @@ JobsJugaad::Application.routes.draw do
   end
 
   resources :job_applications, :only => [:update]
+  controller :job_applications do 
+    get "rejected" => :rejected
+    get "shortlisted" => :shortlisted
+    get "view_shortlisted" => :view_shortlisted
+    get "calling_for_interview" => :calling_for_interview
+    get "view_called_for_interview" => :view_called_for_interview
+    get "called_for_interview" => :called_for_interview
+    get "view_given_offer" => :view_given_offer
+    get "accepted_offer" => :accepted_offer
+    get "rejected_offer" => :rejected_offer
+    get "invalid_action" => :invalid_action
+  end
   
   # namespace :admin do
   # end

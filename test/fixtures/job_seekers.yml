@@ -1,8 +1,9 @@
 one:
+  id: 10
   name: Testing Job Seeker
   gender: 1
-  email: testing@testing.com
-  date_of_birth: 01/01/1990
+  email: testing10@testing.com
+  date_of_birth: <%= Date.parse("01/01/1990") %>
   password_digest: <%= BCrypt::Password.create("123456") %>
   mobile_number: 1234567890
   location: Mumbai

@@ -1,0 +1,14 @@
+<h3>Here are the short listed candidates called for interview for the Job</h3>
+<table>
+  <th>Name</th>
+  <% @job_applications.each do |application| %>
+    <tr>
+      <td><%= application.job_seeker.name %></td>
+      <td>
+        <%= link_to "Called for interview", called_for_interview_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "View Those Who have been given offer", view_given_offer_path(:job_id => params[:job_id]) %>

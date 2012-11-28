@@ -1,0 +1,9 @@
+one:
+  id: 10
+  title: Testing Job,
+  description: This is the description of the testing jobs which is specifically used for testing in the RSpec
+  location: Mumbai
+  salary_min: 15000
+  salary_max: 25000
+  salary_type: pm
+  employer_id: 10

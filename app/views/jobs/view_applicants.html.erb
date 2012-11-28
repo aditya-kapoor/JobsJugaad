@@ -11,6 +11,9 @@
       <th> Skills </th>
       <th> Profile </th>
       <th> Resume </th>
+      <th></th>
+      <th>Valid Actions </th>
+      <th>Invalid Actions </th>
     </tr>
     <% @job.job_seekers.each do |job_seeker| %>
       <tr>
@@ -22,10 +25,26 @@
             <%= link_to "Resume", download_resume_job_seeker_path(job_seeker) %>
           <% end %>
         </td>
-        <td><%= link_to 'Call For interview', call_for_interview_path(:id => job_seeker.id, :job_id => params[:id]) %></td>
+        <td>
+          <%= link_to 'Call For interview', call_for_interview_path(:id => job_seeker.id, :job_id => params[:id]) %>
+        </td>
+        <td>
+          <% if get_application(job_seeker.id, params[:id]).state == "applied" %>
+            <%= link_to "Reject", rejected_path(:seeker_id=>job_seeker.id,:job_id=>params[:id]) %>
+            <%= link_to "Shortlist", shortlisted_path(:seeker_id=>job_seeker.id,:job_id=>params[:id]) %>
+          <% else %>
+            <%= get_application(job_seeker.id, params[:id]).state %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to 'Accept Offer', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "accepted_offer") %>
+          <%= link_to 'Reject Offer', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "rejected_offer") %>
+          <%= link_to 'Call For Interview', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "calling_for_interview") %>
+        </td>
       </tr>
     <% end %>
   </table>
   <% end %>
   <%= link_to 'Back to profile', eprofile_path %>
+  <%= link_to 'View Shortlisted Candidates', view_shortlisted_path(:job_id => params[:id]) %>
 </fieldset>

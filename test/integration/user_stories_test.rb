@@ -1,69 +1,46 @@
 require 'test_helper'
 
 class UserStoriesTest < ActionController::IntegrationTest
-  # fixtures :job_seekers
-  test "Registration of the Job Seeker" do
-    JobSeeker.destroy_all
-    # job_seeker = job_seekers(:one) 
+  # a new user logs on to the website, and then searches for the job and then 
+  # is redirected to its profile page when he has successfully applied for the job
+
+  test "Login of the Job Seeker followed by application to a job" do
+    # JobSeeker.destroy_all
+    # job_seeker = job_seekers(:one)
+
+    #visits the home page
     get "/"
     assert_response :success
     assert_template "index"
 
-    get "/job_seekers/register"
-    assert_response :success
-    assert_template "job_seekers/new"
-
-    post_via_redirect "/job_seekers/register",
-                      :user_type => "am9iX3NlZWtlcg==",
-                      :job_seeker => {
-                        :name => "Testing Job Seeker",
-                        :gender => "1", 
-                        :email => "testing@testing.com",
-                        :date_of_birth => "01/01/1990",
-                        :password => "123456",
-                        :password_confirmation => "123456", 
-                        :mobile_number => "1234567890",
-                        :location => "Mumbai",
-                        :experience => "5",
-                        :industry => "IT",
-                        :activated => false,
-                        :photo_file_name => "photo.jpeg",
-                        :photo_content_type => "image/jpeg",
-                        :photo_file_size => "17185",
-                        :photo_updated_at => "2012-11-07 21:34:43 +0530",
-                        :resume_file_name => "resume.pdf",
-                        :resume_content_type => "application/pdf",
-                        :resume_file_size => "17185",
-                        :resume_updated_at => "2012-11-07 21:34:43 +0530",
-                        :skill_name => "php, ruby"
-                      }
-    assert_response :success
-    assert_template "index"
-    job_seekers = JobSeeker.all
-    assert_equal 1, job_seekers.size
-    assert_equal "Testing Job Seeker", job_seekers[0].name
-  end
-
-  test "Login As Job Seeker" do
-    get "/"
-    assert_response :success
-    assert_template "index"
-
+    #logins by entering its credentials
     post_via_redirect "/login",
-    :user_type => "am9iX3NlZWtlcg==",
-    :email => "testing@testing.com", 
-    :password => "123456"
-    assert_response :success
-    assert_template "job_seekers/profile"
-  end
+    :email => "testing10@testing.com", 
+    :password => "123456",
+    :user_type => "am9iX3NlZWtlcg=="
 
-  test "Search for jobs" do
+    assert_equal '/profile', path
+    assert_template "profile"
+    assert_select 'div#logged_in_holder' do
+      assert_select 'p', 1
+      assert_select 'p:nth-child(1)', "Logged in as testing10@testing.com | Log Out"
+    end  
+
+    # goes to the main index page and searches for job
     get "/"
     assert_response :success
     assert_template "index"
-
-    post "/search_results"
+    post_via_redirect "/search_results"
     assert_response :success
-    assert_template "jobs/search_results"
+    assert_template "search_results"
+    assert_select 'table#job-listings' do
+      assert_select 'tr', 1
+    end
+
+    #Applies to the selected job
+    post_via_redirect "/apply?job_id=10"
+    assert_equal "/profile", path
+    assert_template "profile"
+    assert_equal "You have successfully applied to this job", flash[:notice]
   end
 end

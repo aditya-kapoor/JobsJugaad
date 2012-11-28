@@ -80,7 +80,7 @@ class JobsController < ApplicationController
   end
 
   def view_applicants
-    @job = Job.find_by_id(params[:id])
+    @job = Job.includes(:job_seekers => :skills).find_by_id(params[:id])
   end
 
   def show

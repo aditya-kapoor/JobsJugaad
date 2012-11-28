@@ -4,7 +4,7 @@ hi:
   enter_email: "ईमेल दर्ज करें"
   enter_password: "पासवर्ड दर्ज करें"
   login: "लॉग इन करें"
-  forgot_password: "पासवर्ड भूल गए?"
+  forgot_password: "पासवर्ड भूल गए? तो हम क्या करे फिर ??"
   login_as_employer: "नियोक्ता लॉग इन करें"
   new_job_seeker: "नया रोज़गार इच्छुक?"
   search_by_location: "स्थान के आधार पर खोजें"

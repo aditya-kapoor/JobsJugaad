@@ -50,6 +50,8 @@ class Job < ActiveRecord::Base
     has salary_min
     indexes salary_type
     indexes title
+
+    set_property :delta => true
   end
 
   sphinx_scope(:location) do |place|

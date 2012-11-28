@@ -1,0 +1,8 @@
+one:
+  id: 10
+  name: Testing Employer
+  email: testing_emp10@testing.com
+  password_digest: <%= BCrypt::Password.create("123456") %>
+  activated: true
+  website: http://testing.com
+  description: This is the description of the testing employer
