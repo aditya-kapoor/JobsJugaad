@@ -1,5 +1,6 @@
-<fieldset><legend>Login As Administrator</legend>
-<%= form_tag(:controller => "sessions", :action => "login") do %>
+<fieldset>
+  <legend>Login As Administrator</legend>
+<%= form_tag login_url do %>
   <table>
     <tr>
       <td><%= label_tag :email, "Enter Email" %></td>

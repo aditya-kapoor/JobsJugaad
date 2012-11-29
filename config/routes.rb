@@ -91,18 +91,17 @@ JobsJugaad::Application.routes.draw do
     get "invalid_action" => :invalid_action
   end
   
-  # namespace :admin do
-  # end
-
-  resources :admin, :except => [:new, :destroy] do
-    member do 
-      get "change_password" => "sessions#change_password"
+  namespace :admin do
+    resources :admin, :except => [:new, :destroy] do
+      member do 
+        # get "change_password" => "sessions#change_password"
+      end
+    end
+    controller :admin do
+      get "admin_profile" => :profile
     end
   end
 
-  controller :admin do
-    get "admin_profile" => :profile
-  end
   
   root :to => 'home#index'
 

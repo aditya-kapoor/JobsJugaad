@@ -61,7 +61,7 @@ class JobApplicationsController < ApplicationController
   def invalid_action
     @job_application = JobApplication.find_by_job_id_and_job_seeker_id(params[:job_id], params[:seeker_id])
     unless @job_application.send(params[:event].to_s)
-      flash[:error] = "This Action Cannot be Applied"
+      flash[:error] = "This Action (#{params[:event].humanize}) Cannot be Applied"
     end
     redirect_to request.referrer
   end

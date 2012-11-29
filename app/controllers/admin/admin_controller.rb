@@ -1,5 +1,5 @@
 #FIXME_AB: Should't it be namespaced?
-class AdminController < ApplicationController
+class Admin::AdminController < ApplicationController
   
   def index
   end

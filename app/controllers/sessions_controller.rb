@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
         check_credentials(class_name, redirection)        
       when "admin"
         class_name = "Admin"
-        redirection = :admin_profile
+        redirection = :admin_admin_profile
         check_credentials(class_name, redirection)
       end
     else
