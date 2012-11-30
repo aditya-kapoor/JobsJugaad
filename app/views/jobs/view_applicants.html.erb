@@ -12,8 +12,8 @@
       <th> Profile </th>
       <th> Resume </th>
       <th></th>
-      <th>Valid Actions </th>
-      <th>Invalid Actions </th>
+      <th>Valid Events </th>
+      <th>Invalid Events </th>
     </tr>
     <% @job.job_seekers.each do |job_seeker| %>
       <tr>
@@ -26,25 +26,25 @@
           <% end %>
         </td>
         <td>
-          <%= link_to 'Call For interview', call_for_interview_path(:id => job_seeker.id, :job_id => params[:id]) %>
+          <%= link_to 'Call For interview', call_for_interview_job_application_path(get_application(job_seeker.id)) %>
         </td>
         <td>
-          <% if get_application(job_seeker.id, params[:id]).state == "applied" %>
-            <%= link_to "Reject", rejected_path(:seeker_id=>job_seeker.id,:job_id=>params[:id]) %>
-            <%= link_to "Shortlist", shortlisted_path(:seeker_id=>job_seeker.id,:job_id=>params[:id]) %>
+          <% if get_application(job_seeker.id).state == "applied" %>
+            <%= link_to "Reject", perform_action_job_application_path(get_application(job_seeker.id), :event => "rejected") %>
+            <%= link_to "Shortlist", perform_action_job_application_path(get_application(job_seeker.id), :event => "shortlist") %>
           <% else %>
-            <%= get_application(job_seeker.id, params[:id]).state %>
+            <%= get_application(job_seeker.id).state %>
           <% end %>
         </td>
         <td>
-          <%= link_to 'Accept Offer', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "accepted_offer") %>
-          <%= link_to 'Reject Offer', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "rejected_offer") %>
-          <%= link_to 'Call For Interview', invalid_action_path(:seeker_id=>job_seeker.id,:job_id=>params[:id], :event => "calling_for_interview") %>
+          <% get_invalid_states(job_seeker.id).each do |event| %>
+          <%= link_to "#{event.to_s.humanize}", perform_action_job_application_path(get_application(job_seeker.id), :event => "#{event.to_s}") %>
+          <% end %>
         </td>
       </tr>
     <% end %>
   </table>
   <% end %>
   <%= link_to 'Back to profile', eprofile_path %>
-  <%= link_to 'View Shortlisted Candidates', view_shortlisted_path(:job_id => params[:id]) %>
+  <%= link_to 'View Shortlisted Candidates', view_job_applicants_job_path(:state => "shortlisted") %>
 </fieldset>

@@ -9,48 +9,13 @@ class JobsController < ApplicationController
 
   @@rpp = 2
 
-  def check_unauthorised_access
-    unless session[:user_type] == "employer"
-      flash[:error] = "You are not authorised to do this"
-      redirect_to root_url
-    end
-  end
-
-  def check_for_valid_access
-    employer = Employer.find_by_id(session[:id])
-    if employer && session[:user_type] == "employer"
-      does_job_belongs_to_employer?(employer)
-    else
-      flash[:error] = "You are not logged in as employer"
-      redirect_to root_url
-    end
-  end
-
-  def does_job_belongs_to_employer?(employer)
-    unless employer.job_ids.include?(params[:id].to_i)
-      flash[:error] = "You Don't Own This Job"
-      redirect_to root_url
-    end
-  end
-
-  def check_for_session
-    if session[:id].nil?
-      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
-      redirect_to :root, :notice => "Please Login or Register as the job seeker"
-    end
-  end
-
-  def is_job_found
-    job = Job.find_by_id(params[:id])
-    unless job
-      flash[:error] = "No Job Found"
-      redirect_to root_url
-    end
-  end
+  caches_action :show, :layout => false
 
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
+    expire_fragment "employer-#{@employer.id}-jobs"
+
     respond_to do |format|
       if @job.save
         format.html { redirect_to :eprofile, :notice => "A new job has been posted successfully" }
@@ -97,7 +62,7 @@ class JobsController < ApplicationController
 
   def update
     @job = Job.find(params[:id])
-
+    expire_action :action => :show
     respond_to do |format|
       if @job.update_attributes(params[:job])
         format.html { redirect_to :eprofile, notice: "Job was successfully updated." }
@@ -145,5 +110,45 @@ class JobsController < ApplicationController
       format.html { redirect_to request.referer, :notice => "Job has been successfully removed" }
     end
   end
-  
+
+  private 
+
+  def check_unauthorised_access
+    unless session[:user_type] == "employer"
+      flash[:error] = "You are not authorised to do this"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_valid_access
+    employer = Employer.find_by_id(session[:id])
+    if employer && session[:user_type] == "employer"
+      does_job_belongs_to_employer?(employer)
+    else
+      flash[:error] = "You are not logged in as employer"
+      redirect_to root_url
+    end
+  end
+
+  def does_job_belongs_to_employer?(employer)
+    unless employer.job_ids.include?(params[:id].to_i)
+      flash[:error] = "You Don't Own This Job"
+      redirect_to root_url
+    end
+  end
+
+  def check_for_session
+    if session[:id].nil?
+      session[:job_to_be_added] = Job.find_by_id(params[:job_id])
+      redirect_to :root, :notice => "Please Login or Register as the job seeker"
+    end
+  end
+
+  def is_job_found
+    job = Job.find_by_id(params[:id])
+    unless job
+      flash[:error] = "No Job Found"
+      redirect_to root_url
+    end
+  end
 end

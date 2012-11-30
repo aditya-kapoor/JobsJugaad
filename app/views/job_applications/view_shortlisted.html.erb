@@ -5,9 +5,9 @@
     <tr>
       <td><%= application.job_seeker.name %></td>
       <td>
-        <%= link_to "Call for interview", calling_for_interview_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id) %>
+        <%= link_to "Calling for interview", perform_action_job_application_path(application.id, :event => "calling_for_interview") %>
       </td>
     </tr>
   <% end %>
 </table>
-<%= link_to "View Those Who are called for interview", view_called_for_interview_path(:job_id => params[:job_id]) %>
+<%= link_to "View Those Who are called for interview", view_job_applicants_job_path(:state => "called_for_interview") %>

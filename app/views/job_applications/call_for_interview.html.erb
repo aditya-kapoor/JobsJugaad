@@ -5,8 +5,8 @@
 <% end %>
 <fieldset>
   <legend>Calling Candidate For Interview </legend>
-  <h3> Welcome <%= @employer.name %></h3>
-  <h4> Please fill in the interview date, so that the candidate, <%= @job_seeker.name %> can be intimated about the same </h4>
+  <h3> Welcome <%= @job_application.job.employer.name %></h3>
+  <h4> Please fill in the interview date, so that the candidate, <%= @job_application.job_seeker.name %> can be intimated about the same </h4>
   <%= form_for (@job_application) do |f| %>
   <table>
     <tr>

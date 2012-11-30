@@ -1,13 +1,13 @@
 require 'employers_controller_helper_function'
 class EmployersController < ApplicationController
   include EmployersControllerHelperFunctions
-
+  @@request_token = ""
   before_filter :is_logged_in?, :except => [:new, :forgot_password, :show, :login]
   before_filter :is_authorize_user?, :only => [:edit, :add_job, :update]
-  @@request_token = ""
   before_filter :is_employer_found, :only => [:edit, :show, :update]
-  before_filter :is_employer_exist_in_session, 
-  :only => [:profile, :remove_photo, :call_for_interview, :add_job, :post_to_twitter, :post_tweet]
+  before_filter :is_employer_exist_in_session, :only => [:profile, :remove_photo, :call_for_interview, :add_job, :post_to_twitter, :post_tweet]
+
+  caches_action :show, :layout => false
 
   def profile
     @employer = Employer.find_by_id(session[:id])
@@ -31,7 +31,7 @@ class EmployersController < ApplicationController
 
   def update
     @employer = Employer.find_by_id(params[:id])
-
+    expire_action :action => :show
     respond_to do |format|
       if @employer.update_attributes(params[:employer])
         format.html { redirect_to eprofile_url, notice: "Employer Profile was successfully updated." }
@@ -42,7 +42,7 @@ class EmployersController < ApplicationController
   end
 
   def remove_photo
-    @employer = Employer.find_by_id(session[:id])
+    @employer = Employer.find_by_id(params[:id])
     @employer.photo.destroy
     @employer.update_attribute(:photo, nil)
     redirect_to eprofile_path
@@ -53,13 +53,6 @@ class EmployersController < ApplicationController
     respond_to do |format|
       format.html { render "new", :locals => { :@class_object => @employer } }
     end
-  end
-
-  def call_for_interview
-    @employer = Employer.find(session[:id])
-    @job_seeker = JobSeeker.find(params[:id])
-    @job = Job.find(params[:job_id])
-    @job_application = JobApplication.find_by_job_seeker_id_and_job_id(@job_seeker.id, @job.id)     
   end
 
   def add_job

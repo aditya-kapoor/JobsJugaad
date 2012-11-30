@@ -47,7 +47,7 @@ module SessionsControllerHelperFunctions
       redirect_to get_redirection_route, :notice => "Password has been changed successfully."
     else
       flash[:error] = "There Were Some Errors"
-      redirect_to root_path
+      render "sessions/change_password"
     end
   end
 

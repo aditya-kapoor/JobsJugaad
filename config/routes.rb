@@ -5,7 +5,6 @@ JobsJugaad::Application.routes.draw do
   get "faqs" => "home#faqs"
 
   resources :job_seekers, :except => [:new] do 
-    # get "profile" => :profile, :on => :member
     collection do 
       get "register" => :new
       post "register" => "sessions#register"
@@ -34,14 +33,12 @@ JobsJugaad::Application.routes.draw do
       get "change_password" => "sessions#change_password"
       get "add_job" => :add_job
       get "get_api_token" => :get_api_token
+      get "remove_photo" => :remove_photo
     end
   end
 
   controller 'employers' do
     get "eprofile" => :profile
-    get "emp_edit" => :edit
-    get "remove_photo_emp" => :remove_photo
-    get "call_for_interview" => :call_for_interview
   end
 
   resources :jobs do
@@ -49,13 +46,15 @@ JobsJugaad::Application.routes.draw do
       get "view_applicants" => :view_applicants
       get "post_job_on_twitter" => "employers#post_to_twitter"
       get "post_tweet" => "employers#post_tweet"
+      get "view_job_applicants" => "job_applications#view_applicants"
+      post "apply" => :apply
     end
   end
   
   controller :jobs do
     post "search_results" => :search_results
     get "search_results" => :search_results
-    post "apply" => :apply
+    # post "apply" => :apply
   end
 
   resources :sessions, :except => [:destroy]
@@ -77,18 +76,11 @@ JobsJugaad::Application.routes.draw do
     get "set_locale" => :set_locale
   end
 
-  resources :job_applications, :only => [:update]
-  controller :job_applications do 
-    get "rejected" => :rejected
-    get "shortlisted" => :shortlisted
-    get "view_shortlisted" => :view_shortlisted
-    get "calling_for_interview" => :calling_for_interview
-    get "view_called_for_interview" => :view_called_for_interview
-    get "called_for_interview" => :called_for_interview
-    get "view_given_offer" => :view_given_offer
-    get "accepted_offer" => :accepted_offer
-    get "rejected_offer" => :rejected_offer
-    get "invalid_action" => :invalid_action
+  resources :job_applications, :only => [:update] do 
+    member do
+      get "perform_action" => :perform_action
+      get "call_for_interview" => :call_for_interview
+    end
   end
   
   namespace :admin do
@@ -102,7 +94,6 @@ JobsJugaad::Application.routes.draw do
     end
   end
 
-  
   root :to => 'home#index'
 
 end

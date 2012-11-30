@@ -5,7 +5,7 @@
   </div>
 <% else %>
   <fieldset>
-    <legend>Login As Employer</legend>
+    <legend><%= t('login_as_employer') %></legend>
     <div id="login">
       <%= form_tag(:controller => "sessions", :action => "login") do %>
         <table>
@@ -24,8 +24,8 @@
             <td></td><td><%= submit_tag t(:login) %></td>
           </tr>
         </table>
-        <%= link_to 'Forgot Password', forgot_password_path(:user => "Employer") %>
-        <%= link_to 'Register New', register_employers_path %>
+        <%= link_to t('forgot_password'), forgot_password_path(:user => "Employer") %>
+        <%= link_to t('registration'), register_employers_path %>
       <% end %>
   </fieldset>
 <% end %>

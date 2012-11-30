@@ -5,10 +5,12 @@
     <tr>
       <td><%= application.job_seeker.name %></td>
       <td>
-        <%= link_to "Called for interview", called_for_interview_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id) %>
+        <%= link_to "Called for interview", perform_action_job_application_path(application.id, :event => "called_for_interview") %>
+
+
       </td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to "View Those Who have been given offer", view_given_offer_path(:job_id => params[:job_id]) %>
+<%= link_to "View Those Who have been given offer", view_job_applicants_job_path(:state => "given_offer") %>

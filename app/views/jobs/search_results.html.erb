@@ -13,7 +13,7 @@
         <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
           <td>
             <ul>
-              <%= form_for( job, :url => { :action => :apply, :job_id => job.id }, :method => :post ) do |f| %>
+              <%= form_for( job, :url => apply_job_path(job), :method => "post" ) do |f| %>
                 <li><div class="desc-placeholder">Job Title: </div><%= link_to job.title, job, :target => "_blank" %></li>
                 <li><div class="desc-placeholder">Employer : </div><%= link_to job.employer.name, job.employer, :target => "_blank" %></li>
                 <li><div class="desc-placeholder">Job Description : </div><%= job.description %></li>

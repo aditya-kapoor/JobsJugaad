@@ -6,7 +6,7 @@ module JobSeekersControllerHelperFunctions
       redirect_to :profile, :notice => "You have already applied for this job"
     else
       @job_seeker.jobs << session[:job_to_be_added]
-      Notifier.send_email_to_employer(session[:job_to_be_added], @job_seeker).deliver
+      Notifier.delay.send_email_to_employer(session[:job_to_be_added], @job_seeker)
       session[:job_to_be_added] = nil
       redirect_to :profile, :notice => "You have successfully applied for this job"
     end
@@ -28,7 +28,7 @@ module JobSeekersControllerHelperFunctions
 
   def employer_authorised_to_see_profile?    
     employer = Employer.find(session[:id])
-    if(get_authorized_ids(employer).include?(params["id"].to_i))
+    if (get_authorized_ids(employer).include?(params["id"].to_i))
       return true
     else 
       return false

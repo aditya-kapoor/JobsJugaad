@@ -7,22 +7,6 @@ class JobSeekersController < ApplicationController
   # skip_before_filter :is_valid_access?
   before_filter :is_authorised_access?, :only => [:edit, :update]
   autocomplete :skill, :name
-  
-  def is_authorised_access?
-    unless params[:id].to_s == session[:id].to_s && session[:user_type] == "job_seeker"
-      redirect_to root_url, :notice => "You are not authorised to edit this profile"
-    end
-  end
-
-  def is_valid_access?
-    if session[:id].nil? 
-      redirect_to root_path , :notice => "You are not currently logged into the system..." 
-    else
-      if session['user_type'] == 'employer'
-        check_if_employer_can_see_job_seeker_profile?
-      end
-    end
-  end
 
   def index
     respond_to do |format|
@@ -105,7 +89,26 @@ class JobSeekersController < ApplicationController
     @job_seeker = JobSeeker.find(session["id"])
     @job_seeker.apitoken = SecureRandom.urlsafe_base64
     @job_seeker.save
+    expire_fragment "JobSeeker-#{@job_seeker.id}"
     flash[:notice] = "Successfully created token : #{@job_seeker.apitoken}"
     redirect_to profile_path
+  end
+
+  private
+
+  def is_authorised_access?
+    unless params[:id].to_s == session[:id].to_s && session[:user_type] == "job_seeker"
+      redirect_to root_url, :notice => "You are not authorised to edit this profile"
+    end
+  end
+
+  def is_valid_access?
+    if session[:id].nil? 
+      redirect_to root_path , :notice => "You are not currently logged into the system..." 
+    else
+      if session['user_type'] == 'employer'
+        check_if_employer_can_see_job_seeker_profile?
+      end
+    end
   end
 end

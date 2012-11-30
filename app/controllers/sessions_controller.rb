@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
     params[:user_type] = Base64.decode64(params[:user_type])
   end
 
+  caches_action :change_password, :layout => false
+
   def register
     if(params[:user_type] == 'job_seeker')
       class_name = "JobSeeker"
@@ -68,6 +70,7 @@ class SessionsController < ApplicationController
   end
 
   def update_password
+    # expire_action :change_password
     @object = params[:user_type].constantize.find(session[:id])
     if @object.authenticate(params[:old_password])
       save_password(@object)
@@ -86,7 +89,7 @@ class SessionsController < ApplicationController
     auth_token = BCrypt::Password.create("Tutu")
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
-      Notifier.send_password_reset(@class_object, auth_token).deliver
+      Notifier.delay.send_password_reset(@class_object, auth_token)
       flash[:notice] = "Reset Password instructions has been sent to your mail account"
     else
       flash[:error] = "There Was An Error With your email"

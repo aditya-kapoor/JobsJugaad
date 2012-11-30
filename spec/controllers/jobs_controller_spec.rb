@@ -18,7 +18,7 @@ describe JobsController do
         post :create
       end
       before do 
-        session[:id] = 1
+        session[:id] = @employer.id
         session[:user_type] = "employer"
       end
       it "should not create a job" do 
@@ -32,7 +32,7 @@ describe JobsController do
         post :create, :job => valid_job_attributes
       end
       before do 
-        session[:id] = 1
+        session[:id] = @employer.id
         session[:user_type] = "employer"
       end
       it "should create a job" do 
@@ -215,10 +215,8 @@ describe JobsController do
     end
     context "When job seeker is logged in and applies for job" do 
       before do 
-        session[:id] = 1
+        session[:id] = @job_seeker.id
         session[:user_type] = "job_seeker"
-        @job_seeker = mock_model(JobSeeker, :id => 1)
-        # @job = mock_model(Job, :id => 1)
       end
       it "should be able to successfully apply for job" do
         Notifier.stub!(:send_email_to_employer).and_return(@send_email_to_employer)

@@ -5,8 +5,11 @@
     <tr>
       <td><%= application.job_seeker.name %></td>
       <td><%= application.state %></td>
-      <td><%= link_to "Accepted Offer", accepted_offer_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id)  %></td>
-      <td><%= link_to "Rejected Offer", rejected_offer_path(:seeker_id=>application.job_seeker_id,:job_id=>application.job_id)  %></td> 
+      <td><%= link_to "Accepted Offer", perform_action_job_application_path(application.id, :event => "accepted_offer") %>
+      </td>
+      <td><%= link_to "Rejected Offer", perform_action_job_application_path(application.id, :event => "rejected_offer") %></td> 
     </tr>
   <% end %>
 </table>
+
+<%= link_to "Back to job applicants", view_applicants_job_path %>

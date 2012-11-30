@@ -8,16 +8,13 @@ module JobsHelper
     end
   end
 
-  def get_application(seeker_id, job_id)
-    @job_application = JobApplication.find_by_job_id_and_job_seeker_id(job_id, seeker_id)
-    # str = ""
-    # @job_application.state_events.each do |event|
-    #   event_path = "#{event}_path"
-    #   str += link_to "#{event}", "#{event_path(:seeker_id=>seeker_id,:job_id=>job_id)}"
-    #   str += "  "
-    # end
-    # str
+  def get_application(seeker_id)
+    @job_application = JobApplication.find_by_job_id_and_job_seeker_id(params[:id], seeker_id)
+  end
 
+  def get_invalid_states(seeker_id)
+    @job_application = JobApplication.find_by_job_id_and_job_seeker_id(params[:id], seeker_id)
+    @job_application.state_paths.events - @job_application.state_events
   end
 
   def is_resume_missing?(url)

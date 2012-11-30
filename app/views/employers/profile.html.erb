@@ -24,7 +24,7 @@
          <%= image_tag @employer.photo.url(:small) %>
           <ul>
             <% if is_image_missing?(@employer.photo.to_s) %>
-              <li><%= link_to 'Remove Image', remove_photo_emp_path %></li>
+              <li><%= link_to 'Remove Image', remove_photo_employer_path(@employer) %></li>
             <% end %>
           </ul>
         </div>
@@ -38,21 +38,24 @@
         </div>
       </div>
     </fieldset>
-    <fieldset class="profile-fieldset"><legend>Your Job Postings...</legend>
-      <table>
-        <% @employer.jobs.each do |job| %>  
-          <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
-            <td>
-              <%= link_to 'Show', job %>
-              <%= link_to 'Edit', edit_job_path(job) %> 
-              <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
-              <%= link_to 'Post on Twitter', post_job_on_twitter_job_path(job) %>
-              <%= link_to 'View Applicants', view_applicants_job_url(job) %>
-              <%= truncate(job.description, :length => 50) %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
+    <fieldset class="profile-fieldset">
+      <legend>Your Job Postings...</legend>
+      <%= cache "employer-#{@employer.id}-jobs" do %>
+        <table class="table">
+          <% @employer.jobs.each do |job| %>  
+            <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
+              <td>
+                <%= link_to 'Show', job %>
+                <%= link_to 'Edit', edit_job_path(job) %> 
+                <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
+                <%= link_to 'Post on Twitter', post_job_on_twitter_job_path(job) %>
+                <%= link_to 'View Applicants', view_applicants_job_url(job) %>
+                <%= truncate(job.description, :length => 50) %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
       <%= link_to "Post a New Job", add_job_employer_path(@employer) %>
     </fieldset>
   </div>

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AdminController do
+describe Admin::AdminController do
   before do
     @admin = double(Admin, :id => 1, 
       :email => "admin@jobsjugaad.com",
@@ -9,8 +9,7 @@ describe AdminController do
     @employers = Employer.all
   end
 
-  describe "index" do 
-
+  describe "index" do
     def do_index
       get :index
     end

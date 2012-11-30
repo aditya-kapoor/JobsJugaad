@@ -5,7 +5,7 @@
     </div>
   <% end %>
   <fieldset>
-    <legend>Registration</legend>
+    <legend><%= t('registration') %></legend>
       <table>
         <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("job_seeker") %>
       <tr>
@@ -43,7 +43,7 @@
       <tr>
         <td><%= f.label :gender %>
           <%= mark_required(@class_object, :gender) %></td>
-        <td><%= f.select :gender, JobSeeker.get_gender_values, :prompt => "Select Gender" %></td>
+        <td><%= f.select :gender, JobSeeker.get_gender_values, :prompt => t('select_gender') %></td>
         <% unless error_present?(:gender, @class_object) %>
           <td class="error-notice"><%= get_errors(:gender, @class_object) %></td>
         <% end %>
@@ -69,12 +69,12 @@
         <% end %>
       </tr>
       <tr>
-        <td><h2>Profile Details</h2></td>
+        <td><h2><%= t('profile_details') %></h2></td>
       </tr>
       <tr>
         <td><%= f.label :experience %>
           <%= mark_required(@class_object, :experience) %></td>
-        <td><%= f.select "experience", JobSeeker::EXPERIENCE %> years</td>
+        <td><%= f.select "experience", JobSeeker::EXPERIENCE %><%= t('years') %></td>
       </tr>
       <tr>
         <td><%= f.label :skill_name %>
@@ -91,7 +91,7 @@
       </tr>
       <tr>
         <td></td>
-        <td><p class="button"><%= f.submit %></p></td>
+        <td><p class="button"><%= f.submit t('create_job_seeker')  %></p></td>
       </tr>
   </fieldset>
 <% end %>
