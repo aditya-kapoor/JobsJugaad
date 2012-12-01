@@ -21,14 +21,14 @@
         <div id = "profile_div">
         <h5> Your Profile Information : </h5>
         <div id = "profile-image">
-         <%= image_tag @employer.photo.url(:small) %>
+         <%= image_tag @employer.photo.url(:small), :class => "img-rounded" %>
           <ul>
             <% if is_image_missing?(@employer.photo.to_s) %>
-              <li><%= link_to 'Remove Image', remove_photo_employer_path(@employer) %></li>
+              <li><%= link_to 'Remove Image', remove_photo_employer_path(@employer), :class => "btn btn-danger btn-small" %></li>
             <% end %>
           </ul>
         </div>
-        <div id="profile_table">
+        <div id="profile_table" class="table">
           <table>
             <tr><td> Name:   </td><td><%= @employer.name %></td></tr>
             <tr><td> Email:  </td><td><%= @employer.email %></td></tr>
@@ -45,11 +45,11 @@
           <% @employer.jobs.each do |job| %>  
             <tr class="<%= cycle('job_posting_odd', 'job_posting_even') %>">
               <td>
-                <%= link_to 'Show', job %>
-                <%= link_to 'Edit', edit_job_path(job) %> 
-                <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?" %>
-                <%= link_to 'Post on Twitter', post_job_on_twitter_job_path(job) %>
-                <%= link_to 'View Applicants', view_applicants_job_url(job) %>
+                <%= link_to 'Show', job, :class => "btn btn-small" %>
+                <%= link_to 'Edit', edit_job_path(job), :class => "btn btn-small" %> 
+                <%= link_to 'Delete Job', job, :method => :delete, :confirm => "Are You Sure to delete this job?", :class => "btn btn-danger btn-small" %>
+                <%= link_to 'Post on Twitter', post_job_on_twitter_job_path(job), :class => "btn btn-primary btn-small" %>
+                <%= link_to 'View Applicants', view_applicants_job_url(job), :class => "btn btn-small" %>
                 <%= truncate(job.description, :length => 50) %>
               </td>
             </tr>

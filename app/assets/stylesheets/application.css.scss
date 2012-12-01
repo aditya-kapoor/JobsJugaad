@@ -56,9 +56,13 @@ div#notice {
   height: 35px;
   text-align: center;
   margin:auto;
+  color: black;
+  font-weight: bold;
 }
 
 div#error {
+  color: black;
+  font-weight: bold;
   width:50%;
   background-color: #FF011A;
   border: 2px solid;

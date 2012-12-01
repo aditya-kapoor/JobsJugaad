@@ -7,14 +7,10 @@ module JobsHelper
       "Login to apply to job"
     end
   end
-
-  def get_application(seeker_id)
-    @job_application = JobApplication.find_by_job_id_and_job_seeker_id(params[:id], seeker_id)
-  end
-
-  def get_invalid_states(seeker_id)
-    @job_application = JobApplication.find_by_job_id_and_job_seeker_id(params[:id], seeker_id)
-    @job_application.state_paths.events - @job_application.state_events
+  
+  def get_invalid_states(job_application)
+    all_events = JobApplication.state_machine.events.map &:name
+    all_events - job_application.state_events
   end
 
   def is_resume_missing?(url)

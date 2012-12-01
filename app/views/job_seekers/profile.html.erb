@@ -16,24 +16,26 @@
           <legend id="profile-info-legend">Your Profile Information</legend>
           <div id="profile-container">
             <div id="links_to_use">
-              <%= "API Token: #{@job_seeker.apitoken}" %>
-              <%= link_to 'Register for a token', get_api_token_job_seeker_path(@job_seeker) %>
+              <%= check_for_apitoken %>
+              <%#= "API Token: #{@job_seeker.apitoken}" %>
+              <%#= link_to 'Register for a token', get_api_token_job_seeker_path(@job_seeker) %>
               <%= link_to 'Change Password', change_password_job_seeker_path(@job_seeker) %> |
               <%= link_to 'Edit', edit_job_seeker_path(@job_seeker) %> 
             </div>
             <div id = "profile_div">
               <h5> Your Profile Information : </h5>
               <div id = "profile-image">
-               <%= image_tag @job_seeker.photo.url(:small) %>
+               <%= image_tag @job_seeker.photo.url(:small), :class=>"img-rounded" %>
                 <ul>
                   <% if is_image_missing?(@job_seeker.photo.to_s) %>
-                    <li><%= link_to 'Remove Image', remove_photo_job_seeker_path(@job_seeker) %></li>
+                    <li><%= link_to 'Remove Image', remove_photo_job_seeker_path(@job_seeker), 
+                    :class =>"btn btn-danger btn-mini" %></li>
                   <% end %>
-                  <li><%= link_to 'Upload Profile Image', '#', :id=>"upload-photo" %></li>
+                  <li><%= link_to 'Upload Profile Image', '#', :id=>"upload-photo", :class => "btn btn-mini" %></li>
                   <div id="upload-photo-div">
                     <%= render "upload-photo" %>
                   </div>
-                  <li><%= link_to 'Upload Resume', "#", :id => "upload-resume" %></li>
+                  <li><%= link_to 'Upload Resume', "#", :id => "upload-resume", :class => "btn btn-mini" %></li>
                   <div id="upload-resume-div">
                     <%= render "upload-resume" %>
                   </div>
@@ -57,28 +59,30 @@
         </fieldset>
         <fieldset class="profile-fieldset">
           <legend id="jobs-applied-legend">Your Job Applications</legend>
-          <div id="applied-jobs-container">
-            <% if @job_seeker.jobs.empty? %>
-              No Jobs Applied For..
-            <% else %>
-              <table class="table">
-                <tr>
-                  <th> Title </th>
-                  <th> Employer </th>
-                  <th> Location </th>
-                  <th> Status </th>
-                </tr>
-                <% @job_seeker.jobs.each do |job| %>
+          <%= cache "job_seeker-#{@job_seeker.id}-jobs" do %>
+            <div id="applied-jobs-container">
+              <% if @job_seeker.jobs.empty? %>
+                No Jobs Applied For..
+              <% else %>
+                <table class="table">
                   <tr>
-                    <td><%= link_to job.title, job, :target => '_blank' %></td>
-                    <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
-                    <td><%= job.location %> </td>
-                    <td><%= get_status(current_user.id, job.id).humanize %></td>
-                  </tr>           
-                <% end %>
-              </table>
-            <% end %>
-          </div>
+                    <th> Title </th>
+                    <th> Employer </th>
+                    <th> Location </th>
+                    <th> Status </th>
+                  </tr>
+                  <% @job_seeker.jobs.each do |job| %>
+                    <tr>
+                      <td><%= link_to job.title, job, :target => '_blank' %></td>
+                      <td><%= link_to job.employer.name, job.employer, :target => '_blank' %></td>
+                      <td><%= job.location %> </td>
+                      <td><%= get_status(current_user.id, job.id).humanize %></td>
+                    </tr>           
+                  <% end %>
+                </table>
+              <% end %>
+            </div>
+          <% end %>
         </fieldset>
         <fieldset class="profile-fieldset">
           <legend>Search and Apply for Jobs:</legend>

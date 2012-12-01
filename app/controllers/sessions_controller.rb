@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
         class_name = "JobSeeker"
         redirection = :profile
         check_credentials(class_name, redirection)
-      when "employer"    
+      when "employer"   
         class_name = "Employer"
         redirection = :eprofile
         check_credentials(class_name, redirection)        

@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag "ui-lightness/jquery-ui-1.8.23.custom.css", "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
   <div id = "header">
@@ -27,7 +28,9 @@
   <% end %>
   <div class = "part">
     <% flash.each do |key, msg| %>
-      <%= content_tag :div, msg, :id => key %>
+      <div class="alert alert-block" id = <%= key %>>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= msg %>
     <% end %>
   </div>
   <div class="container">

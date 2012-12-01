@@ -8,6 +8,8 @@ class JobSeekersController < ApplicationController
   before_filter :is_authorised_access?, :only => [:edit, :update]
   autocomplete :skill, :name
 
+  caches_action :show, :layout => false
+
   def index
     respond_to do |format|
       if params[:token].present?
@@ -33,6 +35,7 @@ class JobSeekersController < ApplicationController
   def update
     @job_seeker = JobSeeker.find(params[:id])
     expire_fragment "JobSeeker-#{@job_seeker.id}"
+    expire_action :action => :show
     
     respond_to do |format|
       if @job_seeker.update_attributes(params[:job_seeker])

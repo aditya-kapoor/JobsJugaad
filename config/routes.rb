@@ -82,7 +82,9 @@ JobsJugaad::Application.routes.draw do
       get "call_for_interview" => :call_for_interview
     end
   end
-  
+
+  # match '/job_applications/:id/perform_action/:event' => "job_applications#perform_action"
+
   namespace :admin do
     resources :admin, :except => [:new, :destroy] do
       member do 

@@ -1,29 +1,27 @@
 <h2> <%= t('search_your_dream_job') %></h2>
 <div id="search">
-  <%= form_tag(:controller => "jobs", :action => 'search_results') do %>
-    <%= cache "job-search-form" do %>
-      <table>
-        <tr>
-          <td><%= t(:search_by_location)%></td>
-          <td><%= text_field_tag :location, nil, :placeholder => t(:search_by_location) %></td>
-        </tr>
-        <tr>
-          <td><%=t(:search_by_skills)%></td>
-          <td><%= text_field_tag :skills, nil, :placeholder => t(:search_by_skills) %></td>
-        </tr>
-        <tr>
-          <td><%= t(:search_by_salary) %> </td>
-          <td>
-            <%= number_field_tag :sal_min, nil, :placeholder => "Minimum" , :class => "sal-fields", :value => 0 %>
-             to 
-            <%= number_field_tag :sal_max, nil, :placeholder => "Maximum",:class => "sal-fields", :value => 0 %>
-            <%= select_tag :sal_type, options_for_select(Job::SALARY_TYPE), :class => "sal-fields" %>
-          </td>
-        </tr>
-        <tr>
-          <td><%= submit_tag t(:search) %></td>
-        </tr>
-      </table>
-    <% end %>
+  <%= form_tag({:controller => "jobs", :action => 'search_results'}, :method => "get", :class => "form-search") do %>
+    <table>
+      <tr>
+        <td><%= t(:search_by_location)%></td>
+        <td><%= text_field_tag :location, nil, :placeholder => t(:search_by_location), :class => "input-medium search-query" %></td>
+      </tr>
+      <tr>
+        <td><%=t(:search_by_skills)%></td>
+        <td><%= text_field_tag :skills, nil, :placeholder => t(:search_by_skills), :class => "input-medium search-query" %></td>
+      </tr>
+      <tr>
+        <td><%= t(:search_by_salary) %> </td>
+        <td>
+          <%= number_field_tag :sal_min, nil, :placeholder => "Minimum" , :class => "sal-fields", :value => 0 %>
+           to 
+          <%= number_field_tag :sal_max, nil, :placeholder => "Maximum",:class => "sal-fields", :value => 0 %>
+          <%= select_tag :sal_type, options_for_select(Job::SALARY_TYPE), :class => "sal-fields" %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= submit_tag t(:search), :class => "btn" %></td>
+      </tr>
+    </table>
   <% end %>  
 </div>

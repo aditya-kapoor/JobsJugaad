@@ -14,7 +14,7 @@
           <td><%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("job_seeker") %></td>
         </tr>
         <tr>
-          <td></td><td><%= submit_tag t(:login) %></td>
+          <td></td><td><%= submit_tag t(:login), :class => "btn" %></td>
         </tr>
       </table>
     <% end %>

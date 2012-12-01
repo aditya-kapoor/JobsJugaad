@@ -1,50 +1,50 @@
 <fieldset>
   <legend>The following are the job applicants for the selected Job </legend>
-  <% if @job.job_seekers.empty? %>
+  <% if @job_seekers.empty? %>
     <div id="no-job-seekers">
       There are no job seekers yet!!!
     </div>
   <% else %>
-  <table>
-    <tr>
-      <th> Name </th>
-      <th> Skills </th>
-      <th> Profile </th>
-      <th> Resume </th>
-      <th></th>
-      <th>Valid Events </th>
-      <th>Invalid Events </th>
-    </tr>
-    <% @job.job_seekers.each do |job_seeker| %>
+    <table>
       <tr>
-        <td><%= job_seeker.name %></td>
-        <td><%= job_seeker.skills.collect(&:name).join(", ") %></td>
-        <td><%= link_to job_seeker.name, job_seeker %></td>
-        <td>
-          <% unless is_resume_missing?(job_seeker.resume.url) %>
-            <%= link_to "Resume", download_resume_job_seeker_path(job_seeker) %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to 'Call For interview', call_for_interview_job_application_path(get_application(job_seeker.id)) %>
-        </td>
-        <td>
-          <% if get_application(job_seeker.id).state == "applied" %>
-            <%= link_to "Reject", perform_action_job_application_path(get_application(job_seeker.id), :event => "rejected") %>
-            <%= link_to "Shortlist", perform_action_job_application_path(get_application(job_seeker.id), :event => "shortlist") %>
-          <% else %>
-            <%= get_application(job_seeker.id).state %>
-          <% end %>
-        </td>
-        <td>
-          <% get_invalid_states(job_seeker.id).each do |event| %>
-          <%= link_to "#{event.to_s.humanize}", perform_action_job_application_path(get_application(job_seeker.id), :event => "#{event.to_s}") %>
-          <% end %>
-        </td>
+        <th> Name </th>
+        <th> Skills </th>
+        <th> Profile </th>
+        <th> Resume </th>
+        <th></th>
+        <th>Current State</th>
+        <th>Valid Events </th>
+        <th>Invalid Events </th>
       </tr>
-    <% end %>
-  </table>
+      <% @job_seekers.each do |job_seeker| %>
+        <tr>
+          <td><%= job_seeker.name %></td>
+          <td><%= job_seeker.skills.collect(&:name).join(", ") %></td>
+          <td><%= link_to job_seeker.name, job_seeker %></td>
+          <td>
+            <% unless is_resume_missing?(job_seeker.resume.url) %>
+              <%= link_to "Resume", download_resume_job_seeker_path(job_seeker) %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Call For interview', call_for_interview_job_application_path(job_seeker.job_applications.first.id) %>
+          </td>
+          <td><%= job_seeker.job_applications.first.state %></td>
+          <td>
+            <% job_seeker.job_applications.first.state_events.each do |event| %>
+              <%= link_to "#{event.to_s.humanize}", perform_action_job_application_path(job_seeker.job_applications.first.id, :event => "#{event.to_s}") %>
+              <%#= link_to "#{event.to_s.humanize}", "/job_applications/#{job_seeker.job_applications.first.id}/perform_action/#{event}" %>
+            <% end %>
+          </td>
+          <td>
+            <% get_invalid_states(job_seeker.job_applications.first).each do |event| %>
+            <%= link_to "#{event.to_s.humanize}", perform_action_job_application_path(job_seeker.job_applications.first.id, :event => "#{event.to_s}") %> &nbsp;&nbsp;
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
-  <%= link_to 'Back to profile', eprofile_path %>
+  <%= link_to 'Back to profile', eprofile_path %> | 
   <%= link_to 'View Shortlisted Candidates', view_job_applicants_job_path(:state => "shortlisted") %>
 </fieldset>

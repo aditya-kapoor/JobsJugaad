@@ -16,7 +16,7 @@
         <% end %>
       </tr>
       <tr>
-        <td><%= f.label :description %> [More than 50 characters]</td>
+        <td><%= f.label :description %>[More than 50 characters]</td>
         <td><%= f.text_area :description %></td>
         <% unless error_present?(:description, @job) %>
           <td class="error_notice"><%= get_errors(:description, @job) %></td>
@@ -43,9 +43,9 @@
       </tr>
       <tr>
         <td><%= f.label :key_skills %></td>
-        <td><%= f.text_field :skill_name %></td>
+        <td><%= f.autocomplete_field :skill_name, autocomplete_skill_name_path, "data-delimiter" => "," %></td>
       <tr>
-        <td><%= f.submit %></td>
+        <td><%= f.submit :class => "btn btn-success" %></td>
       </tr>
     </table>
     <%= link_to 'Back to profile', eprofile_path %>

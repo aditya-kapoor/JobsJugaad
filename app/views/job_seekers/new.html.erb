@@ -6,7 +6,7 @@
   <% end %>
   <fieldset>
     <legend><%= t('registration') %></legend>
-      <table>
+      <table class="table table-hover">
         <%= hidden_field_tag :user_type, ActiveSupport::Base64.encode64("job_seeker") %>
       <tr>
         <td><%= f.label :name %>
@@ -91,7 +91,7 @@
       </tr>
       <tr>
         <td></td>
-        <td><p class="button"><%= f.submit t('create_job_seeker')  %></p></td>
+        <td><p class="button"><%= f.submit t('create_job_seeker'), :class => "btn btn-success"%></p></td>
       </tr>
   </fieldset>
 <% end %>

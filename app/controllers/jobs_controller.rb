@@ -45,7 +45,7 @@ class JobsController < ApplicationController
   end
 
   def view_applicants
-    @job = Job.includes(:job_seekers => :skills).find_by_id(params[:id])
+    @job_seekers = JobSeeker.includes({:job_applications => :job}, :skills).where("job_applications.job_id = ?", params[:id])
   end
 
   def show
@@ -63,6 +63,7 @@ class JobsController < ApplicationController
   def update
     @job = Job.find(params[:id])
     expire_action :action => :show
+    expire_fragment "employer-#{@job.employer.id}-jobs"
     respond_to do |format|
       if @job.update_attributes(params[:job])
         format.html { redirect_to :eprofile, notice: "Job was successfully updated." }

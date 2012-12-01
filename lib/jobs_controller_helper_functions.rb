@@ -31,6 +31,7 @@
 
   def apply_to_job
     @job_seeker = JobSeeker.find(session[:id])
+    expire_fragment "job_seeker-#{@job_seeker.id}-jobs"
     authorized_ids = authorized_ids(@job_seeker)
     if authorized_ids.include?(params[:id].to_i)
       flash[:notice] = "You have already applied for this job"
