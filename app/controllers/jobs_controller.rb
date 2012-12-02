@@ -61,7 +61,7 @@ class JobsController < ApplicationController
   end
 
   def update
-    @job = Job.find(params[:id])
+    @job = Job.find_by_id(params[:id])
     expire_action :action => :show
     expire_fragment "employer-#{@job.employer.id}-jobs"
     respond_to do |format|
@@ -109,6 +109,7 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to request.referer, :notice => "Job has been successfully removed" }
+      format.json { render :text => "Job Has been removed successfully" }
     end
   end
 

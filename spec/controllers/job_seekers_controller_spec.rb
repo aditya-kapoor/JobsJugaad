@@ -256,7 +256,7 @@ describe JobSeekersController do
     def do_download_resume
       get :download_resume, :id => @job_seeker.id
     end
-  #--complete
+    #--complete
     context "User must be logged into the system" do
       before do
         session[:id] = nil
@@ -267,7 +267,7 @@ describe JobSeekersController do
         response.should redirect_to(root_path)
       end
     end
-  #--complete
+    #--complete
     context "Valid User trying to access other job seekers resumes" do 
       before do
         session[:id] = 1

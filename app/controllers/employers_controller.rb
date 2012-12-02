@@ -5,7 +5,7 @@ class EmployersController < ApplicationController
   before_filter :is_logged_in?, :except => [:new, :forgot_password, :show, :login]
   before_filter :is_authorize_user?, :only => [:edit, :add_job, :update]
   before_filter :is_employer_found, :only => [:edit, :show, :update]
-  before_filter :is_employer_exist_in_session, :only => [:profile, :remove_photo, :call_for_interview, :add_job, :post_to_twitter, :post_tweet]
+  before_filter :is_employer_exist_in_session, :only => [:profile, :remove_photo, :add_job, :post_to_twitter, :post_tweet]
 
   caches_action :show, :layout => false
 

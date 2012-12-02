@@ -19,8 +19,11 @@
     <tr>
       <td><%= f.label "Place and Time of interview" %></td>
       <td><%= f.text_area :remarks %></td>
+      <% unless error_present?(:remarks, @job_application) %>
+        <td class="error_notice"><%= get_errors(:remarks, @job_application) %></td>
+      <% end %>
     </tr>
-    <tr><td> <%= f.submit "Send Mail for Interview" %></td></tr>
+    <tr><td> <%= f.submit "Send Mail for Interview", :class => "btn btn-success" %></td></tr>
   </table>
 <% end %>
 </fieldset>

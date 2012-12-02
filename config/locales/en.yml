@@ -24,6 +24,14 @@ en:
   male: "Male"
   female: "Female"
   others: "Others"
+  faq_stuff: "This is written to demonstrate the page caching"
+  date:
+    format:
+      default: "%d:%m:%Y"
+    month_names: [January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
   activerecord:
     models:
       Employer: "Employer"
@@ -58,3 +66,14 @@ en:
         inclusion: "This %{attribute} is not an option in the list"
         confirmation: "Does not match its confirmation"
         too_short: "The %{attribute} must have at least %{count} chars"
+  flash:
+    notice:
+      logged_out: "You have been logged out from all the pages of website"
+      save_new_password: "Your Password has been reset successfully..Login now!!"
+      incorrect_link: "Your link is incorrect"
+      reset_password_sent: "Reset Password instructions has been sent to your mail account"
+    error:
+      problem_with_email: "There Was An Error With your email"
+      invalid_password: "Invalid Password"
+      not_activated_account: "You have not activated your account yet!!"
+      invalid_combination: "Invalid Email and Password Combination"

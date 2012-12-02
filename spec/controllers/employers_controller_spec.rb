@@ -200,36 +200,36 @@ describe EmployersController do
     end
   end
 
-  describe "Action Call For Interview" do 
-    def do_call_for_interview
-      get :call_for_interview, :job_id => @job.id
-    end
-    context "No User Login" do 
-      before do 
-        session[:id] = nil
-      end
-      it "should redirect to the root path" do
-        do_call_for_interview
-        flash[:notice].should eq("You are not currently logged into the system...")
-        response.should redirect_to(root_path)
-      end
-    end
-    context "Authorised Employer" do
-      before do
-        session[:id] = 1
-        session[:user_type] = "employer"
-      end
-      it "should render the call for interview page" do
-        Employer.should_receive(:find).with(session[:id]).and_return(@employer)
-        JobSeeker.should_receive(:find).and_return(@job_seeker)
-        Job.should_receive(:find).and_return(@job)
-        JobApplication.stub!(:find_by_job_seeker_id_and_job_id).and_return(@job_application)
-        do_call_for_interview
-        response.should be_success
-        response.should render_template("employers/call_for_interview")
-      end
-    end
-  end
+  # describe "Action Call For Interview" do 
+  #   def do_call_for_interview
+  #     get :call_for_interview, :id => @job.id
+  #   end
+  #   context "No User Login" do 
+  #     before do 
+  #       session[:id] = nil
+  #     end
+  #     it "should redirect to the root path" do
+  #       do_call_for_interview
+  #       flash[:notice].should eq("You are not currently logged into the system...")
+  #       response.should redirect_to(root_path)
+  #     end
+  #   end
+  #   context "Authorised Employer" do
+  #     before do
+  #       session[:id] = 1
+  #       session[:user_type] = "employer"
+  #     end
+  #     it "should render the call for interview page" do
+  #       Employer.should_receive(:find).with(session[:id]).and_return(@employer)
+  #       JobSeeker.should_receive(:find).and_return(@job_seeker)
+  #       Job.should_receive(:find).and_return(@job)
+  #       JobApplication.stub!(:find_by_job_seeker_id_and_job_id).and_return(@job_application)
+  #       do_call_for_interview
+  #       response.should be_success
+  #       response.should render_template("employers/call_for_interview")
+  #     end
+  #   end
+  # end
 
   describe "Action Remove Photo" do
     def do_remove_photo(id)

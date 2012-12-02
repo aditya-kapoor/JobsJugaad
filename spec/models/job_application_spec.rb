@@ -40,7 +40,7 @@ describe JobApplication do
   #   end
   #   it "Date should not be null" do 
   #     @job_application = @job_seeker.job_applications.first
-  #     @job_application.attributes = valid_job_application_attributes.except(:interview_on)
+  #     @job_application.attributes = valid_job_application_attributes.with(:interview_on => "")
   #     @job_application.should have(1).error_on(:interview_on)
   #     @job_application.errors[:interview_on].should eq(["must be Entered correctly"])
   #   end
@@ -76,7 +76,7 @@ describe JobApplication do
     it "should respond to the the calling_for_interview event on shortlist" do 
       @job_application.shortlist
       @job_application.calling_for_interview
-      @job_application.state.should eq("called_for_interview")
+      @job_application.state.should eq("calling_for_interview")
       @job_application.state_events.should eq([:called_for_interview])
       @job_application.should have(0).errors_on(:state)
     end

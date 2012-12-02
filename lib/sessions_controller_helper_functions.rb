@@ -6,7 +6,7 @@ module SessionsControllerHelperFunctions
       session[:user_type] = params[:user_type] #params[:user_type]
       redirect_to redirection
     else
-      flash[:error] = "You have not activated your account yet!!"
+      flash[:error] = t('flash.error.not_activated_account')
       redirect_to root_path
     end
   end
@@ -22,7 +22,7 @@ module SessionsControllerHelperFunctions
         redirect_to redirection
       end
     else
-      flash[:error] = "Invalid Email and Password Combination"
+      flash[:error] = t('flash.error.invalid_combination')
       redirect_to root_path
     end
   end

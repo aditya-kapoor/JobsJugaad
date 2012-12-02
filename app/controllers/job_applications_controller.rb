@@ -1,5 +1,6 @@
 class JobApplicationsController < ApplicationController
 
+  before_filter :is_employer_exist_in_session, :only => [:call_for_interview]
   def update
     @job_application = JobApplication.includes(:job_seeker).find(params[:id])
     @employer = Employer.find(session[:id])
@@ -11,7 +12,7 @@ class JobApplicationsController < ApplicationController
         format.html { redirect_to view_applicants_job_path(@job_application.job_id), 
                       :notice => "An email has been sent to the job seeker" }
       else
-        format.html { render :template => "employers/call_for_interview" }
+        format.html { render "call_for_interview" }
       end
     end
   end
@@ -33,5 +34,15 @@ class JobApplicationsController < ApplicationController
   def view_applicants
     @job_applications = JobApplication.scoped_by_job_id(params[:id]).where(:state => params[:state])
     render "job_applications/view_#{params[:state]}"
+  end
+
+  private
+
+  def is_employer_exist_in_session
+    @employer = Employer.find_by_id(session[:id]) if session[:user_type] == "employer"
+    unless @employer
+      flash[:error] = "Employer not found"
+      redirect_to root_url
+    end
   end
 end

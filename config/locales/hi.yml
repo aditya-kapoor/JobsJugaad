@@ -26,6 +26,14 @@ hi:
   male: "पुरुष"
   female: "महिला"
   others: "अन्य"
+  faq_stuff: "यह पृष्ठ कैशिंग प्रदर्शित करने के लिए लिखा गया है"
+  date:
+    format:
+      default: "%d:%m:%Y"
+    month_names: [ जनवरी, फरवरी, मार्च, अप्रैल, मई, जून, जुलाई, अगस्त, सितंबर, अक्टूबर, नवंबर, दिसंबर ]
+    abbr_month_names: [ जन, फर, मार्च, अप्रै, मई, जून, जुला, अग, सितं, अक्टू,नवं, दिस ]
+    abbr_day_names: [ रवि, सोम, मंगल, बुध, गुरु, शुक्र, शनि ]
+    day_names: [ रविवार, सोमवार, मंगलवार, बुधवार, गुरुवार, शुक्रवार, शनिवार ]
   activerecord:
     models:
       Employer: "नियोक्ता"
@@ -58,3 +66,14 @@ hi:
         inclusion: "यह %{attribute} सूची में एक विकल्प नहीं है"
         confirmation: "इसकी रचना से मेल नहीं खाता"
         too_short: "%{attribute} कम से कम %{count} वर्ण होना चाहिए"
+  flash:
+    notice:
+      logged_out: "आप वेबसाइट के सभी पृष्ठों से लॉग आउट हो चुके हैं"
+      save_new_password: "आपका पासवर्ड सफलतापूर्वक निर्धारित किया है"
+      incorrect_link: "आपका लिंक गलत है"
+      reset_password_sent: "पासवर्ड रीसेट निर्देश आपके मेल खाते के लिए भेज दिया गया है"
+    error:
+      problem_with_email: "अपने ईमेल के साथ एक त्रुटि थी"
+      invalid_password: "अमान्य पासवर्ड"
+      not_activated_account: "आपने अपने  खाते अभी तक सक्रिय नहीं किया है!"
+      invalid_combination: "अमान्य ईमेल और पासवर्ड संयोजन"

@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
     if @object.authenticate(params[:old_password])
       save_password(@object)
     else
-      flash[:error] = "Invalid Password"
+      flash[:error] = t('flash.error.invalid_password')
       redirect_to request.referrer
     end
   end
@@ -89,10 +89,10 @@ class SessionsController < ApplicationController
     auth_token = BCrypt::Password.create("Tutu")
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
-      Notifier.delay.send_password_reset(@class_object, auth_token)
-      flash[:notice] = "Reset Password instructions has been sent to your mail account"
+      Notifier.delay.send_password_reset(@class_object, auth_token.to_s)
+      flash[:notice] = t('flash.notice.reset_password_sent')
     else
-      flash[:error] = "There Was An Error With your email"
+      flash[:error] = t('flash.error.problem_with_email')
     end
     redirect_to root_path
   end
@@ -104,7 +104,7 @@ class SessionsController < ApplicationController
       session[:user_type] = (params[:type] == "JobSeeker" ? "job_seeker" : "employer")
       redirect_to set_new_password_path
     else
-      redirect_to root_url, :notice => "Your link is incorrect"
+      redirect_to root_url, :notice => t('flash.notice.incorrect_link')
     end
   end
 
@@ -117,7 +117,7 @@ class SessionsController < ApplicationController
     if @class_object.update_attributes(params[session[:user_type].to_sym])
       @class_object.update_attributes(:password_reset_token => nil)
       reset_session
-      redirect_to root_url, :notice => "Your Password has been reset successfully..Login now!!"
+      redirect_to root_url, :notice => t('flash.notice.save_new_password')
     else
       render :action => :set_new_password 
     end
@@ -125,7 +125,7 @@ class SessionsController < ApplicationController
 
   def destroy #logout
     reset_session
-    redirect_to root_url, :notice => "You have been logged out from all the pages of this website"
+    redirect_to root_url, :notice => t('flash.notice.logged_out')
   end
 
   def set_locale

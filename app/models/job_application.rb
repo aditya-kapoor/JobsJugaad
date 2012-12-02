@@ -11,11 +11,11 @@ class JobApplication < ActiveRecord::Base
     end
 
     event :calling_for_interview do 
-      transition :shortlisted => :called_for_interview
+      transition :shortlisted => :calling_for_interview
     end
 
     event :called_for_interview do 
-      transition :called_for_interview => :given_offer
+      transition :calling_for_interview => :given_offer
     end
 
     event :accepted_offer do 
@@ -30,18 +30,20 @@ class JobApplication < ActiveRecord::Base
   belongs_to :job
   belongs_to :job_seeker
   
-  # validate :validate_interview_schedule, :on => :update
+  # validate :validate_interview_schedule, :unless => proc { |a| a.interview_on.blank? }
+  # validates :remarks, :presence => { :message => "Please Enter a Valid Place and Time" }, :if => :remarks_present
   # validate :validate_interview_schedule, :unless => proc { |application| application.interview_on.blank? }
 
+  private
   def validate_interview_schedule
     unless interview_on
       errors.add(:interview_on, "must be Entered correctly")
     else
-      check_for_past_date
+      check_for_past_date(interview_on)
     end
   end
 
-  def check_for_past_date
+  def check_for_past_date(interview_on)
     if interview_on < Date.today
       errors.add(:interview_on, "cannot be scheduled in past")
     end

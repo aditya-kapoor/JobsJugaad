@@ -81,7 +81,6 @@ class Job < ActiveRecord::Base
   def as_json(options = {})
     employer_name ||= []
     employer_name << self.employer.name
-    logger.info("self is #{employer_name}")
     super(:include => [:employer => { :only => [:name] }], :except => [:updated_at, :created_at])
   end
 end
