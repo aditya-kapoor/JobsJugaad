@@ -18,10 +18,10 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       if @job.save
-        format.html { redirect_to :eprofile, :notice => "A new job has been posted successfully" }
+        format.html { redirect_to :eprofile, :notice => t('flash.notice.added_job_success') }
         format.json { render :text=> "A new job has been posted successfully" }
       else
-        format.html { render :template => "employers/add_job", :notice => "Job Could not be saved" }
+        format.html { render :template => "employers/add_job", :error => t('flash.error.added_job_failure') }
         format.json { render :text => "There Was Some Error with your job" }
       end
     end
@@ -54,7 +54,7 @@ class JobsController < ApplicationController
 
   def apply
     if session[:user_type] == "employer"
-      redirect_to :root, :notice => "You are Logged in as employer. Please login as the Job Seeker"
+      redirect_to :root, :notice => t('flash.notice.logged_in_as_emp_js_needed')
     else
       apply_to_job
     end
@@ -66,7 +66,7 @@ class JobsController < ApplicationController
     expire_fragment "employer-#{@job.employer.id}-jobs"
     respond_to do |format|
       if @job.update_attributes(params[:job])
-        format.html { redirect_to :eprofile, notice: "Job was successfully updated." }
+        format.html { redirect_to :eprofile, notice: t('flash.notice.update_job_success') }
       else
         format.html { render action: "edit" }
       end

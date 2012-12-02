@@ -100,7 +100,7 @@ JobsJugaad::Application.routes.draw do
     root :to => 'home#index'
   end
 
-  match '*path', :to => redirect("/#{I18n.default_locale}/%{path}")
-  match '', :to => redirect("/#{I18n.default_locale}")
+  # match '*path', :to => redirect("/#{I18n.default_locale}/%{path}")
+  # match '', :to => redirect("/#{I18n.default_locale}")
 
 end

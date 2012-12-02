@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_user_locale
-    I18n.locale = session['locale']
+    I18n.locale = params['locale']
   end
 
   def default_url_options(options = {})

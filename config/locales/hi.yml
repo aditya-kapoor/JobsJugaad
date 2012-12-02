@@ -72,8 +72,12 @@ hi:
       save_new_password: "आपका पासवर्ड सफलतापूर्वक निर्धारित किया है"
       incorrect_link: "आपका लिंक गलत है"
       reset_password_sent: "पासवर्ड रीसेट निर्देश आपके मेल खाते के लिए भेज दिया गया है"
+      update_job_success: "नौकरी का सफलतापूर्वक अद्यतन किया गया."
+      logged_in_as_emp_js_needed: "आप नियोक्ता के रूप में लॉग इन कर रहे हैं. नौकरी साधक के रूप में प्रवेश करें"
+      added_job_success: "एक नई नौकरी सफलतापूर्वक पोस्ट किया गया है"
     error:
       problem_with_email: "अपने ईमेल के साथ एक त्रुटि थी"
       invalid_password: "अमान्य पासवर्ड"
       not_activated_account: "आपने अपने  खाते अभी तक सक्रिय नहीं किया है!"
       invalid_combination: "अमान्य ईमेल और पासवर्ड संयोजन"
+      added_job_failure: "नौकरी बचाया नहीं जा सका"

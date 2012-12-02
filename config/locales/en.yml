@@ -72,8 +72,12 @@ en:
       save_new_password: "Your Password has been reset successfully..Login now!!"
       incorrect_link: "Your link is incorrect"
       reset_password_sent: "Reset Password instructions has been sent to your mail account"
+      update_job_success: "Job was successfully updated."
+      logged_in_as_emp_js_needed: "You are Logged in as employer. Please login as the Job Seeker"
+      added_job_success: "A new job has been posted successfully"
     error:
       problem_with_email: "There Was An Error With your email"
       invalid_password: "Invalid Password"
       not_activated_account: "You have not activated your account yet!!"
       invalid_combination: "Invalid Email and Password Combination"
+      added_job_failure: "Job Could not be saved"
