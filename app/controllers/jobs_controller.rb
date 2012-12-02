@@ -105,6 +105,7 @@ class JobsController < ApplicationController
 
   def destroy
     @job = Job.find(params[:id])
+    expire_fragment "employer-#{@job.employer.id}-jobs"
     @job.destroy
 
     respond_to do |format|

@@ -15,9 +15,15 @@ class ApplicationController < ActionController::Base
 
   def set_session_for_json_entries
     if params[:token].present?
-      session[:user_type] = "employer"
-      employer = Employer.find_by_apitoken(params[:token])
-      session[:id] = employer.id
+      if params[:role] == "Employer"
+        session[:user_type] = "employer"
+        employer = Employer.find_by_apitoken(params[:token])
+        session[:id] = employer.id
+      else
+        session[:user_type] = "job_seeker"
+        job_seeker = JobSeeker.find_by_apitoken(params[:token])
+        session[:id] = job_seeker.id
+      end
     end
   end
 end

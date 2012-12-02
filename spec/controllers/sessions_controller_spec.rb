@@ -427,7 +427,7 @@ describe SessionsController do
     end
     it "should reset the session" do
       do_logout
-      flash[:notice].should eq("You have been logged out from all the pages of this website")
+      flash[:notice].should eq("You have been logged out from all the pages of website")
       response.should redirect_to(root_path)
     end
   end
