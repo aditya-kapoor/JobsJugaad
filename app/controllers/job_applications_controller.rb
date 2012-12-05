@@ -23,12 +23,17 @@ class JobApplicationsController < ApplicationController
 
   def perform_action
     @job_application = JobApplication.find_by_id(params[:id])
-    if @job_application.send(params[:event])
-      flash[:notice] = "Action #{params[:event].humanize} has been successfully performed"
-    else
-      flash[:error] = "This Action (#{params[:event].humanize}) Cannot be Applied"
+    begin
+      if @job_application.send(params[:event])
+        flash[:notice] = "Action #{params[:event].humanize} has been successfully performed"
+      else
+        flash[:error] = "This Action (#{params[:event].humanize}) Cannot be Applied on current state"
+      end
+      redirect_to request.referrer
+    rescue => e
+      flash[:error] = "This Action (#{params[:event].humanize}) is invalid"
+      redirect_to request.referrer 
     end
-    redirect_to request.referrer
   end
 
   def view_applicants

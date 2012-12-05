@@ -81,6 +81,6 @@ class Job < ActiveRecord::Base
   def as_json(options = {})
     employer_name ||= []
     employer_name << self.employer.name
-    super(:include => [:employer => { :only => [:name] }], :except => [:updated_at, :created_at])
+    super(:include => [:employer => { :only => [:name] }], :except => [:updated_at, :created_at, :delta])
   end
 end

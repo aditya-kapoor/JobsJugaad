@@ -10,7 +10,6 @@
         <th> Name </th>
         <th> Skills </th>
         <th> Profile </th>
-        <th> Resume </th>
         <th></th>
         <th>Current State</th>
         <th>Valid Events </th>
@@ -21,11 +20,6 @@
           <td><%= job_seeker.name %></td>
           <td><%= job_seeker.skills.collect(&:name).join(", ") %></td>
           <td><%= link_to job_seeker.name, job_seeker, :target => "_blank" %></td>
-          <td>
-            <% unless is_resume_missing?(job_seeker.resume.url) %>
-              <%= link_to "Resume", download_resume_job_seeker_path(job_seeker) %>
-            <% end %>
-          </td>
           <td>
             <%= link_to 'Call For interview', call_for_interview_job_application_path(job_seeker.job_applications.first.id) %>
           </td>

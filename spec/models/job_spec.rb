@@ -16,7 +16,6 @@ describe Job do
     it "skill name should return the comma separed string of skills of job" do
       @job.skill_name.should eq ("php, java")
     end
-    
   end
 
   describe "Relationships" do 

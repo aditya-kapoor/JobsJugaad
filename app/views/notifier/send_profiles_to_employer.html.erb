@@ -9,7 +9,7 @@ Here are some of the job seeker profiles which you can have a look:
   <tr>
     <td><%= job_seeker.name %></td>
     <td><%= job_seeker.email %></td>
-    <td><%= job_seeker_url(job_seeker.id, :host => "localhost:3000") %></td>
+    <td><%= job_seeker_url(job_seeker.id, :host => "localhost:3000", :locale => I18n.locale) %></td>
   </tr>
   <% end %>
 </table>

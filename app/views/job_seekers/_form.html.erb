@@ -11,20 +11,16 @@
         <tr>
           <td><%= post_form.label :name %></td>
           <td><%= post_form.text_field :name %></td>
-            <% str = "" %>
-            <% unless @job_seeker.errors[:name].empty? %>
-              <% @job_seeker.errors[:name].each { |msg| str+=msg+", " }%>
-              <td class="error_notice"><%= str %></td>
-            <% end %>
+          <% unless error_present?(:mobile_number, @job_seeker) %>
+            <td class="error-notice"><%= get_errors(:mobile_number, @job_seeker) %></td>
+          <% end %>
         </tr>
         <tr>
           <td><%= post_form.label :email %></td>
           <td><%= post_form.text_field :email %></td>
-          <% str = "" %>
-            <% unless @job_seeker.errors[:email].empty? %>
-              <% @job_seeker.errors[:email].each { |msg| str+=msg+", " } %>
-                <td class="error_notice"><%= str %></td>
-            <% end %>
+          <% unless error_present?(:mobile_number, @job_seeker) %>
+            <td class="error-notice"><%= get_errors(:mobile_number, @job_seeker) %></td>
+          <% end %>
           </tr>
         <tr>
           <td><%= post_form.label :location %></td>

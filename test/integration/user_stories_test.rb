@@ -9,7 +9,7 @@ class UserStoriesTest < ActionController::IntegrationTest
     # job_seeker = job_seekers(:one)
 
     #visits the home page
-    get "/"
+    get "/#{I18n.locale}"
     assert_response :success
     assert_template "index"
 
@@ -19,7 +19,7 @@ class UserStoriesTest < ActionController::IntegrationTest
     :password => "123456",
     :user_type => "am9iX3NlZWtlcg=="
 
-    assert_equal '/profile', path
+    assert_equal "/#{I18n.locale}/profile", path
     assert_template "profile"
     assert_select 'div#logged_in_holder' do
       assert_select 'p', 1
@@ -27,7 +27,7 @@ class UserStoriesTest < ActionController::IntegrationTest
     end  
 
     # goes to the main index page and searches for job
-    get "/"
+    get "/#{I18n.locale}"
     assert_response :success
     assert_template "index"
     post_via_redirect "/search_results"
@@ -38,8 +38,8 @@ class UserStoriesTest < ActionController::IntegrationTest
     end
 
     #Applies to the selected job
-    post_via_redirect "/apply?job_id=10"
-    assert_equal "/profile", path
+    post_via_redirect "/jobs/10/apply"
+    assert_equal "/#{I18n.locale}/profile", path
     assert_template "profile"
     assert_equal "You have successfully applied to this job", flash[:notice]
   end

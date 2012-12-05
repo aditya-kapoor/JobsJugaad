@@ -24,7 +24,7 @@ JobsJugaad::Application.routes.draw do
     end
     match "autocomplete_skill_name" => "job_seekers#autocomplete_skill_name"
     
-    resources :employers, :except => [:new, :index] do
+    resources :employers, :except => [:new] do
       collection do 
         get "register" => :new
         get "login" => :login
@@ -37,7 +37,6 @@ JobsJugaad::Application.routes.draw do
         get "remove_photo" => :remove_photo
       end
     end
-
     controller 'employers' do
       get "eprofile" => :profile
     end
@@ -51,7 +50,6 @@ JobsJugaad::Application.routes.draw do
         post "apply" => :apply
       end
     end
-    
     controller :jobs do
       post "search_results" => :search_results
       get "search_results" => :search_results
@@ -59,7 +57,6 @@ JobsJugaad::Application.routes.draw do
     end
 
     resources :sessions, :except => [:destroy]
-
     controller :sessions do
       get "logout" => :destroy
       post "login" => :login
@@ -100,7 +97,6 @@ JobsJugaad::Application.routes.draw do
     root :to => 'home#index'
   end
 
-  # match '*path', :to => redirect("/#{I18n.default_locale}/%{path}")
-  # match '', :to => redirect("/#{I18n.default_locale}")
-
+  # match '*path', :to => redirect("/#{I18n.locale}/%{path}")
+  match '', :to => redirect("/#{I18n.locale}")
 end

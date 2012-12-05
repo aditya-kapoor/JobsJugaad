@@ -9,6 +9,17 @@ class EmployersController < ApplicationController
 
   caches_action :show, :layout => false
 
+  def index
+    respond_to do |format|
+      if params[:token].present?
+        @jobs = Employer.includes(:jobs).find_by_apitoken(params[:token]).jobs
+        format.json { render :json => @jobs }
+      else
+        format.json { flash[:error] = "No token present"; redirect_to root_url }
+      end
+    end
+  end
+
   def profile
     @employer = Employer.find_by_id(session[:id])
   end

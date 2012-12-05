@@ -281,20 +281,20 @@ describe JobSeekersController do
       end
     end
     
-    # Ajax Based Request --failed
-    # context "Valid User In the system" do 
-    #   before do
-    #     session[:id] = 1
-    #     session[:user_type] = "employer"
-    #     controller.stub(:employer_authorised_to_see_profile?).and_return(true)
-    #   end
-    #   it "employer should be able to download the resume of job seeker" do
-    #     JobSeeker.should_receive(:find).and_return(@job_seeker)
-    #     controller.stub!(:send_file).and_return(nil)
-    #     do_download_resume
-    #     response.should be_success
-    #   end
-    # end
+    # Ajax Based Request --failed [Missing Template Error]
+    context "Valid User In the system" do 
+      before do
+        session[:id] = 1
+        session[:user_type] = "employer"
+        controller.stub(:employer_authorised_to_see_profile?).and_return(true)
+      end
+      it "employer should be able to download the resume of job seeker" do
+        JobSeeker.should_receive(:find).and_return(@job_seeker)
+        controller.stub!(:send_file).and_return(nil)
+        controller.stub!(:render)
+        do_download_resume
+      end
+    end
   end
 
   #--complete

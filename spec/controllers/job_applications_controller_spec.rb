@@ -3,7 +3,7 @@ require 'spec_helper'
 describe JobApplicationsController do
   include ValidAttributeCollection
   before do
-    allow_message_expectations_on_nil()
+    # allow_message_expectations_on_nil()
     @employer = Employer.new(valid_employer_attributes)
     @employer.email = "testing@testing.com"
     @employer.save

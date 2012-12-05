@@ -6,23 +6,44 @@ class ApplicationController < ActionController::Base
   private
 
   def set_user_locale
-    I18n.locale = params['locale']
+    if params[:locale]
+      session['locale'] = params[:locale]
+      I18n.locale = session['locale']
+    else
+      I18n.locale = session['locale']
+    end
   end
 
   def default_url_options(options = {})
-    {:locale => I18n.locale }
+    { :locale => session['locale'] || I18n.default_locale }
   end
 
   def set_session_for_json_entries
     if params[:token].present?
-      if params[:role] == "Employer"
-        session[:user_type] = "employer"
-        employer = Employer.find_by_apitoken(params[:token])
-        session[:id] = employer.id
-      else
+      # user = params[:role].constantize.find_by_apitoken(params[:token])
+      # session[:id] ||= user.id
+      # session[:user_type] ||= params[:role].underscore
+      case request.path
+      when '/job_seekers.json'
+        then
+        user = JobSeeker.find_by_apitoken(params[:token])
+        session[:id] = user.id
         session[:user_type] = "job_seeker"
-        job_seeker = JobSeeker.find_by_apitoken(params[:token])
-        session[:id] = job_seeker.id
+        Rails.logger.info(request.path)
+      when '/employers.json'
+        then
+        user = Employer.find_by_apitoken(params[:token])
+        session[:id] = user.id
+        session[:user_type] = "employer"
+        Rails.logger.info(request.path)
+      when /\/jobs(\/[\d]+)?.json/
+        then
+        user = Employer.find_by_apitoken(params[:token])
+        session[:id] = user.id
+        session[:user_type] = "employer"
+      else
+        flash[:error] = t('flash.error.security_breach')
+        redirect_to root_path
       end
     end
   end

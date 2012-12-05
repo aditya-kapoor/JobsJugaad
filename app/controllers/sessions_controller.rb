@@ -10,9 +10,15 @@ class SessionsController < ApplicationController
     params[:user_type] = Base64.decode64(params[:user_type])
   end
 
-  caches_action :change_password, :layout => false
+  # caches_action :change_password, :layout => false
 
   def register
+    # running successfully
+    # class_name = params[:user_type].camelize
+    # registration_stuff = params["#{params[:user_type].to_sym}"]
+    # template = "#{params[:user_type].pluralize}/new"
+    # save_credentials(class_name, registration_stuff, template)
+
     if(params[:user_type] == 'job_seeker')
       class_name = "JobSeeker"
       registration_stuff = params[:job_seeker]
@@ -129,7 +135,8 @@ class SessionsController < ApplicationController
   end
 
   def set_locale
+    I18n.locale = params[:locale]
     session[:locale] = params[:locale]
-    redirect_to root_path 
+    redirect_to root_path
   end
 end

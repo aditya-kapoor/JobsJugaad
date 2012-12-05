@@ -7,22 +7,22 @@ class JobsController < ApplicationController
   before_filter :check_for_session, :only => [:apply]
   before_filter :is_job_found, :only => [:edit, :view_applicants, :show]
 
-  @@rpp = 2
+  @@rpp = 5
 
   caches_action :show, :layout => false
 
   def create
     @employer = Employer.find(session[:id])
     @job = @employer.jobs.build(params[:job])
-    expire_fragment "employer-#{@employer.id}-jobs"
 
     respond_to do |format|
       if @job.save
+        expire_fragment "employer-#{@employer.id}-jobs"
         format.html { redirect_to :eprofile, :notice => t('flash.notice.added_job_success') }
         format.json { render :text=> "A new job has been posted successfully" }
       else
         format.html { render :template => "employers/add_job", :error => t('flash.error.added_job_failure') }
-        format.json { render :text => "There Was Some Error with your job" }
+        format.json { render :text => "#{@job.errors.full_messages}" }
       end
     end
   end
@@ -62,10 +62,10 @@ class JobsController < ApplicationController
 
   def update
     @job = Job.find_by_id(params[:id])
-    expire_action :action => :show
-    expire_fragment "employer-#{@job.employer.id}-jobs"
     respond_to do |format|
       if @job.update_attributes(params[:job])
+        expire_action :action => :show
+        expire_fragment "employer-#{@job.employer.id}-jobs"
         format.html { redirect_to :eprofile, notice: t('flash.notice.update_job_success') }
       else
         format.html { render action: "edit" }

@@ -81,3 +81,4 @@ hi:
       not_activated_account: "आपने अपने  खाते अभी तक सक्रिय नहीं किया है!"
       invalid_combination: "अमान्य ईमेल और पासवर्ड संयोजन"
       added_job_failure: "नौकरी बचाया नहीं जा सका"
+      security_breach: "सुरक्षा का उल्लंघन पाया गया"
