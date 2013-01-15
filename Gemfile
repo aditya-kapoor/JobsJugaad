@@ -29,6 +29,7 @@ end
   gem 'simplecov', :require => false, :group => :test
   gem 'mysql2'
   gem 'state_machine'
+  gem 'capistrano'
 
   group :development, :test do
     # gem 'shoulda'
