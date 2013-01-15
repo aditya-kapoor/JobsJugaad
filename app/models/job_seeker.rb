@@ -42,9 +42,14 @@ class JobSeeker < ActiveRecord::Base
   validates :password, :presence => true, :if => :password
   validates :password, :length => { :minimum => 6 }, 
             :unless => proc { |user| user.password.blank? }
-  validates :password_confirmation, :presence => true, :unless => proc { |job_seeker| job_seeker.password.blank? } 
+  validates :password_confirmation, :presence => true, 
+            :unless => proc { |job_seeker| job_seeker.password.blank? } 
 
-  validates :mobile_number, :numericality => { :only_integer => true, :message => "The mobile number should be numeric" }, :length => { :is => 10 }, :allow_blank => true
+  validates :mobile_number, :numericality => { 
+            :only_integer => true, 
+            :message => "The mobile number should be numeric" },
+                            :length => { :is => 10 }, 
+                            :allow_blank => true
 
   after_create :send_confirmation_email
 

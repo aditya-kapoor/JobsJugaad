@@ -95,7 +95,7 @@ class SessionsController < ApplicationController
     auth_token = BCrypt::Password.create("Tutu")
     unless @class_object.nil?
       @class_object.update_attributes(:password_reset_token => auth_token)
-      Notifier.delay.send_password_reset(@class_object, auth_token.to_s)
+      Notifier.send_password_reset(@class_object, auth_token.to_s).deliver
       flash[:notice] = t('flash.notice.reset_password_sent')
     else
       flash[:error] = t('flash.error.problem_with_email')
