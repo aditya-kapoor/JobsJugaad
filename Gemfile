@@ -20,7 +20,7 @@ end
   gem 'rails3-jquery-autocomplete'
   gem 'omniauth-twitter'
   gem 'oauth'
-  gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
+  # gem 'twitter', :git => 'https://github.com/sferik/twitter.git' 
   gem 'tweet-button'
   gem 'delayed_job'
   gem 'delayed_job_active_record'
