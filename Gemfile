@@ -12,7 +12,6 @@ group :assets do
   gem 'bcrypt-ruby', '~> 3.0'
 end
 
-  gem 'bullet'
   gem 'thinking-sphinx', '2.0.13'
   gem 'yaml_db'
   gem 'paperclip', '3.3.1'
