@@ -15,7 +15,7 @@ end
   gem 'bullet'
   gem 'thinking-sphinx', '2.0.13'
   gem 'yaml_db'
-  gem 'paperclip', '3.3.0'
+  gem 'paperclip', '3.3.1'
   gem 'jquery-rails'
   gem 'kaminari'
   gem 'rails3-jquery-autocomplete'
@@ -31,8 +31,8 @@ end
   gem 'state_machine'
   gem 'capistrano'
 
-  group :development, :test do
-    # gem 'shoulda'
-    gem 'rspec-rails'
-    # gem 'debugger'
-  end
+  # group :development, :test do
+  #   # gem 'shoulda'
+  #   gem 'rspec-rails'
+  #   # gem 'debugger'
+  # end
