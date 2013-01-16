@@ -34,6 +34,7 @@ namespace :gems do
     run "cd #{deploy_to}/current && RAILS_ENV=production #{try_sudo} bundle install"
     # run "echo '#{release_path}'"
     # run "cp #{current_path}/config/database.yml #{release_path}/config/"
+    run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     run "cd #{current_path} && RAILS_ENV=production bundle exec rake db:migrate"
   end
 end
