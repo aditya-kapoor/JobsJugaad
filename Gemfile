@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.11'
 gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -13,9 +13,9 @@ group :assets do
 end
 
   gem 'bullet'
-  gem 'thinking-sphinx'
+  gem 'thinking-sphinx', '2.0.13'
   gem 'yaml_db'
-  gem 'paperclip'
+  gem 'paperclip', '3.3.0'
   gem 'jquery-rails'
   gem 'kaminari'
   gem 'rails3-jquery-autocomplete'

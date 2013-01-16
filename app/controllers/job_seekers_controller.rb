@@ -25,11 +25,11 @@ class JobSeekersController < ApplicationController
   end
 
   def show
-    @job_seeker = JobSeeker.find(params[:id])
+    @job_seeker = JobSeeker.includes(:job_applications).find_by_id(params[:id])
   end
 
   def edit 
-    @job_seeker = JobSeeker.find(params[:id])
+    @job_seeker = JobSeeker.find_by_id(params[:id])
   end
 
   def update
