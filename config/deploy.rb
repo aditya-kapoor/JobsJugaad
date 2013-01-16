@@ -35,7 +35,10 @@ namespace :gems do
     # run "echo '#{release_path}'"
     # run "cp #{current_path}/config/database.yml #{release_path}/config/"
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
+    run "cd #{current_path} && bundle exec rake assets:precompile"
+    run "cd #{current_path} && bundle exec rake db:create RAILS_ENV=production"
     run "cd #{current_path} && bundle exec rake db:migrate RAILS_ENV=production"
+    run "ln -s #{current_path} /var/www/JobsJugaad"
   end
 end
 
