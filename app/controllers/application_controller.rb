@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :set_user_locale
-  before_filter :set_session_for_json_entries
+  # before_filter :set_user_locale
+  # before_filter :set_session_for_json_entries
 
   private
 

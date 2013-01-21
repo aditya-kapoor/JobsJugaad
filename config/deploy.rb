@@ -1,8 +1,9 @@
+require 'bundler/capistrano'
 default_run_options[:pty] = true
 set :user, "aditya"
-set :use_sudo, true
+set :use_sudo, false
 
-server "54.242.75.184", :app, :web, :db, :primary => true
+server "50.19.196.143", :app, :web, :db, :primary => true
 
 set :key_user, "Aditya"
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ec2", "#{key_user}")]
@@ -31,14 +32,9 @@ end
 
 namespace :gems do 
   task :install do 
-    run "cd #{deploy_to}/current && RAILS_ENV=production #{try_sudo} bundle install"
-    # run "echo '#{release_path}'"
     # run "cp #{current_path}/config/database.yml #{release_path}/config/"
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
-    run "cd #{current_path} && bundle exec rake assets:precompile"
-    run "cd #{current_path} && bundle exec rake db:create RAILS_ENV=production"
-    run "cd #{current_path} && bundle exec rake db:migrate RAILS_ENV=production"
-    run "ln -s #{current_path} /var/www/JobsJugaad"
+    # run "cd #{current_path} && bundle exec rake assets:precompile"
   end
 end
 
