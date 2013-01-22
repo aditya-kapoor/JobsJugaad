@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require 'digest/sha1'
 
 default_run_options[:pty] = true
 set :user, "aditya"
@@ -40,13 +41,9 @@ end
 
 namespace :custom_assets do 
   task :precompile do 
-    run "cd #{current_path} && x=`git status | grep -c 'app/assets'`
-      if [ $x -gt 0 ]
-      then
-      `cd #{current_path} && bundle exec rake assets:precompile`
-      fi
-    "
+    run "cd #{shared_path} && sh assets_precompiler.sh"
   end  
 end
 
 after :deploy, "gems:install", "custom_assets:precompile"
+
