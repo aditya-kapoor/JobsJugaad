@@ -41,12 +41,12 @@ end
 namespace :custom_assets do 
   task :precompile do 
     run "cd #{current_path} && x=`git status | grep -c 'app/assets'`
-      if [ $x -gt 0]
+      if [ $x -gt 0 ]
       then
-      `bundle exec rake assets:precompile`
+      `cd #{current_path} && bundle exec rake assets:precompile`
       fi
     "
   end  
 end
 
-after :deploy, "gems:install"
+after :deploy, "gems:install", "custom_assets:precompile"
