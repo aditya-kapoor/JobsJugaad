@@ -5,18 +5,18 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_user_locale
-    if params[:locale]
-      session['locale'] = params[:locale]
-      I18n.locale = session['locale']
-    else
-      I18n.locale = session['locale']
-    end
-  end
+  # def set_user_locale
+  #   if params[:locale]
+  #     session['locale'] = params[:locale]
+  #     I18n.locale = session['locale']
+  #   else
+  #     I18n.locale = session['locale']
+  #   end
+  # end
 
-  def default_url_options(options = {})
-    { :locale => session['locale'] || I18n.default_locale }
-  end
+  # def default_url_options(options = {})
+  #   { :locale => session['locale'] || I18n.default_locale }
+  # end
 
   def set_session_for_json_entries
     if params[:token].present?

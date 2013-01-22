@@ -1,9 +1,10 @@
 require 'bundler/capistrano'
+
 default_run_options[:pty] = true
 set :user, "aditya"
 set :use_sudo, false
 
-server "50.19.196.143", :app, :web, :db, :primary => true
+server "23.22.135.193", :app, :web, :db, :primary => true
 
 set :key_user, "Aditya"
 ssh_options[:keys] = [File.join(ENV["HOME"], ".ec2", "#{key_user}")]
@@ -34,8 +35,18 @@ namespace :gems do
   task :install do 
     # run "cp #{current_path}/config/database.yml #{release_path}/config/"
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
-    # run "cd #{current_path} && bundle exec rake assets:precompile"
   end
+end
+
+namespace :custom_assets do 
+  task :precompile do 
+    run "cd #{current_path} && x=`git status | grep -c 'app/assets'`
+      if [ $x -gt 0]
+      then
+      `bundle exec rake assets:precompile`
+      fi
+    "
+  end  
 end
 
 after :deploy, "gems:install"
