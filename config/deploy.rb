@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require 'digest/sha1'
 
 default_run_options[:pty] = true
 set :user, "aditya"
