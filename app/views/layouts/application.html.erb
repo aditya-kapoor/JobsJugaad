@@ -15,6 +15,7 @@
     <%= link_to "हिंदी", :locale => "hi" %>
     <%= link_to "FAQs", faqs_path %>
   </div>
+
   <% unless current_user.nil? %>
     <div id="logged_in_holder"> 
       <p> Logged in as <%= link_to current_user.email, get_path %> | <%= link_to 'Log Out', logout_path %></p>
